@@ -9,6 +9,13 @@ use super::crypto::generate_device_key;
 fn service() -> &'static str {
     super::config::config().storage_service
 }
+
+fn legacy_revocation_service() -> &'static str {
+    let config = super::config::config();
+    config
+        .legacy_revocation_service
+        .unwrap_or(config.storage_service)
+}
 const ACCOUNT: &str = "license-device-ed25519-v1";
 const LEGACY_REVOCATION_ACCOUNT: &str = "revoked-device";
 
@@ -287,7 +294,7 @@ impl LicenseStore for AppLicenseStore<'_> {
         let current =
             read_keyring_marker(service(), &account).and_then(|id| validate_marker(id, device_id));
         // Preserve already confirmed revocations from the previous implementation.
-        let legacy = read_keyring_marker(service(), LEGACY_REVOCATION_ACCOUNT)
+        let legacy = read_keyring_marker(legacy_revocation_service(), LEGACY_REVOCATION_ACCOUNT)
             .map(|id| id.as_deref() == Some(device_id));
         resolve_markers(file, current, legacy)
     }

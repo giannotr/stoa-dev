@@ -6,6 +6,20 @@
 
 use std::sync::OnceLock;
 
+/// Certificates from a pre-STOA license server that an app keeps accepting.
+///
+/// A legacy certificate is a version-1 payload without app id or major-version scope,
+/// signed with the configured key, whose header `typ` and payload `issuer` match.
+#[derive(Debug, Clone)]
+pub struct LegacyCertificate {
+    /// Header `typ`, e.g. `"invoicer-license"`.
+    pub typ: &'static str,
+    /// Payload `issuer`, e.g. `"invoicer-license-server"`.
+    pub issuer: &'static str,
+    /// Accepted only while the app's major version is at most this value.
+    pub max_app_major: u32,
+}
+
 #[derive(Debug, Clone)]
 pub struct LicensingConfig {
     /// Product identifier registered on the license server, e.g. `"servicerecordr"`.
@@ -20,6 +34,10 @@ pub struct LicensingConfig {
     pub key_id: &'static str,
     /// OS keychain service name; use the Tauri bundle identifier.
     pub storage_service: &'static str,
+    /// Optional pre-STOA certificate format to keep accepting. `None` for new apps.
+    pub legacy_certificate: Option<LegacyCertificate>,
+    /// Keychain service of a legacy device-revocation marker; defaults to `storage_service`.
+    pub legacy_revocation_service: Option<&'static str>,
 }
 
 static CONFIG: OnceLock<LicensingConfig> = OnceLock::new();
@@ -40,6 +58,8 @@ pub(crate) fn config() -> &'static LicensingConfig {
             public_key_base64: "",
             key_id: "test-key",
             storage_service: "stoa-licensing-tests",
+            legacy_certificate: None,
+            legacy_revocation_service: None,
         })
     }
     #[cfg(not(test))]
@@ -78,6 +98,8 @@ macro_rules! config_from_env {
             public_key_base64: env!("STOA_LICENSE_PUBLIC_KEY"),
             key_id: env!("STOA_LICENSE_KEY_ID"),
             storage_service: env!("STOA_STORAGE_SERVICE"),
+            legacy_certificate: None,
+            legacy_revocation_service: None,
         }
     };
 }

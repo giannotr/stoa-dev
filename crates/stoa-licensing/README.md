@@ -43,6 +43,24 @@ pub fn run() {
 
 Schreibende Commands schützen weiterhin mit `licensing::require_write_access(&app, &service)`.
 
+## Ältere Zertifikatsformate (z. B. invoicer)
+
+Apps mit Kunden aus der Zeit vor dem STOA-Lizenzserver bauen die Config selbst und erlauben
+das alte Format ausdrücklich. Für alle anderen Apps bleibt es bei `config_from_env!()`, das
+beide Felder auf `None` setzt.
+
+```rust
+licensing::configure(licensing::LicensingConfig {
+    legacy_certificate: Some(licensing::LegacyCertificate {
+        typ: "invoicer-license",
+        issuer: "invoicer-license-server",
+        max_app_major: 0, // nur solange die App in 0.x ist
+    }),
+    legacy_revocation_service: Some("invoicer-license"),
+    ..licensing::config_from_env!()
+});
+```
+
 ## Sind die Werte geheim?
 
 Nein. App-ID, Server-URL und **öffentlicher** Schlüssel landen ohnehin im ausgelieferten Binary.

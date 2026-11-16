@@ -1569,3 +1569,108 @@ fn signed_all_features_grants_future_features_but_never_bypasses_license_validit
         Err(LicenseError::LicenseFeatureDenied)
     ));
 }
+
+fn signed_token(fixture: &Fixture, payload: &LicensePayload, typ: &str) -> String {
+    let header = URL_SAFE_NO_PAD.encode(
+        serde_json::to_vec(&serde_json::json!({ "alg": "EdDSA", "typ": typ, "kid": "test-key" }))
+            .unwrap(),
+    );
+    let body = URL_SAFE_NO_PAD.encode(serde_json::to_vec(payload).unwrap());
+    let message = format!("{header}.{body}");
+    let signature = fixture.signer.sign(message.as_bytes());
+    format!("{message}.{}", URL_SAFE_NO_PAD.encode(signature.to_bytes()))
+}
+
+fn legacy_payload(fixture: &Fixture) -> LicensePayload {
+    let mut payload = fixture.payload();
+    payload.version = 1;
+    payload.issuer = "invoicer-license-server".into();
+    payload.app_id = None;
+    payload.major_version = None;
+    payload
+}
+
+fn legacy_config(max_app_major: u32) -> super::LegacyCertificate {
+    super::LegacyCertificate {
+        typ: "invoicer-license",
+        issuer: "invoicer-license-server",
+        max_app_major,
+    }
+}
+
+#[test]
+fn legacy_certificates_are_rejected_unless_configured() {
+    let fixture = Fixture::new();
+    let payload = legacy_payload(&fixture);
+    let token = signed_token(&fixture, &payload, "invoicer-license");
+    assert!(fixture
+        .verifier
+        .verify(&token, &payload.device_public_key, &payload.device_id)
+        .is_err());
+}
+
+#[test]
+fn configured_legacy_certificates_are_accepted_only_in_their_exact_unscoped_form() {
+    let fixture = Fixture::new();
+    let major = super::certificate::app_major_version();
+    let verifier = CertificateVerifier::for_test(fixture.signer.verifying_key())
+        .with_legacy(legacy_config(major));
+    let verify = |payload: &LicensePayload, typ: &str| {
+        verifier.verify(
+            &signed_token(&fixture, payload, typ),
+            &payload.device_public_key,
+            &payload.device_id,
+        )
+    };
+    let payload = legacy_payload(&fixture);
+    assert!(verify(&payload, "invoicer-license").is_ok());
+
+    // Header type and issuer must both match the configured legacy format.
+    assert!(verify(&payload, "stoa-license").is_err());
+    assert!(verify(&payload, "other-license").is_err());
+    let mut other = payload.clone();
+    other.issuer = "stoa-license-server".into();
+    assert!(verify(&other, "invoicer-license").is_err());
+
+    // Legacy certificates carry no app or version scope.
+    let mut scoped = payload.clone();
+    scoped.app_id = Some(super::certificate::app_id().into());
+    assert!(verify(&scoped, "invoicer-license").is_err());
+    let mut versioned = payload.clone();
+    versioned.major_version = Some(major);
+    assert!(verify(&versioned, "invoicer-license").is_err());
+    let mut all_versions = payload.clone();
+    all_versions.all_versions = true;
+    assert!(verify(&all_versions, "invoicer-license").is_err());
+    let mut version_two = payload.clone();
+    version_two.version = 2;
+    assert!(verify(&version_two, "invoicer-license").is_err());
+
+    // Device binding still applies.
+    assert!(verifier
+        .verify(
+            &signed_token(&fixture, &payload, "invoicer-license"),
+            &payload.device_public_key,
+            "another-device"
+        )
+        .is_err());
+
+    // Current STOA certificates keep working alongside the legacy format.
+    assert!(verify(&fixture.payload(), "stoa-license").is_ok());
+}
+
+#[test]
+fn legacy_certificates_expire_with_the_configured_major_version() {
+    let fixture = Fixture::new();
+    let major = super::certificate::app_major_version();
+    let payload = legacy_payload(&fixture);
+    let token = signed_token(&fixture, &payload, "invoicer-license");
+    let verify = |max_app_major| {
+        CertificateVerifier::for_test(fixture.signer.verifying_key())
+            .with_legacy(legacy_config(max_app_major))
+            .verify(&token, &payload.device_public_key, &payload.device_id)
+    };
+    assert!(verify(major).is_ok());
+    assert!(verify(major + 1).is_ok());
+    assert!(verify(major - 1).is_err());
+}

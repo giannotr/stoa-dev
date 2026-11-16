@@ -9,7 +9,7 @@ pub mod storage;
 use serde::Serialize;
 pub mod error;
 mod policy;
-pub use config::{configure, LicensingConfig};
+pub use config::{configure, LegacyCertificate, LicensingConfig};
 pub use service::{require_write_access, LicenseService};
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize)]

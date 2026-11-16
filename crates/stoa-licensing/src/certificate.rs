@@ -1,4 +1,4 @@
-use super::config::config;
+use super::config::{config, LegacyCertificate};
 use base64::{
     engine::general_purpose::{STANDARD, URL_SAFE_NO_PAD},
     Engine,
@@ -54,6 +54,7 @@ pub enum CertificateError {
 pub struct CertificateVerifier {
     key: VerifyingKey,
     kid: String,
+    legacy: Option<LegacyCertificate>,
 }
 
 impl CertificateVerifier {
@@ -65,6 +66,7 @@ impl CertificateVerifier {
         Ok(Self {
             key: VerifyingKey::from_bytes(&bytes).map_err(|_| CertificateError::Invalid)?,
             kid: config().key_id.into(),
+            legacy: config().legacy_certificate.clone(),
         })
     }
 
@@ -73,7 +75,14 @@ impl CertificateVerifier {
         Self {
             key,
             kid: "test-key".into(),
+            legacy: None,
         }
+    }
+
+    #[cfg(test)]
+    pub(crate) fn with_legacy(mut self, legacy: LegacyCertificate) -> Self {
+        self.legacy = Some(legacy);
+        self
     }
 
     /// Verify authenticity, binding and signed validity bounds. Time policy is separate.
@@ -116,7 +125,14 @@ impl CertificateVerifier {
         let header: TokenHeader =
             serde_json::from_slice(&decode(parts[0])?).map_err(|e| e.to_string())?;
 
-        if header.alg != "EdDSA" || header.typ != "stoa-license" || header.kid != self.kid {
+        let legacy_typ = self
+            .legacy
+            .as_ref()
+            .is_some_and(|legacy| header.typ == legacy.typ);
+        if header.alg != "EdDSA"
+            || (header.typ != "stoa-license" && !legacy_typ)
+            || header.kid != self.kid
+        {
             return Err("Invalid license header".into());
         }
 
@@ -139,7 +155,16 @@ impl CertificateVerifier {
             && payload.app_id.as_deref() == Some(app_id())
             && ((payload.all_versions && payload.major_version.is_none())
                 || (!payload.all_versions && payload.major_version == Some(app_major_version())));
-        if !scoped {
+        let legacy = self.legacy.as_ref().is_some_and(|legacy| {
+            payload.version == 1
+                && payload.issuer == legacy.issuer
+                && header.typ == legacy.typ
+                && payload.app_id.is_none()
+                && payload.major_version.is_none()
+                && !payload.all_versions
+                && app_major_version() <= legacy.max_app_major
+        });
+        if !scoped && !legacy {
             return Err("Unsupported license payload".into());
         }
 
