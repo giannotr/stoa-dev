@@ -1,0 +1,114 @@
+{
+  "name": "@stoa/kit",
+  "version": "0.1.0",
+  "description": "Shared React components, hooks, utilities, licensing UI and theme for STOA desktop apps",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "files": [
+    "dist",
+    "styles",
+    "scss",
+    "README.md"
+  ],
+  "exports": {
+    "./ui": {
+      "types": "./dist/types/ui/index.d.ts",
+      "import": "./dist/ui/index.js"
+    },
+    "./shell": {
+      "types": "./dist/types/shell/index.d.ts",
+      "import": "./dist/shell/index.js"
+    },
+    "./licensing": {
+      "types": "./dist/types/licensing/index.d.ts",
+      "import": "./dist/licensing/index.js"
+    },
+    "./hooks": {
+      "types": "./dist/types/hooks/index.d.ts",
+      "import": "./dist/hooks/index.js"
+    },
+    "./utils": {
+      "types": "./dist/types/utils/index.d.ts",
+      "import": "./dist/utils/index.js"
+    },
+    "./i18n": {
+      "types": "./dist/types/i18n/index.d.ts",
+      "import": "./dist/i18n/index.js"
+    },
+    "./styles.css": "./dist/kit.css",
+    "./theme.css": "./styles/theme.css",
+    "./scss": {
+      "sass": "./scss/_index.scss",
+      "default": "./scss/_index.scss"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "dev": "vite build --watch",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@tauri-apps/api": "^2.11.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "i18next": ">=25",
+    "lucide-react": ">=1.0.0",
+    "motion": "^12.0.0",
+    "next-themes": "^0.4.6",
+    "radix-ui": "^1.4.3",
+    "react": "^19.1.0",
+    "react-day-picker": ">=9",
+    "react-dom": "^19.1.0",
+    "react-i18next": ">=16",
+    "react-router": "^7.0.0",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0"
+  },
+  "peerDependenciesMeta": {
+    "@tauri-apps/api": {
+      "optional": true
+    },
+    "react-day-picker": {
+      "optional": true
+    },
+    "date-fns": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@stoa/tsconfig": "*",
+    "@tauri-apps/api": "2.11.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "i18next": "^26.7.1",
+    "lucide-react": "^1.14.0",
+    "motion": "^12.38.0",
+    "next-themes": "^0.4.6",
+    "radix-ui": "^1.4.3",
+    "react": "^19.1.0",
+    "react-day-picker": "^10.0.0",
+    "react-dom": "^19.1.0",
+    "react-i18next": "^17.1.11",
+    "react-router": "^7.15.0",
+    "sass-embedded": "^1.108.2",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.5.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

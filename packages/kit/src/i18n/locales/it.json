@@ -1,0 +1,139 @@
+{
+  "actions": {
+    "cancel": "Annulla",
+    "close": "Chiudi"
+  },
+  "app": {
+    "back": "Torna alla home",
+    "errorDescription": "Ricarica l’interfaccia e riprova.",
+    "errorTitle": "Qualcosa è andato storto.",
+    "loadingApp": "Preparazione dell’app …",
+    "navigation": "Navigazione principale",
+    "restart": "Ricarica",
+    "switchTheme": "Cambia aspetto"
+  },
+  "datePicker": {
+    "selectDate": "Seleziona data",
+    "today": "Oggi",
+    "nextMonth": "Mese successivo",
+    "previousMonth": "Mese precedente",
+    "chooseMonth": "Scegli mese",
+    "chooseYear": "Scegli anno",
+    "navigation": "Navigazione del calendario",
+    "selected": "selezionato"
+  },
+  "licensing": {
+    "checking": "Verifica in corso …",
+    "checkAgain": "Verifica nuovamente",
+    "gate": {
+      "loading": "Verifica della licenza e dello stato del dispositivo …",
+      "failed": "Verifica della licenza non riuscita.",
+      "activationRequired": "L’attivazione precedente non è più valida. Attiva nuovamente questa installazione. I dati verranno conservate.",
+      "readOnly": "Consulta ed esporta i dati esistenti"
+    },
+    "activation": {
+      "title": "Attiva App",
+      "renew": "Rinnova attivazione",
+      "description": "Inserisci il codice di attivazione per collegare questa installazione alla tua licenza.",
+      "replacementDescription": "Inserisci un nuovo codice di attivazione per la licenza attuale o per un’altra licenza valida. I dati verranno conservate. L’attivazione precedente viene sostituita solo dopo l’attivazione riuscita.",
+      "replacementNotice": "L’attivazione esistente viene sostituita solo dopo una verifica riuscita.",
+      "code": "Codice di attivazione",
+      "deviceName": "Nome del dispositivo",
+      "devicePlaceholder": "Il mio dispositivo",
+      "defaultDeviceName": "Il mio dispositivo",
+      "pending": "Attivazione in corso …",
+      "submit": "Attiva licenza"
+    },
+    "banner": {
+      "readOnlyTitle": "Modalità di sola lettura",
+      "refreshFailed": "Aggiornamento della licenza non disponibile",
+      "retryStorage": "Riprova il salvataggio",
+      "readOnlyDescription": "Puoi ancora consultare ed esportare i dati esistenti. La creazione e la modifica sono bloccate.",
+      "persistencePending": "Non è stato ancora possibile salvare completamente lo stato di blocco della licenza. Il dispositivo resta bloccato. Riprova il salvataggio."
+    },
+    "errors": {
+      "activationRequired": "L’attivazione precedente non è più valida sul server delle licenze. Inserisci un nuovo codice di attivazione.",
+      "network": "Il server delle licenze non è attualmente raggiungibile. La validità locale resta invariata.",
+      "deviceRevoked": "L’attivazione di questo dispositivo è stata revocata.",
+      "licenseRevoked": "Questa licenza è stata revocata.",
+      "storage": "Non è stato possibile leggere o salvare in modo sicuro lo stato locale della licenza.",
+      "certificate": "Il certificato della licenza non è valido.",
+      "alreadyActivated": "Questa installazione è già attivata.",
+      "api": "Il server ha rifiutato l’attivazione o l’aggiornamento. Verifica il codice e lo stato della licenza.",
+      "protocol": "Non è stato possibile elaborare la risposta del server delle licenze.",
+      "unactivated": "Questa installazione non è ancora attivata.",
+      "stateChanged": "Lo stato della licenza è cambiato. Verificalo nuovamente.",
+      "synchronization": "La sincronizzazione della licenza non è attualmente disponibile. Riprova.",
+      "readOnly": "Questa azione richiede un’attivazione valida. I dati esistenti restano consultabili ed esportabili.",
+      "featureDenied": "Questa funzionalità non è abilitata nella tua licenza.",
+      "unknown": "Verifica della licenza non riuscita. Riprova."
+    }
+  },
+  "licenseProfile": {
+    "title": "Licenza",
+    "checking": "Verifica della licenza …",
+    "unknown": "Non disponibile",
+    "plan": "Piano",
+    "licenseTerm": "Durata della licenza acquistata",
+    "termUnknown": "Non comunicata dal server",
+    "certificateExpires": "Certificato attuale valido fino al",
+    "nextSync": "Prossima sincronizzazione",
+    "syncDue": "Dovuta dal {{date}}",
+    "noSyncScheduled": "Nessuna sincronizzazione automatica attualmente prevista",
+    "features": "Funzionalità indicate nel certificato",
+    "noFeatures": "Nessuna funzionalità disponibile nel certificato attuale.",
+    "validityHint": "La validità del certificato limita l’uso offline. La sua scadenza non coincide necessariamente con la fine della licenza acquistata. La durata effettiva della licenza non viene attualmente comunicata separatamente.",
+    "synchronize": "Sincronizza licenza",
+    "syncing": "Sincronizzazione …",
+    "synchronized": "Stato della licenza aggiornato.",
+    "persistencePending": "Non è stato ancora possibile salvare completamente lo stato di blocco della licenza. Sincronizza nuovamente.",
+    "deviceDetails": "Dettagli avanzati del dispositivo",
+    "deviceId": "ID del dispositivo attuale",
+    "noDevice": "Nessuna attivazione del dispositivo presente.",
+    "deviceReleaseHint": "La disattivazione di un dispositivo non è ancora disponibile nell’app. Eliminare i dati locali della licenza non libera un posto dispositivo sul server.",
+    "status": {
+      "active": {
+        "label": "Attiva",
+        "description": "Il certificato firmato della licenza è valido. Puoi usare normalmente l’app."
+      },
+      "offline_grace": {
+        "label": "Valida offline",
+        "description": "Il certificato esistente consente ancora l’uso locale. È dovuta una sincronizzazione; il certificato viene rinnovato solo dopo una verifica riuscita del server."
+      },
+      "expired": {
+        "label": "Certificato scaduto",
+        "description": "Il certificato locale è scaduto. Sincronizza per ottenerne uno nuovo. Questo da solo non indica se anche la licenza acquistata sia scaduta. I dati esistenti restano consultabili ed esportabili."
+      },
+      "revoked": {
+        "label": "Attivazione del dispositivo revocata",
+        "description": "L’attivazione di questo dispositivo è stata revocata. Le modifiche sono bloccate; i dati esistenti restano consultabili ed esportabili."
+      },
+      "license_revoked": {
+        "label": "Licenza revocata",
+        "description": "Il server ha confermato la revoca della licenza. Le modifiche sono bloccate; i dati esistenti restano consultabili ed esportabili."
+      },
+      "unactivated": {
+        "label": "Non attivata",
+        "description": "Questa installazione non è ancora associata a una licenza. Per usarla serve un codice di attivazione."
+      },
+      "activation_required": {
+        "label": "Attivazione necessaria",
+        "description": "L’associazione precedente sul server manca o non corrisponde più a questa installazione. Rinnova l’attivazione. I dati esistenti vengono conservati."
+      },
+      "invalid": {
+        "label": "Non verificabile",
+        "description": "Al momento il certificato locale non può essere verificato in modo affidabile. Le modifiche restano bloccate. Sincronizza per verificare nuovamente lo stato della licenza."
+      }
+    },
+    "plans": {
+      "trial": "Versione di prova",
+      "personal": "Personal",
+      "professional": "Professional",
+      "lifetime": "Lifetime"
+    },
+    "featureLabels": {
+      "all_features": "Tutte le funzionalità",
+      "core": "Funzioni di base"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "extends": "@stoa/tsconfig/library.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "declaration": false,
+    "declarationMap": false
+  },
+  "include": ["src"]
+}

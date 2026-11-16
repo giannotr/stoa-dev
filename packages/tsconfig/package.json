@@ -1,0 +1,18 @@
+{
+  "name": "@stoa/tsconfig",
+  "version": "0.1.0",
+  "description": "Shared TypeScript configurations for STOA apps and libraries",
+  "license": "MIT",
+  "files": [
+    "*.json"
+  ],
+  "exports": {
+    "./base.json": "./base.json",
+    "./app.json": "./app.json",
+    "./node.json": "./node.json",
+    "./library.json": "./library.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

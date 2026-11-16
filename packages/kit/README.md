@@ -1,0 +1,81 @@
+# @stoa/kit
+
+Gemeinsame React-Komponenten, Hooks, Hilfsfunktionen, Lizenz-UI und Theme der STOA-Desktop-Apps.
+
+| Import | Inhalt |
+|---|---|
+| `@stoa/kit/ui` | shadcn-Primitives (Button, Dialog, Select, Calendar, …) |
+| `@stoa/kit/shell` | AppNavigation, SectionNavigation, PageHeading, BrandLines, Spinner, BackHomeButton, ErrorBoundary, ConfirmDialog, DatePickerInput, NativeSelect, UploadButton |
+| `@stoa/kit/licensing` | LicenseProvider/`useLicense`, LicenseGate, LicenseCard, LicenseActivation, LicenseStatusBanner, Tauri-API |
+| `@stoa/kit/hooks` | `useOnlineStatus`, `useRouting<Route>()` |
+| `@stoa/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, … |
+| `@stoa/kit/i18n` | `registerStoaLocales`, `supportedLanguages`, Namespace `stoa` (de, de-AT, en, it) |
+| `@stoa/kit/theme.css` | Tailwind-4-Tokens (shadcn-Variablen + STOA-Extras), Quelle für die App-Tailwind |
+| `@stoa/kit/styles.css` | Kompilierte SCSS-Module der Komponenten |
+| `@stoa/kit/scss` | SCSS-Werkzeuge (`reduced-motion`, `dark`, `accent-mix`, …) für App-Module |
+
+## Einbindung in eine App
+
+```bash
+npm i @stoa/kit sass-embedded
+```
+
+```css
+/* src/App.css */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@stoa/kit/theme.css";
+@import "@stoa/kit/styles.css";
+@source "../node_modules/@stoa/kit/dist";   /* Tailwind 4 scannt node_modules nicht von selbst */
+
+:root { --stoa-accent: #0093af; }            /* Akzent je App */
+```
+
+```ts
+// src/i18n.ts – nach i18next.init(...)
+import { registerStoaLocales } from '@stoa/kit/i18n'
+registerStoaLocales(i18next)
+```
+
+```tsx
+// App-Navigation
+import { AppNavigation, AppNavigationThemeToggle } from '@stoa/kit/shell'
+
+<AppNavigation
+  logo='/practicr.svg'
+  groups={[
+    [{ path: '/', label: t('common.app.home'), Icon: Home }],
+    [<AppNavigationThemeToggle key='theme' theme={settings.theme} onToggle={saveTheme} disabled={!canWrite} />],
+    [{ path: '/settings', label: t('common.app.settings'), Icon: Settings }],
+  ]}
+/>
+```
+
+```tsx
+// Lizenz-Gate mit Startup-Overlay der App
+<LicenseProvider>
+  <LicenseGate onInteractionRequired={finishStartup}>…</LicenseGate>
+</LicenseProvider>
+```
+
+## Konventionen
+
+- **Ein Ordner je Komponente**: `Name/index.tsx` und optional `Name/Name.module.scss`.
+- **Tailwind liefert Layout und Abstände**, SCSS-Module den eigenen Anstrich (Pseudo-Elemente,
+  Animationen, Zustände). Farben immer über CSS-Variablen, damit Theming zur Laufzeit greift.
+- Klassen aus Modulen heißen `stoa-<Komponente>-<klasse>-<hash>` und lassen sich so in Apps gezielt
+  überschreiben.
+- Keine App-Imports (`@/…`) im Paket: App-Spezifisches kommt über Props/Callbacks herein.
+- Texte liegen im i18next-Namespace `stoa`; einzelne Strings überschreibt eine App mit
+  `registerStoaLocales(i18next, { de: { app: { back: 'Zurück' } } })`.
+
+## Lokale Entwicklung
+
+```bash
+cd stoa-kit && npm run dev          # baut bei Änderungen neu
+cd ../practicr && npm link ../stoa-kit/packages/kit
+```
+
+Vite: Bei verlinkten Paketen `resolve.dedupe: ['react', 'react-dom', 'react-router', 'i18next', 'react-i18next']`
+setzen, damit Kontext-Provider (Router, i18n) nicht doppelt geladen werden.

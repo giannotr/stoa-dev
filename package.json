@@ -1,0 +1,21 @@
+{
+  "name": "stoa-kit-monorepo",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @stoa/kit",
+    "dev": "npm run dev --workspace @stoa/kit",
+    "typecheck": "npm run typecheck --workspace @stoa/kit",
+    "lint": "biome lint .",
+    "biome": "biome check --write .",
+    "check": "npm run lint && npm run typecheck && npm run build",
+    "rust:test": "cargo test --manifest-path crates/stoa-licensing/Cargo.toml",
+    "release:check": "npm run check && npm pack --dry-run --workspace @stoa/kit"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.15"
+  }
+}

@@ -1,0 +1,21 @@
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin dark {
+  :global(.dark) & {
+    @content;
+  }
+}
+
+@mixin active-accent {
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+// Leave color-mix in the generated CSS so changes to the accent still take effect at runtime.
+@function accent-mix($weight, $background: transparent) {
+  @return color-mix(in srgb, var(--accent) $weight, $background);
+}

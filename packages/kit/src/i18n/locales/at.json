@@ -1,0 +1,139 @@
+{
+  "actions": {
+    "cancel": "Obbrechn",
+    "close": "Zumachn"
+  },
+  "app": {
+    "back": "Zruck zur Startseitn",
+    "errorDescription": "Start de Oberfläche neu und probier’s no amoi.",
+    "errorTitle": "Do is wos schiefganga.",
+    "loadingApp": "App vorbereitn …",
+    "navigation": "Hauptnavigation",
+    "restart": "Neu ladn",
+    "switchTheme": "Aussehn wechseln"
+  },
+  "datePicker": {
+    "selectDate": "Datum aussuachn",
+    "today": "Heit",
+    "nextMonth": "Nächster Monat",
+    "previousMonth": "Voriger Monat",
+    "chooseMonth": "Monat aussuachn",
+    "chooseYear": "Joahr aussuachn",
+    "navigation": "Kalendernavigation",
+    "selected": "ausgsuacht"
+  },
+  "licensing": {
+    "checking": "Wird grad prüft …",
+    "checkAgain": "No amoi prüfen",
+    "gate": {
+      "loading": "Lizenz und Gerätestatus werdn grad prüft …",
+      "failed": "De Lizenzprüfung hat ned funktioniert.",
+      "activationRequired": "De bisherige Aktivierung is nimmer gültig. Aktivier de Installation bitte no amoi. Dei Daten bleiben erhalten.",
+      "readOnly": "Vorhandene Daten anschaun und exportieren"
+    },
+    "activation": {
+      "title": "App aktivieren",
+      "renew": "Aktivierung erneuern",
+      "description": "Gib deinen Aktivierungscode ein, damit de Installation mit deiner Lizenz verbunden wird.",
+      "replacementDescription": "Gib an neichen Aktivierungscode für de bisherige oder a andere gültige Lizenz ein. Dei Daten bleiben erhalten. De bisherige Aktivierung wird erst nach erfolgreicher Aktivierung ersetzt.",
+      "replacementNotice": "De bestehende Aktivierung wird erst nach erfolgreicher Prüfung ersetzt.",
+      "code": "Aktivierungscode",
+      "deviceName": "Gerätename",
+      "devicePlaceholder": "Mein Gerät",
+      "defaultDeviceName": "Mein Gerät",
+      "pending": "Aktivierung lauft …",
+      "submit": "Lizenz aktivieren"
+    },
+    "banner": {
+      "readOnlyTitle": "Schreibgschützter Modus",
+      "refreshFailed": "Lizenzaktualisierung geht grad ned",
+      "retryStorage": "Speichern no amoi probiern",
+      "readOnlyDescription": "Du kannst vorhandene Daten weiter anschaun und exportieren. Neich anlegen und Ändern san gsperrt.",
+      "persistencePending": "Da gsperrte Lizenzstatus hat si no ned vollständig speichern lassn. Des Gerät bleibt gsperrt. Probier’s Speichern bitte no amoi."
+    },
+    "errors": {
+      "activationRequired": "De bisherige Aktivierung is am Lizenzserver nimmer gültig. Gib bitte an neichen Aktivierungscode ein.",
+      "network": "Da Lizenzserver is grad ned erreichbar. De lokale Gültigkeit bleibt unverändert.",
+      "deviceRevoked": "De Aktivierung von dem Gerät is widerrufen worden.",
+      "licenseRevoked": "De Lizenz is widerrufen worden.",
+      "storage": "Da lokale Lizenzstatus hat si ned sicher lesen oder speichern lassn.",
+      "certificate": "Da Lizenznachweis is ungültig.",
+      "alreadyActivated": "De Installation is scho aktiviert.",
+      "api": "Da Lizenzserver hat d’Aktivierung oder Aktualisierung abglehnt. Prüf den Code und den Status von da Lizenz.",
+      "protocol": "De Antwort vom Lizenzserver hat si ned verarbeiten lassn.",
+      "unactivated": "De Installation is no ned aktiviert.",
+      "stateChanged": "Da Lizenzstatus hat si inzwischen gändert. Prüf ihn bitte no amoi.",
+      "synchronization": "De Lizenzsynchronisierung is grad ned verfügbar. Probier’s bitte no amoi.",
+      "readOnly": "Für de Aktion brauchst a gültige Aktivierung. Vorhandene Daten kannst weiter anschaun und exportieren.",
+      "featureDenied": "De Funktion is in deiner Lizenz ned freigschaltet.",
+      "unknown": "De Lizenzprüfung hat ned funktioniert. Probier’s bitte no amoi."
+    }
+  },
+  "licenseProfile": {
+    "title": "Lizenz",
+    "checking": "Lizenz wird grad prüft …",
+    "unknown": "Ned verfügbar",
+    "plan": "Tarif",
+    "licenseTerm": "Laufzeit von da kauften Lizenz",
+    "termUnknown": "Vom Server ned mitgschickt",
+    "certificateExpires": "Aktueller Nachweis gültig bis",
+    "nextSync": "Nächste Synchronisierung",
+    "syncDue": "Fällig seit {{date}}",
+    "noSyncScheduled": "Grad ka automatischer Termin",
+    "features": "Funktionen laut Lizenznachweis",
+    "noFeatures": "Im aktuellen Nachweis san kane Funktionen verfügbar.",
+    "validityHint": "De Gültigkeit vom Nachweis begrenzt d’Offline-Nutzung. Sein Ablaufdatum heißt ned automatisch, dass dei kaufte Lizenz endet. De tatsächliche Lizenzlaufzeit wird grad ned extra mitgschickt.",
+    "synchronize": "Lizenz synchronisieren",
+    "syncing": "Wird synchronisiert …",
+    "synchronized": "Lizenzstatus aktualisiert.",
+    "persistencePending": "Da gsperrte Lizenzstatus hat si no ned vollständig speichern lassn. Bitte synchronisier no amoi.",
+    "deviceDetails": "Erweiterte Gerätedetails",
+    "deviceId": "Aktuelle Geräte-ID",
+    "noDevice": "No ka Geräteaktivierung vorhanden.",
+    "deviceReleaseHint": "A Gerätefreigabe gibt’s in da App no ned. Wennst lokale Lizenzdaten löschst, wird am Server ka Geräteplatz frei.",
+    "status": {
+      "active": {
+        "label": "Aktiv",
+        "description": "Dei signierter Lizenznachweis is gültig. Du kannst d’App ganz normal verwenden."
+      },
+      "offline_grace": {
+        "label": "Offline gültig",
+        "description": "Da vorhandene Nachweis erlaubt weiter d’lokale Nutzung. A Synchronisierung is fällig; verlängert wird da Nachweis erst nach erfolgreicher Serverprüfung."
+      },
+      "expired": {
+        "label": "Nachweis abglaufen",
+        "description": "Dei lokaler Lizenznachweis is abglaufen. Synchronisier, damitst an neichen kriagst. Ob dei kaufte Lizenz aa abglaufen is, lässt si daraus allein ned sagen. Vorhandene Daten kannst weiter anschaun und exportieren."
+      },
+      "revoked": {
+        "label": "Geräteaktivierung widerrufen",
+        "description": "De Aktivierung von dem Gerät is widerrufen worden. Änderungen san gsperrt; vorhandene Daten kannst weiter anschaun und exportieren."
+      },
+      "license_revoked": {
+        "label": "Lizenz widerrufen",
+        "description": "Da Server hat den Widerruf von dera Lizenz bestätigt. Änderungen san gsperrt; vorhandene Daten kannst weiter anschaun und exportieren."
+      },
+      "unactivated": {
+        "label": "Ned aktiviert",
+        "description": "De Installation is no kana Lizenz zugeordnet. Zum Verwenden brauchst an Aktivierungscode."
+      },
+      "activation_required": {
+        "label": "Aktivierung nötig",
+        "description": "De bisherige Zuordnung am Server fehlt oder passt nimmer zu dera Installation. Erneuer d’Aktivierung. Dei vorhandenen Daten bleiben erhalten."
+      },
+      "invalid": {
+        "label": "Ned überprüfbar",
+        "description": "Da lokale Nachweis lässt si grad ned zuverlässig prüfen. Änderungen bleiben gsperrt. Synchronisier, damit da Lizenzstatus no amoi prüft wird."
+      }
+    },
+    "plans": {
+      "trial": "Testversion",
+      "personal": "Personal",
+      "professional": "Professional",
+      "lifetime": "Lifetime"
+    },
+    "featureLabels": {
+      "all_features": "Alle Funktionen",
+      "core": "Grundfunktionen"
+    }
+  }
+}

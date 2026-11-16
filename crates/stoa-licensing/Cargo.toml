@@ -1,0 +1,28 @@
+[package]
+name = "stoa-licensing"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.82"
+description = "Offline-capable, device-bound license activation for STOA Tauri apps"
+license = "MIT"
+readme = "README.md"
+keywords = ["tauri", "licensing", "ed25519", "activation"]
+categories = ["authentication"]
+
+[dependencies]
+base64 = "0.22"
+chrono = { version = "0.4", features = ["serde"] }
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service"] }
+rand = "0.8"
+reqwest = { version = "0.12", default-features = false, features = ["json", "rustls-tls"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+tauri = "2"
+thiserror = "2"
+tokio = { version = "1", features = ["sync", "time"] }
+uuid = { version = "1", features = ["v4"] }
+
+[dev-dependencies]
+tokio = { version = "1", features = ["sync", "time", "macros", "rt-multi-thread"] }

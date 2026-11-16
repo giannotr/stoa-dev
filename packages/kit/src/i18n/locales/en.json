@@ -1,0 +1,139 @@
+{
+  "actions": {
+    "cancel": "Cancel",
+    "close": "Close"
+  },
+  "app": {
+    "back": "Back to home",
+    "errorDescription": "Reload the interface and try again.",
+    "errorTitle": "Something went wrong.",
+    "loadingApp": "Preparing app …",
+    "navigation": "Main navigation",
+    "restart": "Reload",
+    "switchTheme": "Change appearance"
+  },
+  "datePicker": {
+    "selectDate": "Select date",
+    "today": "Today",
+    "nextMonth": "Next month",
+    "previousMonth": "Previous month",
+    "chooseMonth": "Choose month",
+    "chooseYear": "Choose year",
+    "navigation": "Calendar navigation",
+    "selected": "selected"
+  },
+  "licensing": {
+    "checking": "Checking …",
+    "checkAgain": "Check again",
+    "gate": {
+      "loading": "Checking license and device status …",
+      "failed": "The license check failed.",
+      "activationRequired": "The previous activation is no longer valid. Please activate this installation again. Your data will be preserved.",
+      "readOnly": "View and export existing data"
+    },
+    "activation": {
+      "title": "Activate App",
+      "renew": "Renew activation",
+      "description": "Enter your activation code to link this installation to your license.",
+      "replacementDescription": "Enter a new activation code for the current license or another valid license. Your data will be preserved. The previous activation is replaced only after successful activation.",
+      "replacementNotice": "The existing activation is replaced only after successful verification.",
+      "code": "Activation code",
+      "deviceName": "Device name",
+      "devicePlaceholder": "My device",
+      "defaultDeviceName": "My device",
+      "pending": "Activating …",
+      "submit": "Activate license"
+    },
+    "banner": {
+      "readOnlyTitle": "Read-only mode",
+      "refreshFailed": "License update unavailable",
+      "retryStorage": "Retry saving",
+      "readOnlyDescription": "You can still view and export existing data. Creating and editing are blocked.",
+      "persistencePending": "The blocked license state could not yet be fully saved. This device remains blocked. Please try saving again."
+    },
+    "errors": {
+      "activationRequired": "The previous activation is no longer valid on the license server. Please enter a new activation code.",
+      "network": "The license server is currently unreachable. Local validity remains unchanged.",
+      "deviceRevoked": "The activation of this device has been revoked.",
+      "licenseRevoked": "This license has been revoked.",
+      "storage": "The local license state could not be read or saved safely.",
+      "certificate": "The license certificate is invalid.",
+      "alreadyActivated": "This installation is already activated.",
+      "api": "The license server rejected the activation or update. Check the code and the license status.",
+      "protocol": "The license server response could not be processed.",
+      "unactivated": "This installation is not activated yet.",
+      "stateChanged": "The license state has changed. Please check it again.",
+      "synchronization": "License synchronization is currently unavailable. Please try again.",
+      "readOnly": "This action requires a valid activation. Existing data remains readable and exportable.",
+      "featureDenied": "This feature is not enabled in your license.",
+      "unknown": "The license check failed. Please try again."
+    }
+  },
+  "licenseProfile": {
+    "title": "License",
+    "checking": "Checking license …",
+    "unknown": "Unavailable",
+    "plan": "Plan",
+    "licenseTerm": "Purchased license term",
+    "termUnknown": "Not provided by the server",
+    "certificateExpires": "Current certificate valid until",
+    "nextSync": "Next synchronization",
+    "syncDue": "Due since {{date}}",
+    "noSyncScheduled": "No automatic synchronization currently scheduled",
+    "features": "Features listed in the certificate",
+    "noFeatures": "No features available in the current certificate.",
+    "validityHint": "The certificate validity limits offline use. Its expiration does not automatically mean your purchased license has ended. The actual license term is not currently provided separately.",
+    "synchronize": "Synchronize license",
+    "syncing": "Synchronizing …",
+    "synchronized": "License status updated.",
+    "persistencePending": "The blocked license state could not yet be fully saved. Please synchronize again.",
+    "deviceDetails": "Advanced device details",
+    "deviceId": "Current device ID",
+    "noDevice": "No device activation yet.",
+    "deviceReleaseHint": "Releasing a device is not yet available in this app. Deleting local license data does not free a device slot on the server.",
+    "status": {
+      "active": {
+        "label": "Active",
+        "description": "Your signed license certificate is valid. The app can be used normally."
+      },
+      "offline_grace": {
+        "label": "Valid offline",
+        "description": "Your existing certificate still permits local use. Synchronization is due; the certificate is renewed only after successful server verification."
+      },
+      "expired": {
+        "label": "Certificate expired",
+        "description": "Your local certificate has expired. Synchronize to obtain a new one. This alone does not tell us whether your purchased license has also expired. Existing data remains readable and exportable."
+      },
+      "revoked": {
+        "label": "Device activation revoked",
+        "description": "This device activation has been revoked. Editing is blocked; existing data remains readable and exportable."
+      },
+      "license_revoked": {
+        "label": "License revoked",
+        "description": "The server has confirmed that this license was revoked. Editing is blocked; existing data remains readable and exportable."
+      },
+      "unactivated": {
+        "label": "Not activated",
+        "description": "This installation is not associated with a license yet. An activation code is required to use it."
+      },
+      "activation_required": {
+        "label": "Activation required",
+        "description": "The previous server association is missing or no longer matches this installation. Renew the activation. Existing data is preserved."
+      },
+      "invalid": {
+        "label": "Cannot be verified",
+        "description": "The local certificate cannot currently be verified reliably. Editing remains blocked. Synchronize to check the license status again."
+      }
+    },
+    "plans": {
+      "trial": "Trial",
+      "personal": "Personal",
+      "professional": "Professional",
+      "lifetime": "Lifetime"
+    },
+    "featureLabels": {
+      "all_features": "All features",
+      "core": "Core features"
+    }
+  }
+}

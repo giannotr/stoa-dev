@@ -1,0 +1,139 @@
+{
+  "actions": {
+    "cancel": "Abbrechen",
+    "close": "Schließen"
+  },
+  "app": {
+    "back": "Zurück zur Startseite",
+    "errorDescription": "Starte die Oberfläche neu und versuche es erneut.",
+    "errorTitle": "Etwas ist schiefgelaufen.",
+    "loadingApp": "App vorbereiten …",
+    "navigation": "Hauptnavigation",
+    "restart": "Neu laden",
+    "switchTheme": "Darstellung wechseln"
+  },
+  "datePicker": {
+    "selectDate": "Datum auswählen",
+    "today": "Heute",
+    "nextMonth": "Nächster Monat",
+    "previousMonth": "Vorheriger Monat",
+    "chooseMonth": "Monat auswählen",
+    "chooseYear": "Jahr auswählen",
+    "navigation": "Kalendernavigation",
+    "selected": "ausgewählt"
+  },
+  "licensing": {
+    "checking": "Wird geprüft …",
+    "checkAgain": "Erneut prüfen",
+    "gate": {
+      "loading": "Lizenz und Gerätestatus werden geprüft …",
+      "failed": "Die Lizenzprüfung ist fehlgeschlagen.",
+      "activationRequired": "Die bisherige Aktivierung ist nicht mehr gültig. Bitte aktiviere diese Installation erneut. Deine Daten bleiben erhalten.",
+      "readOnly": "Vorhandene Daten ansehen und exportieren"
+    },
+    "activation": {
+      "title": "App aktivieren",
+      "renew": "Aktivierung erneuern",
+      "description": "Gib deinen Aktivierungscode ein, um diese Installation mit deiner Lizenz zu verbinden.",
+      "replacementDescription": "Gib einen neuen Aktivierungscode für die bisherige oder eine andere gültige Lizenz ein. Deine Daten bleiben erhalten. Erst nach erfolgreicher Aktivierung wird die bisherige Aktivierung ersetzt.",
+      "replacementNotice": "Die bestehende Aktivierung wird erst nach erfolgreicher Prüfung ersetzt.",
+      "code": "Aktivierungscode",
+      "deviceName": "Gerätename",
+      "devicePlaceholder": "Mein Gerät",
+      "defaultDeviceName": "Mein Gerät",
+      "pending": "Aktivierung läuft …",
+      "submit": "Lizenz aktivieren"
+    },
+    "banner": {
+      "readOnlyTitle": "Schreibgeschützter Modus",
+      "refreshFailed": "Lizenzaktualisierung nicht möglich",
+      "retryStorage": "Speicherung erneut versuchen",
+      "readOnlyDescription": "Du kannst vorhandene Daten weiterhin ansehen und exportieren. Das Erstellen und Ändern ist gesperrt.",
+      "persistencePending": "Der gesperrte Lizenzstatus konnte noch nicht vollständig gespeichert werden. Dieses Gerät bleibt gesperrt. Bitte versuche die Speicherung erneut."
+    },
+    "errors": {
+      "activationRequired": "Die bisherige Aktivierung ist auf dem Lizenzserver nicht mehr gültig. Bitte gib einen neuen Aktivierungscode ein.",
+      "network": "Der Lizenzserver ist derzeit nicht erreichbar. Die lokale Gültigkeit bleibt unverändert.",
+      "deviceRevoked": "Die Aktivierung dieses Geräts wurde widerrufen.",
+      "licenseRevoked": "Diese Lizenz wurde widerrufen.",
+      "storage": "Der lokale Lizenzzustand konnte nicht sicher gelesen oder gespeichert werden.",
+      "certificate": "Der Lizenznachweis ist ungültig.",
+      "alreadyActivated": "Diese Installation ist bereits aktiviert.",
+      "api": "Der Lizenzserver hat die Aktivierung oder Aktualisierung abgelehnt. Prüfe den Code und den Status der Lizenz.",
+      "protocol": "Die Antwort des Lizenzservers konnte nicht verarbeitet werden.",
+      "unactivated": "Diese Installation ist noch nicht aktiviert.",
+      "stateChanged": "Der Lizenzzustand wurde inzwischen geändert. Bitte prüfe ihn erneut.",
+      "synchronization": "Die Lizenzsynchronisierung ist derzeit nicht verfügbar. Bitte versuche es erneut.",
+      "readOnly": "Für diese Aktion ist eine gültige Aktivierung erforderlich. Vorhandene Daten bleiben lesbar und exportierbar.",
+      "featureDenied": "Diese Funktion ist in deiner Lizenz nicht freigeschaltet.",
+      "unknown": "Die Lizenzprüfung ist fehlgeschlagen. Bitte versuche es erneut."
+    }
+  },
+  "licenseProfile": {
+    "title": "Lizenz",
+    "checking": "Lizenz wird geprüft …",
+    "unknown": "Nicht verfügbar",
+    "plan": "Tarif",
+    "licenseTerm": "Laufzeit der gekauften Lizenz",
+    "termUnknown": "Vom Server nicht übermittelt",
+    "certificateExpires": "Aktueller Nachweis gültig bis",
+    "nextSync": "Nächste Synchronisierung",
+    "syncDue": "Fällig seit {{date}}",
+    "noSyncScheduled": "Derzeit kein automatischer Termin",
+    "features": "Funktionen laut Lizenznachweis",
+    "noFeatures": "Keine Funktionen im aktuellen Nachweis verfügbar.",
+    "validityHint": "Die Gültigkeit des Nachweises begrenzt die Offline-Nutzung. Sein Ablaufdatum ist nicht automatisch das Ende deiner gekauften Lizenz. Die tatsächliche Lizenzlaufzeit wird derzeit nicht separat übermittelt.",
+    "synchronize": "Lizenz synchronisieren",
+    "syncing": "Wird synchronisiert …",
+    "synchronized": "Lizenzstatus aktualisiert.",
+    "persistencePending": "Der gesperrte Lizenzstatus konnte noch nicht vollständig gespeichert werden. Bitte synchronisiere erneut.",
+    "deviceDetails": "Erweiterte Gerätedetails",
+    "deviceId": "Aktuelle Geräte-ID",
+    "noDevice": "Noch keine Geräteaktivierung vorhanden.",
+    "deviceReleaseHint": "Eine Gerätefreigabe ist in dieser App noch nicht verfügbar. Das Löschen lokaler Lizenzdaten gibt keinen Geräteplatz auf dem Server frei.",
+    "status": {
+      "active": {
+        "label": "Aktiv",
+        "description": "Dein signierter Lizenznachweis ist gültig. Die App kann regulär genutzt werden."
+      },
+      "offline_grace": {
+        "label": "Offline gültig",
+        "description": "Der vorhandene Nachweis erlaubt weiterhin die lokale Nutzung. Eine Synchronisierung ist fällig; sie verlängert den Nachweis nur nach erfolgreicher Serverprüfung."
+      },
+      "expired": {
+        "label": "Nachweis abgelaufen",
+        "description": "Der lokale Lizenznachweis ist abgelaufen. Synchronisiere, um einen neuen Nachweis zu erhalten. Ob deine gekaufte Lizenz ebenfalls abgelaufen ist, lässt sich daraus allein nicht ableiten. Vorhandene Daten bleiben lesbar und exportierbar."
+      },
+      "revoked": {
+        "label": "Geräteaktivierung widerrufen",
+        "description": "Die Aktivierung dieses Geräts wurde widerrufen. Änderungen sind gesperrt; vorhandene Daten bleiben lesbar und exportierbar."
+      },
+      "license_revoked": {
+        "label": "Lizenz widerrufen",
+        "description": "Der Server hat den Widerruf dieser Lizenz bestätigt. Änderungen sind gesperrt; vorhandene Daten bleiben lesbar und exportierbar."
+      },
+      "unactivated": {
+        "label": "Nicht aktiviert",
+        "description": "Diese Installation ist noch keiner Lizenz zugeordnet. Für die Nutzung ist ein Aktivierungscode erforderlich."
+      },
+      "activation_required": {
+        "label": "Aktivierung erforderlich",
+        "description": "Die bisherige Zuordnung auf dem Server fehlt oder passt nicht mehr zu dieser Installation. Erneuere die Aktivierung. Vorhandene Daten bleiben erhalten."
+      },
+      "invalid": {
+        "label": "Nicht überprüfbar",
+        "description": "Der lokale Nachweis kann derzeit nicht zuverlässig geprüft werden. Änderungen bleiben gesperrt. Synchronisiere, um den Lizenzstatus erneut zu prüfen."
+      }
+    },
+    "plans": {
+      "trial": "Testversion",
+      "personal": "Personal",
+      "professional": "Professional",
+      "lifetime": "Lifetime"
+    },
+    "featureLabels": {
+      "all_features": "Alle Funktionen",
+      "core": "Grundfunktionen"
+    }
+  }
+}
