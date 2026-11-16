@@ -1,13 +1,13 @@
 /*
- * @stoa/kit theme — shared Tailwind 4 tokens (shadcn variables + STOA extras).
+ * @stoa-dev/kit theme — shared Tailwind 4 tokens (shadcn variables + STOA extras).
  *
  * In the app's main CSS:
  *   @import "tailwindcss";
  *   @import "tw-animate-css";
  *   @import "shadcn/tailwind.css";
- *   @import "@stoa/kit/theme.css";
- *   @import "@stoa/kit/styles.css";
- *   @source "../node_modules/@stoa/kit/dist";
+ *   @import "@stoa-dev/kit/theme.css";
+ *   @import "@stoa-dev/kit/styles.css";
+ *   @source "../node_modules/@stoa-dev/kit/dist";
  *   :root { --stoa-accent: #ff9bb9; }   // per-app accent
  */
 

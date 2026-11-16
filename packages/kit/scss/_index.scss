@@ -1,4 +1,4 @@
-// @stoa/kit SCSS toolkit. Usage in an app module:
-//   @use '@stoa/kit/scss' as stoa;
+// @stoa-dev/kit SCSS toolkit. Usage in an app module:
+//   @use '@stoa-dev/kit/scss' as stoa;
 //   .thing { @include stoa.reduced-motion { animation: none; } }
 @forward 'tools';

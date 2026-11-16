@@ -1,5 +1,5 @@
 {
-  "name": "@stoa/kit",
+  "name": "@stoa-dev/kit",
   "version": "0.1.0",
   "description": "Shared React components, hooks, utilities, licensing UI and theme for STOA desktop apps",
   "license": "MIT",
@@ -83,7 +83,7 @@
     }
   },
   "devDependencies": {
-    "@stoa/tsconfig": "*",
+    "@stoa-dev/tsconfig": "*",
     "@tauri-apps/api": "2.11.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.1.8",

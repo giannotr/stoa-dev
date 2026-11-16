@@ -1,13 +1,13 @@
-# stoa-kit
+# stoa-dev
 
 Monorepo für die gemeinsamen Bausteine der STOA-Apps
 (invoicer, servicerecordr, latextemplater, bookcollectr, practicr).
 
 | Paket | Registry | Zweck |
 |---|---|---|
-| [`@stoa/kit`](packages/kit) | npm | Komponenten, Hooks, Utils, Lizenz-UI, Theme, Locales |
-| [`@stoa/biome-config`](packages/biome-config) | npm | gemeinsame Biome-Regeln |
-| [`@stoa/tsconfig`](packages/tsconfig) | npm | `base`, `app`, `node`, `library` |
+| [`@stoa-dev/kit`](packages/kit) | npm | Komponenten, Hooks, Utils, Lizenz-UI, Theme, Locales |
+| [`@stoa-dev/biome-config`](packages/biome-config) | npm | gemeinsame Biome-Regeln |
+| [`@stoa-dev/tsconfig`](packages/tsconfig) | npm | `base`, `app`, `node`, `library` |
 | [`stoa-licensing`](crates/stoa-licensing) | crates.io | Rust-Lizenzmodul für Tauri |
 
 ## Befehle
@@ -22,7 +22,7 @@ npm run release:check  # zusätzlich: Inhalt des npm-Pakets anzeigen
 ## Veröffentlichen
 
 ```bash
-npm publish --workspace @stoa/kit            # bzw. @stoa/biome-config, @stoa/tsconfig
+npm publish --workspace @stoa-dev/kit            # bzw. @stoa-dev/biome-config, @stoa-dev/tsconfig
 cargo publish --manifest-path crates/stoa-licensing/Cargo.toml
 ```
 

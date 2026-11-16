@@ -24,7 +24,7 @@ export const supportedLanguages = [
 export type SupportedLanguage = (typeof supportedLanguages)[number]['value']
 
 /**
- * Adds the @stoa/kit strings as the `stoa` namespace. Call once after `i18next.init()`.
+ * Adds the @stoa-dev/kit strings as the `stoa` namespace. Call once after `i18next.init()`.
  * App strings keep living in the app's own `translation` namespace.
  * Pass `overrides` to adjust single strings per app without forking the bundle.
  */

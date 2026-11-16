@@ -1,23 +1,23 @@
-# @stoa/kit
+# @stoa-dev/kit
 
 Gemeinsame React-Komponenten, Hooks, Hilfsfunktionen, Lizenz-UI und Theme der STOA-Desktop-Apps.
 
 | Import | Inhalt |
 |---|---|
-| `@stoa/kit/ui` | shadcn-Primitives (Button, Dialog, Select, Calendar, …) |
-| `@stoa/kit/shell` | AppNavigation, SectionNavigation, PageHeading, BrandLines, Spinner, BackHomeButton, ErrorBoundary, ConfirmDialog, DatePickerInput, NativeSelect, UploadButton |
-| `@stoa/kit/licensing` | LicenseProvider/`useLicense`, LicenseGate, LicenseCard, LicenseActivation, LicenseStatusBanner, Tauri-API |
-| `@stoa/kit/hooks` | `useOnlineStatus`, `useRouting<Route>()` |
-| `@stoa/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, … |
-| `@stoa/kit/i18n` | `registerStoaLocales`, `supportedLanguages`, Namespace `stoa` (de, de-AT, en, it) |
-| `@stoa/kit/theme.css` | Tailwind-4-Tokens (shadcn-Variablen + STOA-Extras), Quelle für die App-Tailwind |
-| `@stoa/kit/styles.css` | Kompilierte SCSS-Module der Komponenten |
-| `@stoa/kit/scss` | SCSS-Werkzeuge (`reduced-motion`, `dark`, `accent-mix`, …) für App-Module |
+| `@stoa-dev/kit/ui` | shadcn-Primitives (Button, Dialog, Select, Calendar, …) |
+| `@stoa-dev/kit/shell` | AppNavigation, SectionNavigation, PageHeading, BrandLines, Spinner, BackHomeButton, ErrorBoundary, ConfirmDialog, DatePickerInput, NativeSelect, UploadButton |
+| `@stoa-dev/kit/licensing` | LicenseProvider/`useLicense`, LicenseGate, LicenseCard, LicenseActivation, LicenseStatusBanner, Tauri-API |
+| `@stoa-dev/kit/hooks` | `useOnlineStatus`, `useRouting<Route>()` |
+| `@stoa-dev/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, … |
+| `@stoa-dev/kit/i18n` | `registerStoaLocales`, `supportedLanguages`, Namespace `stoa` (de, de-AT, en, it) |
+| `@stoa-dev/kit/theme.css` | Tailwind-4-Tokens (shadcn-Variablen + STOA-Extras), Quelle für die App-Tailwind |
+| `@stoa-dev/kit/styles.css` | Kompilierte SCSS-Module der Komponenten |
+| `@stoa-dev/kit/scss` | SCSS-Werkzeuge (`reduced-motion`, `dark`, `accent-mix`, …) für App-Module |
 
 ## Einbindung in eine App
 
 ```bash
-npm i @stoa/kit sass-embedded
+npm i @stoa-dev/kit sass-embedded
 ```
 
 ```css
@@ -25,22 +25,22 @@ npm i @stoa/kit sass-embedded
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-@import "@stoa/kit/theme.css";
-@import "@stoa/kit/styles.css";
-@source "../node_modules/@stoa/kit/dist";   /* Tailwind 4 scannt node_modules nicht von selbst */
+@import "@stoa-dev/kit/theme.css";
+@import "@stoa-dev/kit/styles.css";
+@source "../node_modules/@stoa-dev/kit/dist";   /* Tailwind 4 scannt node_modules nicht von selbst */
 
 :root { --stoa-accent: #0093af; }            /* Akzent je App */
 ```
 
 ```ts
 // src/i18n.ts – nach i18next.init(...)
-import { registerStoaLocales } from '@stoa/kit/i18n'
+import { registerStoaLocales } from '@stoa-dev/kit/i18n'
 registerStoaLocales(i18next)
 ```
 
 ```tsx
 // App-Navigation
-import { AppNavigation, AppNavigationThemeToggle } from '@stoa/kit/shell'
+import { AppNavigation, AppNavigationThemeToggle } from '@stoa-dev/kit/shell'
 
 <AppNavigation
   logo='/practicr.svg'
@@ -73,8 +73,8 @@ import { AppNavigation, AppNavigationThemeToggle } from '@stoa/kit/shell'
 ## Lokale Entwicklung
 
 ```bash
-cd stoa-kit && npm run dev          # baut bei Änderungen neu
-cd ../practicr && npm link ../stoa-kit/packages/kit
+cd stoa-dev && npm run dev          # baut bei Änderungen neu
+cd ../practicr && npm link ../stoa-dev/packages/kit
 ```
 
 Vite: Bei verlinkten Paketen `resolve.dedupe: ['react', 'react-dom', 'react-router', 'i18next', 'react-i18next']`
