@@ -1,8 +1,17 @@
 {
   "name": "@stoa-dev/tsconfig",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared TypeScript configurations for STOA apps and libraries",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giannotr/stoa-dev.git",
+    "directory": "packages/tsconfig"
+  },
+  "homepage": "https://github.com/giannotr/stoa-dev/tree/main/packages/tsconfig#readme",
+  "bugs": {
+    "url": "https://github.com/giannotr/stoa-dev/issues"
+  },
   "files": [
     "*.json"
   ],

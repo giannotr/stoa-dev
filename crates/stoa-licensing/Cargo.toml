@@ -1,11 +1,13 @@
 [package]
 name = "stoa-licensing"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.82"
 description = "Offline-capable, device-bound license activation for STOA Tauri apps"
 license = "MIT"
 readme = "README.md"
+repository = "https://github.com/giannotr/stoa-dev"
+homepage = "https://github.com/giannotr/stoa-dev/tree/main/crates/stoa-licensing"
 keywords = ["tauri", "licensing", "ed25519", "activation"]
 categories = ["authentication"]
 

@@ -1,4 +1,6 @@
 import { readFileSync } from 'node:fs'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
@@ -10,6 +12,8 @@ const peers = Object.keys(pkg.peerDependencies ?? {})
 const external = (id: string) =>
 	peers.some((peer) => id === peer || id.startsWith(`${peer}/`))
 
+const srcDir = fileURLToPath(new URL('./src', import.meta.url))
+
 const entries = ['ui', 'shell', 'licensing', 'hooks', 'utils', 'i18n']
 
 export default defineConfig({
@@ -18,12 +22,18 @@ export default defineConfig({
 		modules: {
 			// Stable, readable, collision-safe class names: stoa-AppNavigation-menuButton-x1y2
 			generateScopedName: (local, file) => {
-				const component = file
+				// Hash the path relative to src/, never the absolute one: class names must not
+				// change when the package is built on another machine or in another folder.
+				const relative = path
+					.relative(srcDir, file.replace(/\?.*$/, ''))
+					.split(path.sep)
+					.join('/')
+				const component = relative
 					.split('/')
 					.at(-1)
-					?.replace(/\.module\.s?css.*$/, '')
+					?.replace(/\.module\.s?css$/, '')
 				let hash = 0
-				for (const char of `${file}:${local}`)
+				for (const char of `${relative}:${local}`)
 					hash = (hash * 31 + char.charCodeAt(0)) >>> 0
 				return `stoa-${component}-${local}-${hash.toString(36).slice(0, 4)}`
 			},

@@ -1,8 +1,17 @@
 {
   "name": "@stoa-dev/kit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared React components, hooks, utilities, licensing UI and theme for STOA desktop apps",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giannotr/stoa-dev.git",
+    "directory": "packages/kit"
+  },
+  "homepage": "https://github.com/giannotr/stoa-dev/tree/main/packages/kit#readme",
+  "bugs": {
+    "url": "https://github.com/giannotr/stoa-dev/issues"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css",

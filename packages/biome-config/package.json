@@ -1,8 +1,17 @@
 {
   "name": "@stoa-dev/biome-config",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Shared Biome configuration for STOA apps",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giannotr/stoa-dev.git",
+    "directory": "packages/biome-config"
+  },
+  "homepage": "https://github.com/giannotr/stoa-dev/tree/main/packages/biome-config#readme",
+  "bugs": {
+    "url": "https://github.com/giannotr/stoa-dev/issues"
+  },
   "type": "module",
   "files": [
     "config.json"
