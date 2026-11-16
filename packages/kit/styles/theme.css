@@ -71,16 +71,13 @@
 	--sidebar-ring: oklch(0.708 0 0);
 }
 
+/* Link hover colours are app-specific and stay in each app. */
 @media (prefers-color-scheme: dark) {
 	:root {
 		color: #f6f6f6;
 		background-color: #2f2f2f;
 	}
 
-	a:hover {
-		/* color: #f2178f; */
-    color: lch(from var(--accent) calc(l - 20) c h);
-	}
 }
 
 @theme inline {
