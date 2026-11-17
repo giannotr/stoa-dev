@@ -326,6 +326,9 @@ export function DatePickerInput({
 							<Calendar
 								mode='single'
 								captionLayout='dropdown'
+								// Always six week rows: the popover keeps its height, so the
+								// month chevrons never jump away from the pointer.
+								fixedWeeks
 								startMonth={firstMonth}
 								endMonth={lastMonth}
 								disabled={disabled}

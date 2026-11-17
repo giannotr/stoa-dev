@@ -95,3 +95,35 @@ export const TypeADate: Story = {
 		await expect(canvas.getByTestId('value')).toHaveTextContent('2025-12-24')
 	},
 }
+
+/**
+ * The calendar always shows six week rows, so its height and the position of
+ * the month chevrons stay the same while paging through a year.
+ */
+export const StableHeightWhilePaging: Story = {
+	play: async ({ canvas }) => {
+		await userEvent.click(
+			canvas.getByRole('button', { name: /datum auswählen/i }),
+		)
+		await screen.findByRole('grid')
+		// Measure only after the popover's zoom-in animation has settled.
+		await Promise.all(document.getAnimations().map((a) => a.finished))
+		// The calendar re-renders its buttons, so query them again every time.
+		const nextButton = () =>
+			screen.getByRole('button', { name: /nächster monat/i })
+		const gridHeight = () =>
+			screen.getByRole('grid').getBoundingClientRect().height
+		const start = nextButton().getBoundingClientRect()
+		const height = gridHeight()
+
+		for (let month = 0; month < 12; month += 1) {
+			await userEvent.click(nextButton())
+			await expect(gridHeight()).toBe(height)
+			const position = nextButton().getBoundingClientRect()
+			await expect([position.top, position.left]).toEqual([
+				start.top,
+				start.left,
+			])
+		}
+	},
+}
