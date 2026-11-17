@@ -24,7 +24,14 @@ type DatePickerInputProps = {
 	invalid?: boolean
 	required?: boolean
 	disabled?: boolean
+	/** First month reachable in the calendar. Defaults to January, 100 years ago. */
+	startMonth?: Date
+	/** Last month reachable in the calendar. Defaults to December, 10 years ahead. */
+	endMonth?: Date
 }
+
+const YEARS_BACK = 100
+const YEARS_AHEAD = 10
 
 function parseDateValue(value: string) {
 	return parseTypedDateValue(value)
@@ -183,7 +190,12 @@ export function DatePickerInput({
 	invalid = false,
 	required = false,
 	disabled = false,
+	startMonth,
+	endMonth,
 }: DatePickerInputProps) {
+	const currentYear = new Date().getFullYear()
+	const firstMonth = startMonth ?? new Date(currentYear - YEARS_BACK, 0, 1)
+	const lastMonth = endMonth ?? new Date(currentYear + YEARS_AHEAD, 11, 1)
 	const { t, i18n } = useTranslation(STOA_NS)
 	const language = i18n.resolvedLanguage ?? 'de'
 	const calendarLocales = { de, 'de-AT': deAT, en: enUS, it }
@@ -313,6 +325,9 @@ export function DatePickerInput({
 
 							<Calendar
 								mode='single'
+								captionLayout='dropdown'
+								startMonth={firstMonth}
+								endMonth={lastMonth}
 								disabled={disabled}
 								locale={calendarLocale}
 								labels={{
