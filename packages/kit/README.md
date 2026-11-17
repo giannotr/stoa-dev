@@ -83,8 +83,9 @@ setzen, damit Kontext-Provider (Router, i18n) nicht doppelt geladen werden.
 
 ## Experimentell: Skin „Instrument“
 
-Monochromes Instrumenten-Design: Papiergrau mit feinem Raster, Haarlinien und Eckmarken,
-Mono-Versalien für Beschriftungen, Pillen-Buttons und schwarze Punkte für aktive Zustände.
+Ruhiges, monochromes Instrumenten-Design: papiergraue, stark gerundete Flächen mit viel Luft,
+kräftige Linien, Mono-Versalien für Beschriftungen und Buttons, Pillen-Buttons und Schwarz
+für aktive Zustände (auch die hervorgehobene Zeile im Kontextmenü).
 Die App-Akzentfarbe bleibt nur als kleiner Indikator erhalten.
 
 ```css
@@ -94,6 +95,7 @@ Die App-Akzentfarbe bleibt nur als kleiner Indikator erhalten.
 
 Aktiv wird er mit der Klasse `stoa-instrument` auf `<html>` (zusammen mit `dark` für die dunkle
 Variante). Der Skin greift nur über `data-slot`-Attribute und braucht für die Beschriftungen
-die Schrift „JetBrains Mono“ (sonst Fallback auf die System-Monospace). Im Storybook über die
+die Schriften „Mona Sans“ und „Mona Sans Mono“ (github.com/github/mona-sans, SIL OFL; sonst
+Fallback auf Geist bzw. die System-Monospace). Im Storybook über die
 Toolbar „Design“ umschaltbar.
 

@@ -17,7 +17,12 @@ import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
+	DropdownMenuLabel,
 	DropdownMenuSeparator,
+	DropdownMenuShortcut,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 	Input,
 	Label,
@@ -26,6 +31,8 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
 	ChartPie,
+	Copy,
+	Download,
 	EllipsisVertical,
 	Home,
 	Library,
@@ -72,7 +79,7 @@ function Screen() {
 	const max = Math.max(...week.map(([, value]) => value))
 
 	return (
-		<div className='relative min-h-screen pl-24 pr-8 pb-16'>
+		<div className='relative min-h-screen pl-28 pr-10 pb-20'>
 			<AppNavigation
 				groups={[
 					[
@@ -99,7 +106,7 @@ function Screen() {
 
 			<PageHeading>Übersicht</PageHeading>
 
-			<div className='mt-8 grid gap-6 lg:grid-cols-3'>
+			<div className='mt-10 grid gap-8 lg:grid-cols-3'>
 				<Card>
 					<CardHeader>
 						<Caption>Übezeit heute</Caption>
@@ -139,9 +146,23 @@ function Screen() {
 									</Button>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent align='end'>
+									<DropdownMenuLabel>Woche</DropdownMenuLabel>
 									<DropdownMenuItem>
 										<Pencil /> Ziele bearbeiten
+										<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
 									</DropdownMenuItem>
+									<DropdownMenuItem>
+										<Copy /> Woche duplizieren
+									</DropdownMenuItem>
+									<DropdownMenuSub>
+										<DropdownMenuSubTrigger>
+											<Download /> Exportieren als
+										</DropdownMenuSubTrigger>
+										<DropdownMenuSubContent>
+											<DropdownMenuItem>PDF</DropdownMenuItem>
+											<DropdownMenuItem>CSV</DropdownMenuItem>
+										</DropdownMenuSubContent>
+									</DropdownMenuSub>
 									<DropdownMenuSeparator />
 									<DropdownMenuItem variant='destructive'>
 										<Trash2 /> Woche zurücksetzen
@@ -175,7 +196,7 @@ function Screen() {
 						<CardTitle>Eintrag</CardTitle>
 						<CardDescription>Formularfelder im Zusammenspiel.</CardDescription>
 					</CardHeader>
-					<CardContent className='grid gap-5 sm:grid-cols-2'>
+					<CardContent className='grid gap-6 sm:grid-cols-2'>
 						<div className='grid gap-2'>
 							<Label htmlFor='ov-title'>Stück</Label>
 							<Input
@@ -245,7 +266,7 @@ function Screen() {
 				</Card>
 			</div>
 
-			<footer className='absolute right-8 bottom-6 left-24 flex items-center justify-between'>
+			<footer className='absolute right-10 bottom-6 left-28 flex items-center justify-between'>
 				<span className='border border-foreground px-2 py-1 font-mono text-xs tabular-nums'>
 					013
 				</span>

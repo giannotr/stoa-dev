@@ -3,7 +3,6 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/mona-sans/wdth.css";
-@import "@fontsource-variable/jetbrains-mono";
 
 @import "@stoa-dev/kit/theme.css";
 /* Experimental skin, active when <html> has the class `stoa-instrument` (toolbar: Design). */
@@ -17,4 +16,13 @@
 :root {
 	--font-sans: "Mona Sans Variable", "Geist Variable", sans-serif;
 	font-family: var(--font-sans);
+}
+
+/* Mona Sans Mono (SIL OFL 1.1, github.com/github/mona-sans v2.0.27), see fonts/mona-sans-mono/LICENSE. */
+@font-face {
+	font-family: "Mona Sans Mono";
+	src: url("./fonts/mona-sans-mono/MonaSansMonoVF[wdth,wght].woff2") format("woff2-variations");
+	font-weight: 200 900;
+	font-stretch: 75% 125%;
+	font-display: swap;
 }

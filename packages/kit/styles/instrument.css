@@ -1,88 +1,83 @@
 /*
  * @stoa-dev/kit — "Instrument" skin (experimental).
  *
- * Monochrome instrument-panel look: paper-grey surfaces on a faint grid,
- * hairlines and corner marks instead of heavy borders, mono small caps for
- * labels, tabular figures, pill controls and solid ink dots for active states.
+ * A calm, monochrome instrument-panel look: soft paper-grey surfaces with
+ * generous rounding and spacing, firm strokes, mono small caps for labels and
+ * buttons, tabular figures, pill controls and solid ink for active states.
  * The app accent only survives as a small indicator.
  *
  * Opt-in, after theme.css:
  *   @import "@stoa-dev/kit/theme.css";
  *   @import "@stoa-dev/kit/instrument.css";
  * and put `stoa-instrument` on <html> (next to `dark` for the dark variant).
+ * Fonts: "Mona Sans" and "Mona Sans Mono" (github.com/github/mona-sans).
  *
  * Rules are intentionally unlayered so they win over the component utilities.
- * They only hook into `data-slot` attributes, never into generated class names.
+ * They only hook into `data-*` attributes, never into generated class names.
  */
 
 /* ── Tokens ─────────────────────────────────────────────────────────────── */
 
 .stoa-instrument {
-	--ink: #141414;
-	--paper: #f2f2f0;
-	--background: #e4e4e1;
+	--ink: #161616;
+	--paper: #f4f4f2;
+	--background: #dfdfdc;
 	--foreground: var(--ink);
-	--card: #ececea;
+	--card: #ebebe8;
 	--card-foreground: var(--ink);
 	--popover: var(--paper);
 	--popover-foreground: var(--ink);
 	--primary: var(--ink);
 	--primary-foreground: var(--paper);
-	--secondary: #d8d8d5;
+	--secondary: #d3d3d0;
 	--secondary-foreground: var(--ink);
-	--muted: #d9d9d6;
-	--muted-foreground: #6b6b67;
+	--muted: #d6d6d3;
+	--muted-foreground: #66665f;
 	--destructive: #c4321f;
-	--border: rgb(20 20 20 / 20%);
-	--input: rgb(20 20 20 / 26%);
+	--border: rgb(22 22 22 / 18%);
+	--input: rgb(22 22 22 / 30%);
 	--ring: var(--ink);
-	--hairline: rgb(20 20 20 / 14%);
-	--grid-line: rgb(20 20 20 / 4.5%);
-	--tick: rgb(20 20 20 / 55%);
-	--wash: rgb(20 20 20 / 6%);
-	--radius: 0.375rem;
-	--ui-border-width: 1px;
+	--hairline: rgb(22 22 22 / 12%);
+	--wash: rgb(22 22 22 / 6%);
+	--stroke: 1.5px;
+	--radius: 0.75rem;
+	--ui-border-width: var(--stroke);
 	--surface-shadow: none;
 	--accent-wash: color-mix(in srgb, var(--accent) 10%, var(--card));
 	--section-active: var(--ink);
-	--instrument-mono: "JetBrains Mono Variable", "JetBrains Mono", "IBM Plex Mono",
-		ui-monospace, SFMono-Regular, Menlo, monospace;
+	--instrument-sans: "Mona Sans", "Mona Sans Variable", "Geist Variable", sans-serif;
+	--instrument-mono: "Mona Sans Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	color: var(--foreground);
 	background-color: var(--background);
+	font-family: var(--instrument-sans);
 	font-variation-settings: "wdth" 100;
 	font-variant-numeric: tabular-nums;
 }
 
 .stoa-instrument.dark,
 .dark .stoa-instrument {
-	--ink: #ebebe8;
-	--paper: #151515;
-	--background: #151515;
-	--card: #1c1c1c;
-	--popover: #212121;
-	--primary-foreground: #151515;
-	--secondary: #2a2a2a;
-	--muted: #262626;
-	--muted-foreground: #8f8f8a;
+	--ink: #ececea;
+	--paper: #171717;
+	--background: #121212;
+	--card: #1e1e1e;
+	--popover: #242424;
+	--primary-foreground: #171717;
+	--secondary: #2c2c2c;
+	--muted: #282828;
+	--muted-foreground: #9a9a94;
 	--destructive: #e5604f;
-	--border: rgb(235 235 232 / 16%);
-	--input: rgb(235 235 232 / 22%);
-	--hairline: rgb(235 235 232 / 12%);
-	--grid-line: rgb(235 235 232 / 3.5%);
-	--tick: rgb(235 235 232 / 50%);
-	--wash: rgb(235 235 232 / 7%);
+	--border: rgb(236 236 234 / 16%);
+	--input: rgb(236 236 234 / 26%);
+	--hairline: rgb(236 236 234 / 10%);
+	--wash: rgb(236 236 234 / 7%);
 }
 
 /* ── Canvas ─────────────────────────────────────────────────────────────── */
 
 .stoa-instrument body {
 	background-color: var(--background);
-	background-image:
-		linear-gradient(var(--grid-line) 1px, transparent 1px),
-		linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-	background-size: 2rem 2rem;
-	background-position: -1px -1px;
+	font-family: var(--instrument-sans);
 }
 
 .stoa-instrument ::selection {
@@ -103,35 +98,18 @@
 	) {
 	font-family: var(--instrument-mono);
 	font-size: 0.6875rem;
-	font-weight: 500;
-	letter-spacing: 0.14em;
+	font-weight: 600;
+	letter-spacing: 0.12em;
 	line-height: 1.2;
 	text-transform: uppercase;
 }
 
 .stoa-instrument :is([data-slot="label"], [data-slot="field-label"]) {
-	color: color-mix(in srgb, var(--foreground) 72%, transparent);
+	color: color-mix(in srgb, var(--foreground) 78%, transparent);
 }
 
-/* Corner marks, drawn as eight 1px bars on an overlay. */
-.stoa-instrument :is([data-slot="card"], [data-slot="dialog-content"], [data-slot="app-navigation"])::before {
-	--l: 0.75rem;
-	--t: 1px;
-	content: "";
-	position: absolute;
-	inset: -1px;
-	z-index: 1;
-	pointer-events: none;
-	background:
-		linear-gradient(var(--tick), var(--tick)) top left / var(--l) var(--t),
-		linear-gradient(var(--tick), var(--tick)) top left / var(--t) var(--l),
-		linear-gradient(var(--tick), var(--tick)) top right / var(--l) var(--t),
-		linear-gradient(var(--tick), var(--tick)) top right / var(--t) var(--l),
-		linear-gradient(var(--tick), var(--tick)) bottom left / var(--l) var(--t),
-		linear-gradient(var(--tick), var(--tick)) bottom left / var(--t) var(--l),
-		linear-gradient(var(--tick), var(--tick)) bottom right / var(--l) var(--t),
-		linear-gradient(var(--tick), var(--tick)) bottom right / var(--t) var(--l);
-	background-repeat: no-repeat;
+.stoa-instrument :is([data-slot="field"], [data-slot="field-group"]) {
+	gap: 0.625rem;
 }
 
 /* ── Buttons ────────────────────────────────────────────────────────────── */
@@ -139,14 +117,19 @@
    data-slot, so buttons are matched by their data-variant/data-size pair too. */
 
 .stoa-instrument :is([data-slot="button"], [data-variant][data-size]) {
+	border-width: var(--stroke);
 	border-radius: 999px;
 	font-family: var(--instrument-mono);
 	font-size: 0.6875rem;
-	font-weight: 500;
+	font-weight: 600;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 	box-shadow: none;
 	filter: none;
+}
+
+.stoa-instrument :is([data-slot="button"], [data-variant][data-size])[data-size="default"] {
+	padding-inline: 1.375rem;
 }
 
 .stoa-instrument :is([data-slot="button"], [data-variant][data-size])[data-size^="icon"] {
@@ -176,7 +159,7 @@
 		:is([data-slot="button"], [data-variant][data-size])[data-variant="ghost"],
 		:is([data-slot="button"], [data-variant][data-size])[data-variant="secondary"]
 	):is(:hover, [aria-expanded="true"]) {
-	border-color: color-mix(in srgb, var(--foreground) 45%, transparent);
+	border-color: color-mix(in srgb, var(--foreground) 55%, transparent);
 	background: var(--wash);
 	color: var(--foreground);
 }
@@ -186,7 +169,7 @@
 }
 
 .stoa-instrument :is([data-slot="button"], [data-variant][data-size])[data-variant="destructive"] {
-	border-color: color-mix(in srgb, var(--destructive) 45%, transparent);
+	border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
 	background: transparent;
 	color: var(--destructive);
 }
@@ -204,7 +187,7 @@
 }
 
 .stoa-instrument :is([data-slot="button"], [data-variant][data-size]):focus-visible {
-	box-shadow: 0 0 0 1px var(--background), 0 0 0 2px var(--foreground);
+	box-shadow: 0 0 0 2px var(--background), 0 0 0 3.5px var(--foreground);
 }
 
 /* ── Fields ─────────────────────────────────────────────────────────────── */
@@ -216,10 +199,14 @@
 		[data-slot="select-trigger"],
 		[data-slot="input-group"]
 	) {
-	border: 1px solid var(--input);
-	border-radius: 0.5rem;
-	background-color: color-mix(in srgb, var(--paper) 45%, transparent);
+	border: var(--stroke) solid var(--input);
+	border-radius: 0.875rem;
+	background-color: color-mix(in srgb, var(--paper) 50%, transparent);
 	box-shadow: none;
+}
+
+.stoa-instrument :is([data-slot="input"], [data-slot="native-select"], [data-slot="select-trigger"]) {
+	padding-inline: 0.875rem;
 }
 
 .stoa-instrument :is(
@@ -229,7 +216,7 @@
 		[data-slot="select-trigger"]
 	):hover,
 .stoa-instrument [data-slot="input-group"]:hover {
-	border-color: color-mix(in srgb, var(--foreground) 45%, transparent);
+	border-color: color-mix(in srgb, var(--foreground) 50%, transparent);
 }
 
 .stoa-instrument :is(
@@ -240,7 +227,7 @@
 	):focus-visible,
 .stoa-instrument [data-slot="input-group"]:focus-within {
 	border-color: var(--foreground);
-	box-shadow: 0 0 0 3px var(--wash);
+	box-shadow: 0 0 0 4px var(--wash);
 	outline: none;
 }
 
@@ -262,79 +249,168 @@
 /* ── Surfaces ───────────────────────────────────────────────────────────── */
 
 .stoa-instrument [data-slot="card"] {
-	position: relative;
-	border: 1px solid var(--hairline);
-	border-radius: 0.25rem;
-	background: color-mix(in srgb, var(--card) 88%, transparent);
+	gap: 1.5rem;
+	padding-block: 1.75rem;
+	border: 0;
+	border-radius: 1.5rem;
+	background: var(--card);
 	box-shadow: none;
-	--tw-ring-shadow: 0 0 #0000;
+}
+
+.stoa-instrument :is([data-slot="card-header"], [data-slot="card-content"], [data-slot="card-footer"]) {
+	padding-inline: 1.75rem;
+}
+
+.stoa-instrument [data-slot="card-header"] {
+	gap: 0.375rem;
 }
 
 .stoa-instrument [data-slot="card-title"] {
-	font-weight: 500;
+	font-size: 1.0625rem;
+	font-weight: 600;
 	letter-spacing: -0.01em;
 }
 
-.stoa-instrument :is(
-		[data-slot="dropdown-menu-content"],
-		[data-slot="dropdown-menu-sub-content"],
-		[data-slot="select-content"],
-		[data-slot="popover-content"]
-	) {
-	border: 1px solid var(--hairline);
-	border-radius: 0.375rem;
-	background: var(--popover);
-	box-shadow: 0 18px 40px -20px rgb(0 0 0 / 35%);
+.stoa-instrument [data-slot="card-description"] {
+	color: var(--muted-foreground);
 }
 
-.stoa-instrument :is([data-slot="dropdown-menu-item"], [data-slot="dropdown-menu-sub-trigger"], [data-slot="select-item"]) {
-	border-radius: 0.25rem;
-}
-
-.stoa-instrument :is(
-		[data-slot="dropdown-menu-item"],
-		[data-slot="dropdown-menu-sub-trigger"],
-		[data-slot="select-item"],
-		[data-slot="dropdown-menu-checkbox-item"],
-		[data-slot="dropdown-menu-radio-item"]
-	):is(:focus, [data-highlighted], [data-state="open"]) {
-	background: var(--wash);
-	color: var(--foreground);
-}
-
-.stoa-instrument [data-slot="dropdown-menu-item"][data-variant="destructive"]:is(:focus, [data-highlighted]) {
-	background: color-mix(in srgb, var(--destructive) 9%, transparent);
-	color: var(--destructive);
-}
-
-.stoa-instrument :is([data-slot="separator"], [data-slot="dropdown-menu-separator"], [data-slot="select-separator"]) {
-	background: var(--hairline);
+.stoa-instrument :is([data-slot="separator"], [data-slot="select-separator"]) {
+	background: var(--border);
 }
 
 .stoa-instrument [data-slot="tooltip-content"] {
-	border-radius: 0.25rem;
+	border-radius: 0.5rem;
 	background: var(--ink);
 	color: var(--paper);
 	font-size: 0.625rem;
 }
 
 .stoa-instrument [data-slot="dialog-content"] {
-	border: 1px solid var(--hairline);
-	border-radius: 0.25rem;
+	gap: 1.5rem;
+	padding: 1.75rem;
+	border: 0;
+	border-radius: 1.5rem;
 	background: var(--popover);
-	box-shadow: 0 30px 80px -30px rgb(0 0 0 / 40%);
-	--tw-ring-shadow: 0 0 #0000;
+	box-shadow: 0 30px 80px -30px rgb(0 0 0 / 35%);
+}
+
+.stoa-instrument [data-slot="dialog-title"] {
+	font-weight: 600;
+}
+
+.stoa-instrument [data-slot="dialog-footer"] {
+	border-top: 0;
+	background: transparent;
 }
 
 .stoa-instrument [data-slot="dialog-overlay"] {
 	background: color-mix(in srgb, var(--background) 55%, transparent);
-	backdrop-filter: blur(3px);
+	backdrop-filter: blur(4px);
+}
+
+/* ── Menus and popovers ─────────────────────────────────────────────────── */
+/* Floating paper sheets; the highlighted row turns into a solid ink bar. */
+
+.stoa-instrument :is(
+		[data-slot="dropdown-menu-content"],
+		[data-slot="dropdown-menu-sub-content"],
+		[data-slot="select-content"]
+	) {
+	padding: 0.375rem;
+	border: 0;
+	border-radius: 1rem;
+	background: var(--popover);
+	box-shadow:
+		0 0 0 1px var(--hairline),
+		0 20px 48px -18px rgb(0 0 0 / 30%);
+}
+
+.stoa-instrument [data-slot="popover-content"] {
+	border: 0;
+	border-radius: 1.25rem;
+	background: var(--popover);
+	box-shadow:
+		0 0 0 1px var(--hairline),
+		0 20px 48px -18px rgb(0 0 0 / 30%);
+}
+
+.stoa-instrument :is(
+		[data-slot="dropdown-menu-item"],
+		[data-slot="dropdown-menu-sub-trigger"],
+		[data-slot="dropdown-menu-checkbox-item"],
+		[data-slot="dropdown-menu-radio-item"],
+		[data-slot="select-item"]
+	) {
+	gap: 0.75rem;
+	min-height: 2.25rem;
+	padding-block: 0.5rem;
+	border-radius: 0.625rem;
+	font-size: 0.8125rem;
+	font-weight: 500;
+}
+
+.stoa-instrument :is([data-slot="dropdown-menu-item"], [data-slot="dropdown-menu-sub-trigger"]) {
+	padding-inline: 0.75rem;
+}
+
+.stoa-instrument :is([data-slot="dropdown-menu-item"], [data-slot="dropdown-menu-sub-trigger"]) svg {
+	color: var(--muted-foreground);
+}
+
+.stoa-instrument :is(
+		[data-slot="dropdown-menu-item"],
+		[data-slot="dropdown-menu-sub-trigger"],
+		[data-slot="dropdown-menu-checkbox-item"],
+		[data-slot="dropdown-menu-radio-item"],
+		[data-slot="select-item"]
+	):is(:focus, [data-highlighted], [data-state="open"]) {
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.stoa-instrument :is(
+		[data-slot="dropdown-menu-item"],
+		[data-slot="dropdown-menu-sub-trigger"],
+		[data-slot="dropdown-menu-checkbox-item"],
+		[data-slot="dropdown-menu-radio-item"],
+		[data-slot="select-item"]
+	):is(:focus, [data-highlighted], [data-state="open"]) svg {
+	color: currentColor;
+}
+
+.stoa-instrument [data-slot="dropdown-menu-item"][data-variant="destructive"] {
+	color: var(--destructive);
+}
+
+.stoa-instrument [data-slot="dropdown-menu-item"][data-variant="destructive"] svg {
+	color: currentColor;
+}
+
+.stoa-instrument [data-slot="dropdown-menu-item"][data-variant="destructive"]:is(:focus, [data-highlighted]) {
+	background: var(--destructive);
+	color: #fff;
+}
+
+.stoa-instrument [data-slot="dropdown-menu-label"] {
+	padding: 0.625rem 0.75rem 0.375rem;
+	color: var(--muted-foreground);
+}
+
+.stoa-instrument [data-slot="dropdown-menu-separator"] {
+	margin: 0.375rem 0.75rem;
+	background: var(--border);
+}
+
+.stoa-instrument [data-slot="dropdown-menu-shortcut"] {
+	color: inherit;
+	opacity: 0.6;
 }
 
 /* ── Choice controls: ink dots ──────────────────────────────────────────── */
 
 .stoa-instrument [data-slot="switch"] {
-	border: 1px solid var(--input);
+	border: var(--stroke) solid var(--input);
 	background: transparent;
 	box-shadow: none;
 }
@@ -352,8 +428,12 @@
 	background: var(--paper);
 }
 
+.stoa-instrument [data-slot="radio-group"] {
+	gap: 0.875rem;
+}
+
 .stoa-instrument [data-slot="radio-group-item"] {
-	border: 1px solid var(--input);
+	border: var(--stroke) solid var(--input);
 	background: transparent;
 }
 
@@ -370,10 +450,11 @@
 }
 
 .stoa-instrument [data-slot="toggle"] {
-	border: 1px solid var(--input);
+	border: var(--stroke) solid var(--input);
 	border-radius: 999px;
 	font-family: var(--instrument-mono);
 	font-size: 0.6875rem;
+	font-weight: 600;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 }
@@ -387,11 +468,13 @@
 /* ── Calendar ───────────────────────────────────────────────────────────── */
 
 .stoa-instrument [data-slot="calendar"] {
+	padding: 0.75rem;
 	font-family: var(--instrument-mono);
 }
 
 .stoa-instrument [data-slot="calendar"] :is(.rdp-caption_label, .rdp-weekday) {
 	font-size: 0.6875rem;
+	font-weight: 600;
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
 }
@@ -410,7 +493,7 @@
 }
 
 .stoa-instrument [data-slot="calendar"] .rdp-today button:not([data-selected-single="true"]) {
-	box-shadow: inset 0 0 0 1px var(--foreground);
+	box-shadow: inset 0 0 0 var(--stroke) var(--foreground);
 }
 
 .stoa-instrument [data-slot="calendar"] button[data-selected-single="true"] {
@@ -425,11 +508,11 @@
 /* ── STOA shell ─────────────────────────────────────────────────────────── */
 
 .stoa-instrument [data-slot="app-navigation"] {
-	border: 1px solid var(--hairline);
-	border-radius: 0.25rem;
-	background: color-mix(in srgb, var(--card) 80%, transparent);
+	gap: 0.875rem;
+	border: 0;
+	border-radius: 1.5rem;
+	background: var(--card);
 	box-shadow: none;
-	backdrop-filter: blur(6px);
 }
 
 .stoa-instrument [data-slot="app-navigation-logo"] {
@@ -455,26 +538,26 @@
 /* The active marker becomes a small accent dot beside the ink circle. */
 .stoa-instrument [data-nav-item][aria-current="page"]::before {
 	left: auto;
-	right: -0.6rem;
-	width: 4px;
-	height: 4px;
+	right: -0.625rem;
+	width: 5px;
+	height: 5px;
 	border-radius: 999px;
 	background: var(--accent);
 }
 
 .stoa-instrument [data-slot="app-navigation-divider"] {
-	width: 0.75rem;
-	height: 2px;
+	width: 0.875rem;
+	height: 3px;
 	border: 0;
-	background: radial-gradient(circle, var(--foreground) 1px, transparent 1.5px) 0 0 / 6px 2px repeat-x;
-	opacity: 0.55;
+	background: radial-gradient(circle, var(--foreground) 1.25px, transparent 1.75px) 0 0 / 7px 3px repeat-x;
+	opacity: 0.5;
 }
 
 .stoa-instrument [data-slot="page-heading"] {
 	gap: 1rem;
-	font-size: clamp(2rem, 3.2vw, 3rem);
-	font-weight: 300;
-	letter-spacing: -0.035em;
+	font-size: clamp(2rem, 3.2vw, 2.75rem);
+	font-weight: 500;
+	letter-spacing: -0.03em;
 }
 
 .stoa-instrument [data-slot="brand-lines"] {
@@ -484,8 +567,8 @@
 }
 
 .stoa-instrument [data-slot="brand-lines"] > i {
-	height: 1px;
-	border-radius: 0;
+	height: var(--stroke);
+	border-radius: 999px;
 }
 
 .stoa-instrument [data-slot="brand-lines"] > i:first-child {
@@ -493,12 +576,12 @@
 }
 
 .stoa-instrument [data-slot="section-navigation-link"] {
-	border: 1px solid transparent;
+	border: var(--stroke) solid transparent;
 	color: var(--muted-foreground);
 }
 
 .stoa-instrument [data-slot="section-navigation-link"]:hover {
-	border-color: var(--hairline);
+	border-color: var(--border);
 	background: transparent;
 	color: var(--foreground);
 }
