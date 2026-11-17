@@ -56,6 +56,16 @@ function Caption({ children }: { children: React.ReactNode }) {
 	)
 }
 
+/** The long dash between weekday and date, drawn as a firm rule. */
+function DateRule() {
+	return (
+		<span
+			aria-hidden='true'
+			className='inline-block h-[1.5px] w-10 rounded-full bg-current'
+		/>
+	)
+}
+
 const week = [
 	['Mo', 23],
 	['Di', 17],
@@ -97,11 +107,14 @@ function Screen() {
 				]}
 			/>
 
-			<header className='flex items-center justify-between pt-6 pb-10'>
-				<Caption>
-					{weekday} —— {day}
-				</Caption>
-				<Caption>{now.getFullYear()}</Caption>
+			<header className='flex items-center justify-between pt-6 pb-10 text-sm font-medium'>
+				<p className='flex items-center gap-4'>
+					{weekday}
+					<span className='sr-only'>, </span>
+					<DateRule />
+					{day}
+				</p>
+				<p className='tabular-nums'>{now.getFullYear()}</p>
 			</header>
 
 			<PageHeading>Übersicht</PageHeading>
@@ -109,7 +122,8 @@ function Screen() {
 			<div className='mt-10 grid gap-8 lg:grid-cols-3'>
 				<Card>
 					<CardHeader>
-						<Caption>Übezeit heute</Caption>
+						<CardTitle>Übezeit heute</CardTitle>
+						<CardDescription>Stunden und Minuten</CardDescription>
 					</CardHeader>
 					<CardContent className='grid gap-6'>
 						<p className='text-7xl font-extralight tracking-tight tabular-nums'>
@@ -239,7 +253,8 @@ function Screen() {
 
 				<Card>
 					<CardHeader>
-						<Caption>Repertoire</Caption>
+						<CardTitle>Repertoire</CardTitle>
+						<CardDescription>Stücke nach Status</CardDescription>
 					</CardHeader>
 					<CardContent className='grid gap-4'>
 						{[
