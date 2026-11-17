@@ -97,6 +97,11 @@ export const AllControls: Story = {
 						<Switch id='fc-archive' />
 						<Label htmlFor='fc-archive'>Archiviert</Label>
 					</div>
+					<div className='flex items-center gap-4'>
+						<Switch size='sm' aria-label='Klein' defaultChecked />
+						<Switch aria-label='Standard' />
+						<Switch size='lg' aria-label='Groß' defaultChecked />
+					</div>
 					<div className='flex gap-2'>
 						<Toggle aria-label='Fett' defaultPressed>
 							<Bold />

@@ -470,9 +470,51 @@
 /* ── Choice controls: ink dots ──────────────────────────────────────────── */
 
 .stoa-instrument [data-slot="switch"] {
+	/* Track size and inner padding per size; thumb and travel are derived. */
+	--switch-h: 1.625rem;
+	--switch-w: 2.875rem;
+	--switch-pad: 3.5px;
+	--switch-thumb: calc(var(--switch-h) - 2 * var(--stroke) - 2 * var(--switch-pad));
+	--switch-travel: calc(var(--switch-w) - var(--switch-h));
+
+	box-sizing: border-box;
+	width: var(--switch-w);
+	height: var(--switch-h);
+	padding-inline: var(--switch-pad);
 	border: var(--stroke) solid var(--input);
 	background: transparent;
 	box-shadow: none;
+	/* Only colours animate; the size must not grow visibly when the skin switches on. */
+	transition-property: background-color, border-color;
+}
+
+.stoa-instrument [data-slot="switch"][data-size="sm"] {
+	--switch-h: 1.25rem;
+	--switch-w: 2.125rem;
+	--switch-pad: 2.5px;
+}
+
+.stoa-instrument [data-slot="switch"][data-size="lg"] {
+	--switch-h: 2rem;
+	--switch-w: 3.5rem;
+	--switch-pad: 4px;
+}
+
+.stoa-instrument [data-slot="switch-thumb"] {
+	width: var(--switch-thumb);
+	height: var(--switch-thumb);
+	translate: 0 0;
+	transition: translate 0.18s ease, background-color 0.18s ease;
+}
+
+.stoa-instrument [data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
+	translate: var(--switch-travel) 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.stoa-instrument [data-slot="switch-thumb"] {
+		transition: none;
+	}
 }
 
 .stoa-instrument [data-slot="switch"][data-state="checked"] {
