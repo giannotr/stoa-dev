@@ -28,6 +28,7 @@ const accents = {
 const withApp: Decorator = (Story, { globals, parameters }) => {
 	const theme = globals.theme === 'dark' ? 'dark' : 'light'
 	const accent = accents[globals.accent as keyof typeof accents] ?? accents.stoa
+	const instrument = globals.design === 'instrument'
 
 	useEffect(() => {
 		void i18next.changeLanguage(globals.locale)
@@ -37,12 +38,16 @@ const withApp: Decorator = (Story, { globals, parameters }) => {
 		document.documentElement.style.setProperty('--stoa-accent', accent)
 	}, [accent])
 
+	useEffect(() => {
+		document.documentElement.classList.toggle('stoa-instrument', instrument)
+	}, [instrument])
+
 	return (
 		<I18nextProvider i18n={i18next}>
 			<ThemeProvider attribute='class' forcedTheme={theme}>
 				<MemoryRouter initialEntries={[parameters.route ?? '/']}>
 					<TooltipProvider>
-						<div className='min-h-24 bg-background p-6 text-foreground'>
+						<div className='min-h-24 p-6 text-foreground'>
 							<Story />
 						</div>
 					</TooltipProvider>
@@ -62,6 +67,18 @@ const preview: Preview = {
 		controls: { matchers: { color: /(background|color)$/i, date: /Date$/i } },
 	},
 	globalTypes: {
+		design: {
+			description: 'Gestaltung',
+			toolbar: {
+				title: 'Design',
+				icon: 'component',
+				items: [
+					{ value: 'classic', title: 'Classic' },
+					{ value: 'instrument', title: 'Instrument (experimentell)' },
+				],
+				dynamicTitle: true,
+			},
+		},
 		theme: {
 			description: 'Farbschema',
 			toolbar: {
@@ -96,7 +113,12 @@ const preview: Preview = {
 			},
 		},
 	},
-	initialGlobals: { theme: 'light', locale: 'de', accent: 'stoa' },
+	initialGlobals: {
+		design: 'instrument',
+		theme: 'light',
+		locale: 'de',
+		accent: 'stoa',
+	},
 }
 
 export default preview

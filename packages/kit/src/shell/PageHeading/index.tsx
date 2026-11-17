@@ -12,7 +12,10 @@ export interface PageHeadingProps {
 
 export function PageHeading({ children, className, plain }: PageHeadingProps) {
 	return (
-		<h2 className={cn(styles.pageHeading, 'shrink-0', className)}>
+		<h2
+			data-slot='page-heading'
+			className={cn(styles.pageHeading, 'shrink-0', className)}
+		>
 			{!plain && <BrandLines />}
 			{children}
 		</h2>

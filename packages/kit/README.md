@@ -11,6 +11,7 @@ Gemeinsame React-Komponenten, Hooks, Hilfsfunktionen, Lizenz-UI und Theme der ST
 | `@stoa-dev/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, … |
 | `@stoa-dev/kit/i18n` | `registerStoaLocales`, `supportedLanguages`, Namespace `stoa` (de, de-AT, en, it) |
 | `@stoa-dev/kit/theme.css` | Tailwind-4-Tokens (shadcn-Variablen + STOA-Extras), Quelle für die App-Tailwind |
+| `@stoa-dev/kit/instrument.css` | Experimenteller Skin „Instrument“ (siehe unten) |
 | `@stoa-dev/kit/styles.css` | Kompilierte SCSS-Module der Komponenten |
 | `@stoa-dev/kit/scss` | SCSS-Werkzeuge (`reduced-motion`, `dark`, `accent-mix`, …) für App-Module |
 
@@ -79,3 +80,20 @@ cd ../practicr && npm link ../stoa-dev/packages/kit
 
 Vite: Bei verlinkten Paketen `resolve.dedupe: ['react', 'react-dom', 'react-router', 'i18next', 'react-i18next']`
 setzen, damit Kontext-Provider (Router, i18n) nicht doppelt geladen werden.
+
+## Experimentell: Skin „Instrument“
+
+Monochromes Instrumenten-Design: Papiergrau mit feinem Raster, Haarlinien und Eckmarken,
+Mono-Versalien für Beschriftungen, Pillen-Buttons und schwarze Punkte für aktive Zustände.
+Die App-Akzentfarbe bleibt nur als kleiner Indikator erhalten.
+
+```css
+@import "@stoa-dev/kit/theme.css";
+@import "@stoa-dev/kit/instrument.css";
+```
+
+Aktiv wird er mit der Klasse `stoa-instrument` auf `<html>` (zusammen mit `dark` für die dunkle
+Variante). Der Skin greift nur über `data-slot`-Attribute und braucht für die Beschriftungen
+die Schrift „JetBrains Mono“ (sonst Fallback auf die System-Monospace). Im Storybook über die
+Toolbar „Design“ umschaltbar.
+

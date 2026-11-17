@@ -3,8 +3,11 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 @import "@fontsource-variable/mona-sans/wdth.css";
+@import "@fontsource-variable/jetbrains-mono";
 
 @import "@stoa-dev/kit/theme.css";
+/* Experimental skin, active when <html> has the class `stoa-instrument` (toolbar: Design). */
+@import "@stoa-dev/kit/instrument.css";
 
 /* Tailwind scans the kit sources and the stories for class names. */
 @source "../../../packages/kit/src";

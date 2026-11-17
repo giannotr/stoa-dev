@@ -50,6 +50,7 @@
     },
     "./styles.css": "./dist/kit.css",
     "./theme.css": "./styles/theme.css",
+    "./instrument.css": "./styles/instrument.css",
     "./scss": {
       "sass": "./scss/_index.scss",
       "default": "./scss/_index.scss"

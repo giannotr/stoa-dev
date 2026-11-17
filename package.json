@@ -19,6 +19,15 @@
     "storybook:test": "npm run test --workspace @stoa-dev/storybook"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.15"
+    "@biomejs/biome": "2.4.15",
+    "@vitest/browser": "^4.1.12",
+    "@vitest/browser-playwright": "^4.1.12",
+    "vitest": "^4.1.12"
+  },
+  "overrides": {
+    "vitest": "^4.1.12",
+    "@vitest/browser": "^4.1.12",
+    "@vitest/browser-playwright": "^4.1.12",
+    "@vitest/ui": "^4.1.12"
   }
 }

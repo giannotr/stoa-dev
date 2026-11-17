@@ -147,6 +147,7 @@ export function SectionNavigation({
 	return (
 		<nav
 			ref={navigationRef}
+			data-slot='section-navigation'
 			aria-label={label ?? t('app.navigation')}
 			className='sticky top-1 z-20 isolate m-1 mt-4 flex flex-wrap gap-1 rounded-xl p-2'
 		>
@@ -162,6 +163,7 @@ export function SectionNavigation({
 					key={id}
 					to={`#${id}`}
 					replace
+					data-slot='section-navigation-link'
 					aria-current={activeSection === id ? 'location' : undefined}
 					onClick={() => {
 						if (hash === `#${id}`) scrollToSection(id)

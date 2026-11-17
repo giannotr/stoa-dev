@@ -15,6 +15,8 @@ const kitEntries = ['ui', 'shell', 'licensing', 'hooks', 'utils', 'i18n']
 
 export default defineConfig({
 	plugins: [react(), tailwindcss()],
+	// Same convention as the kit build: SCSS modules are read as `styles.pageHeading`.
+	css: { modules: { localsConvention: 'camelCaseOnly' } },
 	resolve: {
 		alias: kitEntries.map((entry) => ({
 			find: `@stoa-dev/kit/${entry}`,

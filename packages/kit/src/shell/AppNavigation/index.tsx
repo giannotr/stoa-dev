@@ -94,6 +94,7 @@ export function AppNavigationItem({
 			<Button
 				variant='ghost'
 				size='icon'
+				data-nav-item=''
 				className={cn(styles.menuButton, 'rounded-xl')}
 				disabled={disabled}
 				asChild={!disabled}
@@ -125,6 +126,7 @@ export function AppNavigationButton({
 			<Button
 				variant='ghost'
 				size='icon'
+				data-nav-item=''
 				className={cn(styles.menuButton, 'rounded-xl')}
 				aria-label={label}
 				disabled={disabled}
@@ -166,7 +168,13 @@ export function AppNavigationThemeToggle({
 }
 
 export function AppNavigationDivider() {
-	return <div className={styles.divider} aria-hidden='true' />
+	return (
+		<div
+			data-slot='app-navigation-divider'
+			className={styles.divider}
+			aria-hidden='true'
+		/>
+	)
 }
 
 function renderGroups(
@@ -202,11 +210,18 @@ export function AppNavigation({
 
 	return (
 		<nav
+			data-slot='app-navigation'
 			aria-label={label ?? t('app.navigation')}
 			className={cn(styles.root, className)}
 		>
 			{typeof logo === 'string' ? (
-				<img src={logo} className={styles.logo} alt='' aria-hidden='true' />
+				<img
+					src={logo}
+					data-slot='app-navigation-logo'
+					className={styles.logo}
+					alt=''
+					aria-hidden='true'
+				/>
 			) : (
 				logo
 			)}

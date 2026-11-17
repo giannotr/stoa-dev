@@ -10,6 +10,8 @@ export function BrandLines({ loading = false, className }: BrandLinesProps) {
 	return (
 		<span
 			aria-hidden='true'
+			data-slot='brand-lines'
+			data-loading={loading || undefined}
 			className={cn(
 				styles.brandLines,
 				loading && styles.brandLinesLoading,
