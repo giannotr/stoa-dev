@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/*"
   ],
   "scripts": {
     "build": "npm run build --workspace @stoa-dev/kit",
@@ -11,9 +12,11 @@
     "typecheck": "npm run typecheck --workspace @stoa-dev/kit",
     "lint": "biome lint .",
     "biome": "biome check --write .",
-    "check": "npm run lint && npm run typecheck && npm run build",
+    "check": "npm run lint && npm run typecheck && npm run build && npm run storybook:test",
     "rust:test": "cargo test --manifest-path crates/stoa-licensing/Cargo.toml",
-    "release:check": "npm run check && npm pack --dry-run --workspace @stoa-dev/kit"
+    "release:check": "npm run check && npm pack --dry-run --workspace @stoa-dev/kit",
+    "storybook": "npm run storybook --workspace @stoa-dev/storybook",
+    "storybook:test": "npm run test --workspace @stoa-dev/storybook"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.15"

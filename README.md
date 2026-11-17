@@ -9,12 +9,15 @@ Monorepo für die gemeinsamen Bausteine der STOA-Apps
 | [`@stoa-dev/biome-config`](packages/biome-config) | npm | gemeinsame Biome-Regeln |
 | [`@stoa-dev/tsconfig`](packages/tsconfig) | npm | `base`, `app`, `node`, `library` |
 | [`stoa-licensing`](crates/stoa-licensing) | crates.io | Rust-Lizenzmodul für Tauri |
+| [`@stoa-dev/storybook`](apps/storybook) | – (privat) | Storybook und Interaktionstests für das Kit |
 
 ## Befehle
 
 ```bash
 npm install
-npm run check          # Biome + Typecheck + Build
+npm run check          # Biome + Typecheck + Build + Storybook-Tests
+npm run storybook      # Storybook auf http://localhost:6006
+npm run storybook:test # nur die Interaktionstests (headless Chromium)
 npm run rust:test      # Tests des Lizenz-Crates
 npm run release:check  # zusätzlich: Inhalt des npm-Pakets anzeigen
 ```

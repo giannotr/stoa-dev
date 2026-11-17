@@ -1,0 +1,20 @@
+{
+  "extends": "@stoa-dev/tsconfig/app.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@stoa-dev/kit/ui": ["../../packages/kit/src/ui/index.ts"],
+      "@stoa-dev/kit/shell": ["../../packages/kit/src/shell/index.ts"],
+      "@stoa-dev/kit/licensing": ["../../packages/kit/src/licensing/index.ts"],
+      "@stoa-dev/kit/hooks": ["../../packages/kit/src/hooks/index.ts"],
+      "@stoa-dev/kit/utils": ["../../packages/kit/src/utils/index.ts"],
+      "@stoa-dev/kit/i18n": ["../../packages/kit/src/i18n/index.ts"]
+    }
+  },
+  "include": [
+    "src",
+    ".storybook",
+    "vite.config.ts",
+    "../../packages/kit/src/vite-env.d.ts"
+  ]
+}
