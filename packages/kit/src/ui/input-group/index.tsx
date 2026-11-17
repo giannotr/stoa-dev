@@ -54,7 +54,10 @@ function InputGroupAddon({
 			data-align={align}
 			className={cn(inputGroupAddonVariants({ align }), className)}
 			onClick={(e) => {
-				if ((e.target as HTMLElement).closest('button')) {
+				const target = e.target as HTMLElement
+				// React bubbles clicks from portals (e.g. a popover opened from this
+				// addon) through here; only clicks on the addon itself focus the input.
+				if (!e.currentTarget.contains(target) || target.closest('button')) {
 					return
 				}
 				e.currentTarget.parentElement?.querySelector('input')?.focus()
