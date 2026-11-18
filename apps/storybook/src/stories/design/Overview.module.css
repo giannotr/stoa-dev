@@ -1,0 +1,9 @@
+@media (forced-colors: none) {
+	:global(.dark) .canvas {
+		background-color: #242424;
+		background-image: url("./film-grain.png");
+		background-repeat: repeat;
+		background-size: 120px 120px;
+		background-blend-mode: soft-light;
+	}
+}

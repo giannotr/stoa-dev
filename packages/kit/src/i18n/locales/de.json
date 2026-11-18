@@ -11,6 +11,7 @@
     "loadingApp": "App vorbereiten …",
     "navigation": "Hauptnavigation",
     "restart": "Neu laden",
+    "darkMode": "Dunkelmodus",
     "switchTheme": "Darstellung wechseln",
     "loadingSettings": "Einstellungen laden …"
   },

@@ -51,7 +51,9 @@ import {
 	UserRound,
 } from 'lucide-react'
 import { useState } from 'react'
+import { useGlobals } from 'storybook/preview-api'
 import { fn } from 'storybook/test'
+import styles from './Overview.module.css'
 
 const week = [
 	['Mo', 23],
@@ -63,7 +65,13 @@ const week = [
 	['So', 9],
 ] as const
 
-function Screen() {
+function Screen({
+	theme,
+	onThemeChange,
+}: {
+	theme: 'light' | 'dark'
+	onThemeChange: (theme: 'light' | 'dark') => void
+}) {
 	const [date, setDate] = useState('2026-11-17')
 	const now = new Date()
 	const weekday = new Intl.DateTimeFormat('de', { weekday: 'short' }).format(
@@ -86,7 +94,11 @@ function Screen() {
 				]}
 				footerGroups={[
 					[
-						<AppNavigationThemeToggle key='theme' onToggle={fn()} />,
+						<AppNavigationThemeToggle
+							key='theme'
+							theme={theme}
+							onToggle={onThemeChange}
+						/>,
 						{ path: '/user', label: 'Profil', Icon: UserRound },
 						{ path: '/settings', label: 'Einstellungen', Icon: Settings },
 					],
@@ -237,8 +249,16 @@ function Screen() {
  */
 const meta = {
 	title: 'Design/Overview',
-	render: () => <Screen />,
-	parameters: { layout: 'fullscreen' },
+	render: () => {
+		const [{ theme }, updateGlobals] = useGlobals()
+		return (
+			<Screen
+				theme={theme === 'dark' ? 'dark' : 'light'}
+				onThemeChange={(nextTheme) => updateGlobals({ theme: nextTheme })}
+			/>
+		)
+	},
+	parameters: { layout: 'fullscreen', canvasClassName: styles.canvas },
 } satisfies Meta
 
 export default meta

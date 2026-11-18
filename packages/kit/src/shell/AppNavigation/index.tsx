@@ -1,10 +1,11 @@
-import { Eclipse, type LucideIcon } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { Fragment, type ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useLocation } from 'react-router'
 import { STOA_NS } from '../../i18n/namespace'
 import { Button } from '../../ui/button'
+import { ThemeToggle } from '../../ui/theme-toggle'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../ui/tooltip'
 import { cn } from '../../utils/cn'
 import styles from './AppNavigation.module.scss'
@@ -156,14 +157,20 @@ export function AppNavigationThemeToggle({
 	const { t } = useTranslation(STOA_NS)
 	const { resolvedTheme } = useTheme()
 	const current = theme === 'system' ? resolvedTheme : theme
+	const toggleLabel = label ?? t('app.switchTheme')
 
 	return (
-		<AppNavigationButton
-			label={label ?? t('app.switchTheme')}
-			Icon={Eclipse}
-			disabled={disabled}
-			onClick={() => void onToggle(current === 'dark' ? 'light' : 'dark')}
-		/>
+		<ItemTooltip label={toggleLabel}>
+			<ThemeToggle
+				variant='ghost'
+				data-nav-item=''
+				className={cn(styles.menuButton, 'rounded-xl')}
+				theme={current === 'dark' ? 'dark' : 'light'}
+				label={toggleLabel}
+				disabled={disabled}
+				onToggle={onToggle}
+			/>
+		</ItemTooltip>
 	)
 }
 

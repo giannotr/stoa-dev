@@ -8,7 +8,22 @@ import {
 	Settings,
 	UserRound,
 } from 'lucide-react'
-import { expect, fn } from 'storybook/test'
+import { useTheme } from 'next-themes'
+import { useState } from 'react'
+import { expect, screen, userEvent } from 'storybook/test'
+
+function NavigationThemeControl() {
+	const { forcedTheme } = useTheme()
+	const [theme, setTheme] = useState<'light' | 'dark'>()
+
+	return (
+		<AppNavigationThemeToggle
+			theme={theme ?? (forcedTheme === 'dark' ? 'dark' : 'light')}
+			onToggle={setTheme}
+			label='Darstellung wechseln'
+		/>
+	)
+}
 
 const meta = {
 	title: 'Shell/AppNavigation',
@@ -38,7 +53,7 @@ const meta = {
 		],
 		footerGroups: [
 			[
-				<AppNavigationThemeToggle key='theme' onToggle={fn()} />,
+				<NavigationThemeControl key='theme' />,
 				{ path: '/user', label: 'Profil', Icon: UserRound },
 				{ path: '/settings', label: 'Einstellungen', Icon: Settings },
 			],
@@ -57,6 +72,21 @@ export const Default: Story = {
 		await expect(
 			canvas.getByRole('link', { name: 'Übersicht' }),
 		).not.toHaveAttribute('aria-current')
+
+		const toggle = canvas.getByRole('button', { name: 'Darstellung wechseln' })
+		const pressed = toggle.getAttribute('aria-pressed') === 'true'
+
+		await userEvent.hover(toggle)
+		await expect(await screen.findByRole('tooltip')).toHaveTextContent(
+			'Darstellung wechseln',
+		)
+		await userEvent.click(toggle)
+		await expect(toggle).toHaveAttribute('aria-pressed', String(!pressed))
+		await expect(
+			toggle.querySelector(pressed ? 'svg.lucide-sun' : 'svg.lucide-moon'),
+		).toBeVisible()
+		await userEvent.click(toggle)
+		await expect(toggle).toHaveAttribute('aria-pressed', String(pressed))
 	},
 }
 

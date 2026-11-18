@@ -1,5 +1,6 @@
 import { registerStoaLocales, supportedLanguages } from '@stoa-dev/kit/i18n'
 import { TooltipProvider } from '@stoa-dev/kit/ui'
+import { cn } from '@stoa-dev/kit/utils'
 import type { Decorator, Preview } from '@storybook/react-vite'
 import i18next from 'i18next'
 import { ThemeProvider } from 'next-themes'
@@ -49,7 +50,12 @@ const withApp: Decorator = (Story, { globals, parameters }) => {
 			<ThemeProvider attribute='class' forcedTheme={theme}>
 				<MemoryRouter initialEntries={[parameters.route ?? '/']}>
 					<TooltipProvider>
-						<div className='min-h-24 p-6 text-foreground'>
+						<div
+							className={cn(
+								'min-h-24 p-6 text-foreground',
+								parameters.canvasClassName,
+							)}
+						>
 							<Story />
 						</div>
 					</TooltipProvider>
