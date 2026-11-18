@@ -1,6 +1,6 @@
 {
   "name": "@stoa-dev/kit",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "Shared React components, hooks, utilities, licensing UI and theme for STOA desktop apps",
   "license": "MIT",
   "repository": {
@@ -21,7 +21,8 @@
     "dist",
     "styles",
     "scss",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "exports": {
     "./ui": {

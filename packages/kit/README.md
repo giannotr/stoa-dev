@@ -12,7 +12,7 @@ Gemeinsame React-Komponenten, Hooks, Hilfsfunktionen, Lizenz-UI und Theme der ST
 | `@stoa-dev/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, `SaveFeedback`, … |
 | `@stoa-dev/kit/i18n` | `registerStoaLocales`, `supportedLanguages`, Namespace `stoa` (de, de-AT, en, it) |
 | `@stoa-dev/kit/theme.css` | Tailwind-4-Tokens (shadcn-Variablen + STOA-Extras), Quelle für die App-Tailwind |
-| `@stoa-dev/kit/instrument.css` | Experimenteller Skin „Instrument“ (siehe unten) |
+| `@stoa-dev/kit/instrument.css` | Skin „Instrument“ (siehe unten) |
 | `@stoa-dev/kit/styles.css` | Kompilierte SCSS-Module der Komponenten |
 | `@stoa-dev/kit/scss` | SCSS-Werkzeuge (`reduced-motion`, `dark`, `accent-mix`, …) für App-Module |
 
@@ -82,7 +82,7 @@ cd ../practicr && npm link ../stoa-dev/packages/kit
 Vite: Bei verlinkten Paketen `resolve.dedupe: ['react', 'react-dom', 'react-router', 'i18next', 'react-i18next']`
 setzen, damit Kontext-Provider (Router, i18n) nicht doppelt geladen werden.
 
-## Experimentell: Skin „Instrument“
+## Skin „Instrument“
 
 Ruhiges, monochromes Instrumenten-Design: papiergraue, stark gerundete Flächen mit viel Luft,
 kräftige Linien, Mono-Versalien für Beschriftungen und Buttons, Pillen-Buttons und Schwarz

@@ -11,7 +11,15 @@ const kitSrc = path.resolve(dirname, '../../packages/kit/src')
 
 // Stories run against the kit's sources, not its build: edits show up instantly
 // and the interaction tests check exactly what the next release will contain.
-const kitEntries = ['ui', 'shell', 'display', 'licensing', 'hooks', 'utils', 'i18n']
+const kitEntries = [
+	'ui',
+	'shell',
+	'display',
+	'licensing',
+	'hooks',
+	'utils',
+	'i18n',
+]
 
 export default defineConfig({
 	plugins: [react(), tailwindcss()],

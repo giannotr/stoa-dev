@@ -76,7 +76,7 @@ const preview: Preview = {
 				icon: 'component',
 				items: [
 					{ value: 'classic', title: 'Classic' },
-					{ value: 'instrument', title: 'Instrument (experimentell)' },
+					{ value: 'instrument', title: 'Instrument' },
 				],
 				dynamicTitle: true,
 			},
