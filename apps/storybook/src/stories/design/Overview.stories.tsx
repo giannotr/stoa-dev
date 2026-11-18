@@ -1,11 +1,11 @@
 import {
 	BarChart,
 	BarChartItem,
+	Marginalia,
+	MarginaliaFramed,
+	MarginaliaPair,
 	ProgressBar,
 	TimeMeasured,
-	ValueFramed,
-	ValuePaired,
-	ValueSingle,
 } from '@stoa-dev/kit/display'
 import {
 	AppNavigation,
@@ -94,8 +94,8 @@ function Screen() {
 			/>
 
 			<header className='flex items-center justify-between pt-6 pb-10'>
-				<ValuePaired left={weekday} right={day} />
-				<ValueSingle value={now.getFullYear()} />
+				<MarginaliaPair left={weekday} right={day} />
+				<Marginalia value={now.getFullYear()} />
 			</header>
 
 			<PageHeading>Übersicht</PageHeading>
@@ -224,8 +224,8 @@ function Screen() {
 			</div>
 
 			<footer className='absolute right-10 bottom-6 left-28 flex items-center justify-between'>
-				<ValueFramed value='013' />
-				<ValueSingle value='stoa kit' className='text-muted-foreground' />
+				<MarginaliaFramed value='013' />
+				<Marginalia value='stoa kit' className='text-muted-foreground' />
 			</footer>
 		</div>
 	)

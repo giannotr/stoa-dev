@@ -6,7 +6,7 @@ Gemeinsame React-Komponenten, Hooks, Hilfsfunktionen, Lizenz-UI und Theme der ST
 |---|---|
 | `@stoa-dev/kit/ui` | shadcn-Primitives (Button, Dialog, Select, Calendar, …) |
 | `@stoa-dev/kit/shell` | AppNavigation, SectionNavigation, PageHeading, BrandLines, Spinner, BackHomeButton, ErrorBoundary, ConfirmDialog, DatePickerInput, NativeSelect, UploadButton, StartupProvider/`useStartup`, StartupAnimation, SaveStatus, TagInput, ValidatedInput, ExternalLink, AnimatedSwap |
-| `@stoa-dev/kit/display` | ValuePaired, ValueSingle, ValueFramed, TimeMeasured, ProgressBar, BarChart/BarChartItem |
+| `@stoa-dev/kit/display` | MarginaliaPair, Marginalia, MarginaliaFramed, TimeMeasured, ProgressBar, BarChart/BarChartItem |
 | `@stoa-dev/kit/licensing` | LicenseProvider/`useLicense`, LicenseGate, LicenseCard, LicenseActivation, LicenseStatusBanner, Tauri-API |
 | `@stoa-dev/kit/hooks` | `useOnlineStatus`, `useRouting<Route>()` |
 | `@stoa-dev/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, `SaveFeedback`, … |
