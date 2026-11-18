@@ -1,6 +1,6 @@
 export * from './AnimatedSwap'
 export * from './AppNavigation'
-export { BackHomeButton, type BackHomeButtonProps } from './BackHomeButton'
+export { BackButton, type BackButtonProps } from './BackButton'
 export { BrandLines, type BrandLinesProps } from './BrandLines'
 export { ConfirmDialog, type ConfirmDialogProps } from './ConfirmDialog'
 export * from './DatePicker'
