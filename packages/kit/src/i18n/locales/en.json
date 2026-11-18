@@ -1,7 +1,8 @@
 {
   "actions": {
     "cancel": "Cancel",
-    "close": "Close"
+    "close": "Close",
+    "retry": "Try again"
   },
   "app": {
     "back": "Back to home",
@@ -10,7 +11,8 @@
     "loadingApp": "Preparing app …",
     "navigation": "Main navigation",
     "restart": "Reload",
-    "switchTheme": "Change appearance"
+    "switchTheme": "Change appearance",
+    "loadingSettings": "Loading settings …"
   },
   "datePicker": {
     "selectDate": "Select date",
@@ -135,5 +137,14 @@
       "all_features": "All features",
       "core": "Core features"
     }
+  },
+  "autosave": {
+    "saving": "Saving …",
+    "saved": "Changes saved",
+    "error": "Saving failed."
+  },
+  "tags": {
+    "placeholder": "Type a tag and press Enter",
+    "remove": "Remove tag “{{tag}}”"
   }
 }

@@ -1,4 +1,13 @@
 import {
+	BarChart,
+	BarChartItem,
+	ProgressBar,
+	TimeMeasured,
+	ValueFramed,
+	ValuePaired,
+	ValueSingle,
+} from '@stoa-dev/kit/display'
+import {
 	AppNavigation,
 	AppNavigationThemeToggle,
 	ConfirmDialog,
@@ -44,28 +53,6 @@ import {
 import { useState } from 'react'
 import { fn } from 'storybook/test'
 
-/** Small mono caption, like the corner annotations in the reference images. */
-function Caption({ children }: { children: React.ReactNode }) {
-	return (
-		<span
-			className='text-[0.6875rem] uppercase tracking-[0.14em] text-muted-foreground'
-			style={{ fontFamily: 'var(--instrument-mono, ui-monospace, monospace)' }}
-		>
-			{children}
-		</span>
-	)
-}
-
-/** The long dash between weekday and date, drawn as a firm rule. */
-function DateRule() {
-	return (
-		<span
-			aria-hidden='true'
-			className='inline-block h-[1.5px] w-10 rounded-full bg-current'
-		/>
-	)
-}
-
 const week = [
 	['Mo', 23],
 	['Di', 17],
@@ -86,7 +73,6 @@ function Screen() {
 		day: '2-digit',
 		month: 'long',
 	}).format(now)
-	const max = Math.max(...week.map(([, value]) => value))
 
 	return (
 		<div className='relative min-h-screen pl-28 pr-10 pb-20'>
@@ -107,14 +93,9 @@ function Screen() {
 				]}
 			/>
 
-			<header className='flex items-center justify-between pt-6 pb-10 text-sm font-medium'>
-				<p className='flex items-center gap-4'>
-					{weekday}
-					<span className='sr-only'>, </span>
-					<DateRule />
-					{day}
-				</p>
-				<p className='tabular-nums'>{now.getFullYear()}</p>
+			<header className='flex items-center justify-between pt-6 pb-10'>
+				<ValuePaired left={weekday} right={day} />
+				<ValueSingle value={now.getFullYear()} />
 			</header>
 
 			<PageHeading>Übersicht</PageHeading>
@@ -126,19 +107,8 @@ function Screen() {
 						<CardDescription>Stunden und Minuten</CardDescription>
 					</CardHeader>
 					<CardContent className='grid gap-6'>
-						<p className='text-7xl font-extralight tracking-tight tabular-nums'>
-							01:45
-							<span className='ml-2 align-top text-sm font-normal text-muted-foreground'>
-								H
-							</span>
-						</p>
-						<div className='flex items-center justify-between'>
-							<Caption>Ziel 02:00</Caption>
-							<Caption>87 %</Caption>
-						</div>
-						<div className='h-px bg-border'>
-							<div className='h-px w-[87%] bg-foreground' />
-						</div>
+						<TimeMeasured hours={1} minutes={45} />
+						<ProgressBar label='Ziel 02:00' progress={0.87} />
 					</CardContent>
 				</Card>
 
@@ -186,22 +156,11 @@ function Screen() {
 						</CardAction>
 					</CardHeader>
 					<CardContent>
-						<div className='grid grid-cols-7 items-end gap-4'>
+						<BarChart label='Minuten pro Tag'>
 							{week.map(([label, value]) => (
-								<div key={label} className='grid justify-items-center gap-2'>
-									<div className='flex h-28 items-end'>
-										<div
-											className='w-1.5 rounded-full bg-foreground'
-											style={{ height: `${(value / max) * 100}%` }}
-										/>
-									</div>
-									<span className='text-xl font-light tabular-nums'>
-										{value}
-									</span>
-									<Caption>{label}</Caption>
-								</div>
+								<BarChartItem key={label} label={label} value={value} />
 							))}
-						</div>
+						</BarChart>
 					</CardContent>
 				</Card>
 
@@ -257,35 +216,16 @@ function Screen() {
 						<CardDescription>Stücke nach Status</CardDescription>
 					</CardHeader>
 					<CardContent className='grid gap-4'>
-						{[
-							['In Arbeit', 12, 60],
-							['Geplant', 7, 35],
-							['Abgeschlossen', 31, 100],
-						].map(([label, count, share]) => (
-							<div key={label} className='grid gap-2'>
-								<div className='flex items-baseline justify-between'>
-									<Caption>{label}</Caption>
-									<span className='text-2xl font-light tabular-nums'>
-										{count}
-									</span>
-								</div>
-								<div className='h-px bg-border'>
-									<div
-										className='h-px bg-foreground'
-										style={{ width: `${share}%` }}
-									/>
-								</div>
-							</div>
-						))}
+						<ProgressBar label='In Arbeit' value={12} progress={0.6} />
+						<ProgressBar label='Geplant' value={7} total={21} />
+						<ProgressBar label='Abgeschlossen' value={31} completed />
 					</CardContent>
 				</Card>
 			</div>
 
 			<footer className='absolute right-10 bottom-6 left-28 flex items-center justify-between'>
-				<span className='border border-foreground px-2 py-1 font-mono text-xs tabular-nums'>
-					013
-				</span>
-				<Caption>stoa kit</Caption>
+				<ValueFramed value='013' />
+				<ValueSingle value='stoa kit' className='text-muted-foreground' />
 			</footer>
 		</div>
 	)

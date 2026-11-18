@@ -5,10 +5,11 @@ Gemeinsame React-Komponenten, Hooks, Hilfsfunktionen, Lizenz-UI und Theme der ST
 | Import | Inhalt |
 |---|---|
 | `@stoa-dev/kit/ui` | shadcn-Primitives (Button, Dialog, Select, Calendar, …) |
-| `@stoa-dev/kit/shell` | AppNavigation, SectionNavigation, PageHeading, BrandLines, Spinner, BackHomeButton, ErrorBoundary, ConfirmDialog, DatePickerInput, NativeSelect, UploadButton |
+| `@stoa-dev/kit/shell` | AppNavigation, SectionNavigation, PageHeading, BrandLines, Spinner, BackHomeButton, ErrorBoundary, ConfirmDialog, DatePickerInput, NativeSelect, UploadButton, StartupProvider/`useStartup`, StartupAnimation, SaveStatus, TagInput, ValidatedInput, ExternalLink, AnimatedSwap |
+| `@stoa-dev/kit/display` | ValuePaired, ValueSingle, ValueFramed, TimeMeasured, ProgressBar, BarChart/BarChartItem |
 | `@stoa-dev/kit/licensing` | LicenseProvider/`useLicense`, LicenseGate, LicenseCard, LicenseActivation, LicenseStatusBanner, Tauri-API |
 | `@stoa-dev/kit/hooks` | `useOnlineStatus`, `useRouting<Route>()` |
-| `@stoa-dev/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, … |
+| `@stoa-dev/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, `SaveFeedback`, … |
 | `@stoa-dev/kit/i18n` | `registerStoaLocales`, `supportedLanguages`, Namespace `stoa` (de, de-AT, en, it) |
 | `@stoa-dev/kit/theme.css` | Tailwind-4-Tokens (shadcn-Variablen + STOA-Extras), Quelle für die App-Tailwind |
 | `@stoa-dev/kit/instrument.css` | Experimenteller Skin „Instrument“ (siehe unten) |

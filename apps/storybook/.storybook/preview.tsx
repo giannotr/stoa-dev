@@ -20,9 +20,11 @@ registerStoaLocales(i18next)
 /** Accent colours of the apps, so components can be checked in every brand. */
 const accents = {
 	stoa: '#0093af',
-	practicr: '#0070FF',
-	bookcollectr: '#E23F5A',
-	invoicer: '#43AEC5',
+	invoicer: '#ff9bfa',
+	servicerecordr: '#ff9bb9',
+	latextemplater: '#0093af',
+	practicr: '#0070ff',
+	bookcollectr: '#e23f5a',
 } as const
 
 const withApp: Decorator = (Story, { globals, parameters }) => {

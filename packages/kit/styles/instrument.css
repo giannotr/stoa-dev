@@ -197,7 +197,8 @@
 		[data-slot="textarea"],
 		[data-slot="native-select"],
 		[data-slot="select-trigger"],
-		[data-slot="input-group"]
+		[data-slot="input-group"],
+		[data-slot="tag-input"]
 	) {
 	border: var(--stroke) solid var(--input);
 	border-radius: 0.875rem;
@@ -234,6 +235,16 @@
 .stoa-instrument :is([data-slot="input"], [data-slot="textarea"], [data-slot="input-group"])[aria-invalid="true"],
 .stoa-instrument [data-slot="input-group"]:has([aria-invalid="true"]) {
 	border-color: var(--destructive);
+}
+
+.stoa-instrument [data-slot="tag-input"]:focus-within {
+	border-color: var(--foreground);
+	box-shadow: 0 0 0 4px var(--wash);
+}
+
+.stoa-instrument [data-slot="tag-input-tag"] {
+	background: var(--wash);
+	font-weight: 600;
 }
 
 .stoa-instrument [data-slot="input-group-control"] {

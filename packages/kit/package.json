@@ -32,6 +32,10 @@
       "types": "./dist/types/shell/index.d.ts",
       "import": "./dist/shell/index.js"
     },
+    "./display": {
+      "types": "./dist/types/display/index.d.ts",
+      "import": "./dist/display/index.js"
+    },
     "./licensing": {
       "types": "./dist/types/licensing/index.d.ts",
       "import": "./dist/licensing/index.js"

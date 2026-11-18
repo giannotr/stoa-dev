@@ -1,7 +1,8 @@
 {
   "actions": {
     "cancel": "Annulla",
-    "close": "Chiudi"
+    "close": "Chiudi",
+    "retry": "Riprova"
   },
   "app": {
     "back": "Torna alla home",
@@ -10,7 +11,8 @@
     "loadingApp": "Preparazione dell’app …",
     "navigation": "Navigazione principale",
     "restart": "Ricarica",
-    "switchTheme": "Cambia aspetto"
+    "switchTheme": "Cambia aspetto",
+    "loadingSettings": "Caricamento impostazioni …"
   },
   "datePicker": {
     "selectDate": "Seleziona data",
@@ -135,5 +137,14 @@
       "all_features": "Tutte le funzionalità",
       "core": "Funzioni di base"
     }
+  },
+  "autosave": {
+    "saving": "Salvataggio …",
+    "saved": "Modifiche salvate",
+    "error": "Salvataggio non riuscito."
+  },
+  "tags": {
+    "placeholder": "Scrivi una parola chiave e premi Invio",
+    "remove": "Rimuovi “{{tag}}”"
   }
 }

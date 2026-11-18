@@ -14,7 +14,7 @@ const external = (id: string) =>
 
 const srcDir = fileURLToPath(new URL('./src', import.meta.url))
 
-const entries = ['ui', 'shell', 'licensing', 'hooks', 'utils', 'i18n']
+const entries = ['ui', 'shell', 'display', 'licensing', 'hooks', 'utils', 'i18n']
 
 export default defineConfig({
 	plugins: [react()],

@@ -1,7 +1,8 @@
 {
   "actions": {
     "cancel": "Obbrechn",
-    "close": "Zumachn"
+    "close": "Zumachn",
+    "retry": "No amoi probiern"
   },
   "app": {
     "back": "Zruck zur Startseitn",
@@ -10,7 +11,8 @@
     "loadingApp": "App vorbereitn …",
     "navigation": "Hauptnavigation",
     "restart": "Neu ladn",
-    "switchTheme": "Aussehn wechseln"
+    "switchTheme": "Aussehn wechseln",
+    "loadingSettings": "Einstöllungen ladn …"
   },
   "datePicker": {
     "selectDate": "Datum aussuachn",
@@ -135,5 +137,14 @@
       "all_features": "Alle Funktionen",
       "core": "Grundfunktionen"
     }
+  },
+  "autosave": {
+    "saving": "Wird gespeichert …",
+    "saved": "Änderungen gespeichert",
+    "error": "Speichern fehlgeschlagen."
+  },
+  "tags": {
+    "placeholder": "Schlagwort eingeben, mit Enter bestätigen",
+    "remove": "Schlagwort „{{tag}}“ entfernen"
   }
 }
