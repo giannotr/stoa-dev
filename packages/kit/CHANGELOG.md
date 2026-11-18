@@ -1,5 +1,17 @@
 # Changelog — @stoa-dev/kit
 
+## Unreleased
+
+- Neuer Export `@stoa-dev/kit/autosave`: `createAutosave<T>()` mit typisiertem
+  Provider und Hook, dazu ein unabhängig von React nutzbarer `AutosaveController`.
+- Autosave und manuelles Speichern teilen sich eine serielle Warteschlange:
+  Debounce, maximale Wartezeit, neuester Entwurf während laufender Schreibvorgänge,
+  Schreibsperre, explizites Wiederholen und Fehlerzustand ohne Datenverlust im Speicher.
+- `SaveStatus` unterstützt nun auch `pending` (ungespeicherte Änderungen), mit
+  Übersetzungen in allen vier Sprachen.
+- Storybook-Beispiele für Autosave, manuelles Speichern und Fehler/Wiederholung;
+  Unit-Tests für die Speichersteuerung (`npm test`).
+
 ## 1.0.0
 
 Erste stabile Version: neues Design, neue Anzeige-Bausteine und die gemeinsamen

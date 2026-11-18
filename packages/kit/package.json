@@ -60,7 +60,11 @@
       "sass": "./scss/_index.scss",
       "default": "./scss/_index.scss"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./autosave": {
+      "types": "./dist/types/autosave/index.d.ts",
+      "import": "./dist/autosave/index.js"
+    }
   },
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json",

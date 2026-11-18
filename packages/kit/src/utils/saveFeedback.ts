@@ -1,4 +1,4 @@
-export type VisibleSaveStatus = 'saving' | 'saved' | 'error' | null
+export type VisibleSaveStatus = 'pending' | 'saving' | 'saved' | 'error' | null
 
 /** What an autosave controller exposes to the feedback timing. */
 export type FeedbackSource = {

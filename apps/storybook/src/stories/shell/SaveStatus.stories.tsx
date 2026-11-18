@@ -17,7 +17,7 @@ const meta = {
 	argTypes: {
 		status: {
 			control: 'inline-radio',
-			options: ['saving', 'saved', 'error', null],
+			options: ['pending', 'saving', 'saved', 'error', null],
 		},
 	},
 } satisfies Meta<typeof SaveStatus>
@@ -25,6 +25,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+export const Pending: Story = { args: { status: 'pending' } }
 export const Saved: Story = {}
 export const Saving: Story = { args: { status: 'saving' } }
 

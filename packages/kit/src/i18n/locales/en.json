@@ -141,7 +141,8 @@
   "autosave": {
     "saving": "Saving …",
     "saved": "Changes saved",
-    "error": "Saving failed."
+    "error": "Saving failed.",
+    "pending": "Unsaved changes"
   },
   "tags": {
     "placeholder": "Type a tag and press Enter",

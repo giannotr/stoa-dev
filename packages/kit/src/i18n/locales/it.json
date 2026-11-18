@@ -141,7 +141,8 @@
   "autosave": {
     "saving": "Salvataggio …",
     "saved": "Modifiche salvate",
-    "error": "Salvataggio non riuscito."
+    "error": "Salvataggio non riuscito.",
+    "pending": "Modifiche non salvate"
   },
   "tags": {
     "placeholder": "Scrivi una parola chiave e premi Invio",

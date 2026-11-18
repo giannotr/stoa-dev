@@ -9,7 +9,8 @@
       "@stoa-dev/kit/hooks": ["../../packages/kit/src/hooks/index.ts"],
       "@stoa-dev/kit/utils": ["../../packages/kit/src/utils/index.ts"],
       "@stoa-dev/kit/i18n": ["../../packages/kit/src/i18n/index.ts"],
-      "@stoa-dev/kit/display": ["../../packages/kit/src/display/index.ts"]
+      "@stoa-dev/kit/display": ["../../packages/kit/src/display/index.ts"],
+      "@stoa-dev/kit/autosave": ["../../packages/kit/src/autosave/index.ts"]
     }
   },
   "include": [

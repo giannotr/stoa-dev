@@ -16,6 +16,7 @@ const kitEntries = [
 	'shell',
 	'display',
 	'licensing',
+	'autosave',
 	'hooks',
 	'utils',
 	'i18n',

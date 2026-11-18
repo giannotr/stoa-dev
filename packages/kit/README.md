@@ -8,6 +8,7 @@ Gemeinsame React-Komponenten, Hooks, Hilfsfunktionen, Lizenz-UI und Theme der ST
 | `@stoa-dev/kit/shell` | AppNavigation, SectionNavigation, PageHeading, BrandLines, Spinner, BackHomeButton, ErrorBoundary, ConfirmDialog, DatePickerInput, NativeSelect, UploadButton, StartupProvider/`useStartup`, StartupAnimation, SaveStatus, TagInput, ValidatedInput, ExternalLink, AnimatedSwap |
 | `@stoa-dev/kit/display` | MarginaliaPair, Marginalia, MarginaliaFramed, TimeMeasured, ProgressBar, BarChart/BarChartItem |
 | `@stoa-dev/kit/licensing` | LicenseProvider/`useLicense`, LicenseGate, LicenseCard, LicenseActivation, LicenseStatusBanner, Tauri-API |
+| `@stoa-dev/kit/autosave` | `createAutosave<T>()`, typisierte Provider/Hooks, `AutosaveController` |
 | `@stoa-dev/kit/hooks` | `useOnlineStatus`, `useRouting<Route>()` |
 | `@stoa-dev/kit/utils` | `cn`, `formatDate`, `formatTimestamp`, `parseHexColor`, `SaveFeedback`, … |
 | `@stoa-dev/kit/i18n` | `registerStoaLocales`, `supportedLanguages`, Namespace `stoa` (de, de-AT, en, it) |
@@ -100,3 +101,76 @@ die Schriften „Mona Sans“ und „Mona Sans Mono“ (github.com/github/mona-s
 Fallback auf Geist bzw. die System-Monospace). Im Storybook über die
 Toolbar „Design“ umschaltbar.
 
+
+## Autosave und manuelles Speichern
+
+`createAutosave<T>()` erzeugt ein zusammengehöriges Paar aus `AutosaveProvider`
+und `useAutosave`. Die Factory einmal auf Modulebene aufrufen. Jeder gemountete
+Provider hält einen unabhängigen Datensatz und dessen Schreibwarteschlange.
+
+```tsx
+import { createAutosave } from '@stoa-dev/kit/autosave'
+
+type Preferences = { language: string; theme: 'light' | 'dark' }
+export const { AutosaveProvider, useAutosave } = createAutosave<Preferences>()
+
+// Erst nach erfolgreichem Laden mounten; initialValue gilt als bereits gespeichert.
+// savePreferences muss erst auflösen, wenn die Speicherung abgeschlossen ist.
+<AutosaveProvider
+  initialValue={loadedPreferences}
+  save={savePreferences}
+  enabled={canWrite}
+  debounceMs={600}
+  maxWaitMs={5000}
+>
+  <PreferencesEditor />
+</AutosaveProvider>
+
+function PreferencesEditor() {
+  const { value, setValue, dirty, status, error, flush, retry } = useAutosave()
+  // Beispiel für ein Formularfeld:
+  // setValue(previous => ({ ...previous, language: 'it' }))
+  // Manueller Button: await flush(); Fehler anzeigen oder über status behandeln.
+  // Wiederholen nach Fehler: await retry().
+  return <button disabled={!dirty || status === 'saving'}
+    onClick={() => { void flush().catch(console.error) }}>Speichern</button>
+}
+```
+
+- `value` immer unveränderlich aktualisieren; vorhandene Objekte nicht mutieren.
+  Nur gültige Daten an `setValue` übergeben. Unvollständige Formulartexte separat
+  halten. Ein abgelehnter `save`-Aufruf bewahrt den neuesten Entwurf.
+- Standard: Speicherung nach 600 ms Eingabepause, spätestens nach 5 s fortlaufender
+  Änderungen, sofern kein Schreibvorgang läuft. Während einer Speicherung werden
+  neue Änderungen gesammelt und anschließend als neuester Stand geschrieben.
+- `autoSave={false}` bietet ausschließlich manuelles Speichern über `flush`/`retry`.
+  `enabled={false}` sperrt auch manuelle Schreibversuche; Änderungen bleiben im
+  Speicher. Die App muss Berechtigungen zusätzlich im Backend prüfen.
+- `flush()` wartet auch auf Änderungen während eines laufenden Schreibvorgangs.
+  Gleichzeitige Aufrufe teilen sich eine Promise. Fehler werden weitergereicht;
+  automatische Fehler erzeugen keine unbegrenzte Wiederholungsschleife.
+  `retry()` oder eine neue Änderung können einen weiteren Versuch auslösen.
+- `status`: `idle`, `pending`, `saving`, `saved`, `error`; zusätzlich `dirty`,
+  `error`, `editRevision` und `successfulSaves`. `SaveStatus` aus `/shell` versteht
+  `pending`, `saving`, `saved`, `error` und `null`. `idle` als `null` abbilden.
+- Den Provider oberhalb wechselnder Routen halten. Beim Unmount werden Timer
+  gestoppt, ausstehende Änderungen werden **nicht automatisch gespeichert**.
+  Vor dem bewussten Dokumentwechsel `await flush()` ausführen, dann für das neue
+  Dokument mit einem neuen React-`key` mounten. Änderungen an `initialValue`
+  setzen einen bestehenden Provider absichtlich nicht zurück.
+- React StrictMode wird unterstützt. `AutosaveController<T>` stellt dieselbe
+  Steuerung ohne React bereit (`start`, `stop`, `setValue`, `flush`, `subscribe`,
+  `getSnapshot`, `configure`).
+
+Der Provider koordiniert eine schreibende Instanz. Atomare Dateiablage,
+Datenbankschemata, Migrationen, Konflikte zwischen Fenstern/Prozessen und
+Backups liegen beim Speicheradapter. Es gibt keine Garantie für noch nicht
+persistierte Änderungen bei Prozessabsturz, erzwungenem Beenden oder Stromausfall.
+
+Das Desktop-Boilerplate enthält ein Beispiel mit den vorhandenen Tauri-Commands
+und `localStorage` für die Browser-Vorschau. Sein nativer Exit-Guard fängt
+Fensterschließen und reguläres App-Beenden ab, wartet auf `flush()` und lässt die
+App bei Speicherfehlern geöffnet. Die Browser-Vorschau warnt bei ungespeicherten
+Änderungen vor dem Verlassen; Browser erlauben keine verlässliche asynchrone
+Speicherung während des Schließens. Diese Integration ist app-spezifisch und
+wird vom Kit nicht automatisch registriert.

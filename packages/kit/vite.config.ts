@@ -19,6 +19,7 @@ const entries = [
 	'shell',
 	'display',
 	'licensing',
+	'autosave',
 	'hooks',
 	'utils',
 	'i18n',

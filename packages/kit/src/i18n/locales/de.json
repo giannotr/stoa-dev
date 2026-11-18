@@ -141,7 +141,8 @@
   "autosave": {
     "saving": "Wird gespeichert …",
     "saved": "Änderungen gespeichert",
-    "error": "Speichern fehlgeschlagen."
+    "error": "Speichern fehlgeschlagen.",
+    "pending": "Ungespeicherte Änderungen"
   },
   "tags": {
     "placeholder": "Schlagwort eingeben, mit Enter bestätigen",
