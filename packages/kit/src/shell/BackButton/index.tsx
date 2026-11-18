@@ -22,7 +22,7 @@ export function BackButton({ strict = false, to = '/', label }: BackButtonProps)
 			variant='ghost'
 			size='icon'
 			aria-label={label ?? t('app.back')}
-			onClick={() => strict ? navigate(-1) : routeToDefault}
+			onClick={() => strict ? navigate(-1) : routeToDefault()}
 		>
 			<ArrowLeft />
 		</Button>
