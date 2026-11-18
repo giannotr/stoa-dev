@@ -41,6 +41,23 @@ export const Completed: Story = {
 	args: { label: 'Abgeschlossen', completed: true, progress: undefined },
 }
 
+/** Full bar and still a count on the right, e.g. finished pieces. */
+export const CompletedWithValue: Story = {
+	args: {
+		label: 'Abgeschlossen',
+		value: 31,
+		completed: true,
+		progress: undefined,
+	},
+	play: async ({ canvas }) => {
+		await expect(canvas.getByRole('progressbar')).toHaveAttribute(
+			'aria-valuenow',
+			'100',
+		)
+		await expect(canvas.getByText('31')).toBeVisible()
+	},
+}
+
 export const Group: Story = {
 	render: () => (
 		<div className='grid gap-4'>

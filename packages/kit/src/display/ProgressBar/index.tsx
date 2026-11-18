@@ -10,7 +10,7 @@ export interface ProgressBarProps {
 	total?: number
 	/** Share from 0 to 1. Shown as a percentage when no `value` is given. */
 	progress?: number
-	/** Shortcut for a full bar. */
+	/** Full bar. Combines with `value`, e.g. the number of finished items. */
 	completed?: boolean
 	className?: string
 }

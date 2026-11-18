@@ -1,8 +1,12 @@
 import { ValueFramed, ValuePaired, ValueSingle } from '@stoa-dev/kit/display'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
+/**
+ * Marginalia: quiet annotations at the edges of a screen — date, year,
+ * page index — as in printed margins.
+ */
 const meta = {
-	title: 'Display/Values',
+	title: 'Display/Marginalia',
 	component: ValuePaired,
 	args: { left: 'Mi', right: '18. November' },
 } satisfies Meta<typeof ValuePaired>
