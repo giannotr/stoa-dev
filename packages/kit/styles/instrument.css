@@ -92,7 +92,6 @@
 		[data-slot="field-legend"],
 		[data-slot="dropdown-menu-label"],
 		[data-slot="select-label"],
-		[data-slot="tooltip-content"],
 		[data-slot="section-navigation-link"],
 		[data-slot="dropdown-menu-shortcut"]
 	) {
@@ -334,7 +333,6 @@
 	border-radius: 0.5rem;
 	background: var(--ink);
 	color: var(--paper);
-	font-size: 0.625rem;
 }
 
 .stoa-instrument [data-slot="dialog-content"] {

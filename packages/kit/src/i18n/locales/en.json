@@ -139,6 +139,15 @@
       "core": "Core features"
     }
   },
+  "setupWizard": {
+    "progress": "Setup progress",
+    "step": "Step {{current}} of {{total}}",
+    "back": "Back",
+    "next": "Continue",
+    "finish": "Finish setup",
+    "saving": "Saving …",
+    "saveError": "Setup could not be saved. Please try again."
+  },
   "autosave": {
     "saving": "Saving …",
     "saved": "Changes saved",

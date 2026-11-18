@@ -139,6 +139,15 @@
       "core": "Funzioni di base"
     }
   },
+  "setupWizard": {
+    "progress": "Avanzamento della configurazione",
+    "step": "Passaggio {{current}} di {{total}}",
+    "back": "Indietro",
+    "next": "Avanti",
+    "finish": "Completa la configurazione",
+    "saving": "Salvataggio in corso …",
+    "saveError": "Impossibile salvare la configurazione. Riprova."
+  },
   "autosave": {
     "saving": "Salvataggio …",
     "saved": "Modifiche salvate",

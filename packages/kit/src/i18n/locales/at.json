@@ -139,6 +139,15 @@
       "core": "Grundfunktionen"
     }
   },
+  "setupWizard": {
+    "progress": "Einrichtungsfortschritt",
+    "step": "Schritt {{current}} von {{total}}",
+    "back": "Zurück",
+    "next": "Weiter",
+    "finish": "Einrichtung abschließen",
+    "saving": "Wird gespeichert …",
+    "saveError": "Die Einrichtung konnte nicht gespeichert werden. Bitte versuch es noch einmal."
+  },
   "autosave": {
     "saving": "Wird gespeichert …",
     "saved": "Änderungen gespeichert",
