@@ -188,6 +188,16 @@
 	}
 }
 
+@media (hover: hover) {
+	[data-slot="radio-group-item"]:enabled:hover [data-slot="radio-group-indicator"][data-state="unchecked"] {
+		visibility: visible;
+
+		> span {
+			background-color: color-mix(in srgb, var(--foreground) 35%, transparent);
+		}
+	}
+}
+
 [data-slot="input"][data-inline-label="hidden"]::placeholder {
 	opacity: 0;
 }
