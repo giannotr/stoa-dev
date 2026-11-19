@@ -20,6 +20,19 @@ type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
 export const Fancy: Story = { args: { transitionStyle: 'fancy' } }
+export const WithSuggestions: Story = {
+	args: { suggestions: ['Sonate in C-Dur', 'Sonate in a-Moll', 'Etüde Nr. 4'] },
+	play: async ({ args, canvas }) => {
+		const input = canvas.getByRole<HTMLInputElement>('combobox', {
+			name: 'Titel',
+		})
+		await expect(
+			Array.from(input.list?.options ?? [], ({ value }) => value),
+		).toEqual(args.suggestions)
+		await userEvent.type(input, 'Präludium')
+		await expect(input).toHaveValue('Präludium')
+	},
+}
 export const WithInlineLabelAndIcon: Story = {
 	args: {
 		label: 'Benutzername',

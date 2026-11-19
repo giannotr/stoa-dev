@@ -2,6 +2,7 @@ import {
 	type ComponentProps,
 	type ReactNode,
 	useEffect,
+	useId,
 	useRef,
 	useState,
 } from 'react'
@@ -15,6 +16,8 @@ type InputProps = ComponentProps<'input'> & {
 	icon?: ReactNode
 	/** Transition used for hover and focus. */
 	transitionStyle?: 'default' | 'fancy'
+	/** Suggested values offered by the native input picker. */
+	suggestions?: readonly string[]
 }
 
 function Input({
@@ -23,12 +26,16 @@ function Input({
 	label,
 	icon,
 	transitionStyle = 'default',
+	suggestions,
+	list,
 	placeholder,
 	'aria-label': ariaLabel,
 	onFocus,
 	onBlur,
 	...props
 }: InputProps) {
+	const suggestionsId = useId()
+	const hasSuggestions = list === undefined && Boolean(suggestions?.length)
 	const [inlineText, setInlineText] = useState({
 		focused: false,
 		showingPlaceholder: false,
@@ -66,6 +73,7 @@ function Input({
 	const input = (
 		<input
 			type={type}
+			list={hasSuggestions ? suggestionsId : list}
 			data-slot='input'
 			data-transition-style={transitionStyle}
 			data-has-icon={icon ? '' : undefined}
@@ -95,9 +103,7 @@ function Input({
 		/>
 	)
 
-	if (!icon) return input
-
-	return (
+	const field = icon ? (
 		<div className='flex min-w-0 items-center'>
 			{input}
 			<span
@@ -108,7 +114,22 @@ function Input({
 				{icon}
 			</span>
 		</div>
+	) : (
+		input
+	)
+
+	return (
+		<>
+			{field}
+			{hasSuggestions && (
+				<datalist id={suggestionsId}>
+					{Array.from(new Set(suggestions), (value) => (
+						<option key={value} value={value} />
+					))}
+				</datalist>
+			)}
+		</>
 	)
 }
 
-export { Input }
+export { Input, type InputProps }

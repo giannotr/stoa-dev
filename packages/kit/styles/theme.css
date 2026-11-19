@@ -182,9 +182,37 @@
 	.border-r { border-right-width: var(--ui-border-width); }
 }
 
-@media (hover: hover) and (forced-colors: none) {
-	:where([data-slot="input"][data-transition-style="default"]):enabled:hover:not(:focus-visible, [aria-invalid="true"], [data-field-state]) {
-		border-color: color-mix(in srgb, var(--foreground) 50%, transparent);
+[data-slot="card"][data-clickable="true"] {
+	cursor: pointer;
+
+	&:has(> [data-slot="card-trigger"]:focus-visible) {
+		outline: 2px solid var(--ring);
+		outline-offset: -2px;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		transition: background-color 160ms ease;
+	}
+	@media (hover: hover) {
+		&:hover {
+			background-color: color-mix(in srgb, var(--card), var(--foreground) 7%);
+		}
+
+		&:not(:hover, :has(:focus-visible)) > [data-slot="card-action-icon"][data-visibility="hoverOnly"] {
+			opacity: 0;
+		}
+	}
+}
+
+[data-slot="input"][data-transition-style="default"] {
+	@media (prefers-reduced-motion: no-preference) {
+		transition: border-color 200ms ease-out;
+	}
+
+	@media (hover: hover) and (forced-colors: none) {
+		&:enabled:hover:not(:focus-visible, [aria-invalid="true"], [data-field-state]) {
+			border-color: color-mix(in srgb, var(--foreground) 70%, transparent);
+		}
 	}
 }
 
