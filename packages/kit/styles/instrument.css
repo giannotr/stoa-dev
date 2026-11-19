@@ -201,8 +201,11 @@
 	) {
 	border: var(--stroke) solid var(--input);
 	border-radius: 0.875rem;
-	background-color: color-mix(in srgb, var(--paper) 50%, transparent);
 	box-shadow: none;
+}
+
+.stoa-instrument :is([data-slot="input-group"], [data-slot="tag-input"]) {
+	background-color: color-mix(in srgb, var(--paper) 50%, transparent);
 }
 
 .stoa-instrument :is([data-slot="input"], [data-slot="native-select"], [data-slot="select-trigger"]) {
@@ -216,7 +219,6 @@
 
 .stoa-instrument [data-slot="input"] {
 	--stoa-input-line-inset: 1rem;
-	background-color: transparent;
 }
 
 .stoa-instrument [data-slot="input"][data-has-icon] {
