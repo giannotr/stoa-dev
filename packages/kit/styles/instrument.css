@@ -209,6 +209,20 @@
 	padding-inline: 0.875rem;
 }
 
+.stoa-instrument :is([data-slot="input"], [data-slot="textarea"], [data-slot="input-group"]) {
+	--stoa-input-frame-color: color-mix(in srgb, var(--input), var(--foreground) 20%);
+	border-color: var(--stoa-input-frame-color);
+}
+
+.stoa-instrument [data-slot="input"] {
+	--stoa-input-line-inset: 1rem;
+	background-color: transparent;
+}
+
+.stoa-instrument [data-slot="input"][data-has-icon] {
+	padding-right: 2.5rem;
+}
+
 .stoa-instrument :is(
 		[data-slot="input"],
 		[data-slot="textarea"],
@@ -290,10 +304,6 @@
 
 .stoa-instrument [data-slot="textarea"]::-webkit-resizer {
 	background: transparent;
-}
-
-.stoa-instrument :is([data-slot="input"], [data-slot="textarea"])::placeholder {
-	color: color-mix(in srgb, var(--muted-foreground) 80%, transparent);
 }
 
 /* ── Surfaces ───────────────────────────────────────────────────────────── */

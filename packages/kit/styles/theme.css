@@ -182,6 +182,82 @@
 	.border-r { border-right-width: var(--ui-border-width); }
 }
 
+@media (hover: hover) and (forced-colors: none) {
+	:where([data-slot="input"][data-transition-style="default"]):enabled:hover:not(:focus-visible, [aria-invalid="true"], [data-field-state]) {
+		border-color: color-mix(in srgb, var(--foreground) 50%, transparent);
+	}
+}
+
+[data-slot="input"][data-inline-label="hidden"]::placeholder {
+	opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-slot="input"][data-inline-label]::placeholder {
+		transition: opacity 65ms ease-out;
+	}
+}
+
+@property --stoa-input-frame-collapse {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 0;
+}
+
+@media (forced-colors: none) {
+	[data-slot="input"][data-transition-style="fancy"]:enabled:is(
+		:not([type]), [type="text"], [type="search"], [type="email"],
+		[type="password"], [type="url"], [type="tel"], [type="number"]
+	):not([aria-invalid="true"], [data-field-state]) {
+		--input-frame-color: var(--stoa-input-frame-color, color-mix(in oklab, var(--foreground) 35%, transparent));
+		--input-line-start: var(--stoa-input-line-inset, 0.875rem);
+		--input-line-end: var(--input-line-start);
+		--input-line-trim: clamp(0, (var(--stoa-input-frame-collapse) - 0.8) * 5, 1);
+		--input-line-width: calc(100% - (var(--input-line-start) + var(--input-line-end)) * var(--input-line-trim));
+		--input-line-position: calc(var(--input-line-start) * var(--input-line-trim));
+
+		background-origin: border-box;
+		background-repeat: no-repeat;
+
+		/* Keep an inset underline on engines without border-area clipping. */
+		--input-line-color: color-mix(in oklab, var(--input-frame-color) calc(var(--stoa-input-frame-collapse) * 100%), transparent);
+		border-color: color-mix(in oklab, transparent calc(var(--stoa-input-frame-collapse) * 100%), var(--input-frame-color));
+		background-image: linear-gradient(var(--input-line-color), var(--input-line-color));
+		background-size: var(--input-line-width) var(--ui-border-width);
+		background-position: var(--input-line-position) bottom;
+
+		&[data-has-icon] { --input-line-end: 2.625rem; }
+
+		@media (hover: hover) {
+			&:hover { --stoa-input-frame-collapse: 1; }
+		}
+
+		&:focus {
+			--stoa-input-frame-collapse: 1;
+			--input-frame-color: var(--foreground);
+			box-shadow: none;
+		}
+
+		@media (prefers-reduced-motion: no-preference) {
+			transition: --stoa-input-frame-collapse 240ms ease-in-out;
+		}
+
+		@supports (background-clip: border-area) {
+			/* Open the frame at the top, sweep down the sides, then inset the bottom stroke. */
+			--input-frame-angle: min(90deg, var(--stoa-input-frame-collapse) * 112.5deg);
+			border-color: transparent;
+			background-clip: border-area, border-box;
+			background-image: conic-gradient(
+				at center calc(100% - var(--ui-border-width)),
+				transparent 0deg var(--input-frame-angle),
+				var(--input-frame-color) var(--input-frame-angle) calc(360deg - var(--input-frame-angle)),
+				transparent calc(360deg - var(--input-frame-angle)) 360deg
+			), none;
+			background-size: var(--input-line-width) 100%;
+		}
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	[data-slot="button"], [data-slot="input"], [data-slot="textarea"],
 	[data-slot="native-select"], [data-slot="select-trigger"], [data-slot="toggle"] {
