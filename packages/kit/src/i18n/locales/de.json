@@ -15,6 +15,20 @@
     "switchTheme": "Darstellung wechseln",
     "loadingSettings": "Einstellungen laden …"
   },
+  "colorPicker": {
+    "title": "Farbinstrument",
+    "choose": "Farbe auswählen",
+    "hue": "Farbton",
+    "saturation": "Sättigung",
+    "lightness": "Helligkeit",
+    "opacity": "Deckkraft",
+    "hex": "HEX-Farbe",
+    "copy": "Kopieren",
+    "copied": "Farbe kopiert",
+    "copyFailed": "Farbe konnte nicht kopiert werden",
+    "presets": "Schnellauswahl",
+    "select": "{{color}} auswählen"
+  },
   "datePicker": {
     "selectDate": "Datum auswählen",
     "today": "Heute",

@@ -15,6 +15,20 @@
     "switchTheme": "Cambia aspetto",
     "loadingSettings": "Caricamento impostazioni …"
   },
+  "colorPicker": {
+    "title": "Strumento colore",
+    "choose": "Scegli colore",
+    "hue": "Tonalità",
+    "saturation": "Saturazione",
+    "lightness": "Luminosità",
+    "opacity": "Opacità",
+    "hex": "Colore HEX",
+    "copy": "Copia",
+    "copied": "Colore copiato",
+    "copyFailed": "Impossibile copiare il colore",
+    "presets": "Selezione rapida",
+    "select": "Seleziona {{color}}"
+  },
   "datePicker": {
     "selectDate": "Seleziona data",
     "today": "Oggi",

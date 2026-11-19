@@ -15,6 +15,20 @@
     "switchTheme": "Change appearance",
     "loadingSettings": "Loading settings …"
   },
+  "colorPicker": {
+    "title": "Color instrument",
+    "choose": "Choose color",
+    "hue": "Hue",
+    "saturation": "Saturation",
+    "lightness": "Lightness",
+    "opacity": "Opacity",
+    "hex": "Hex color",
+    "copy": "Copy",
+    "copied": "Color copied",
+    "copyFailed": "Could not copy color",
+    "presets": "Quick select",
+    "select": "Select {{color}}"
+  },
   "datePicker": {
     "selectDate": "Select date",
     "today": "Today",

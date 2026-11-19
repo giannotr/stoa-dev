@@ -15,6 +15,20 @@
     "switchTheme": "Aussehn wechseln",
     "loadingSettings": "Einstöllungen ladn …"
   },
+  "colorPicker": {
+    "title": "Farbinstrument",
+    "choose": "Farb aussuachn",
+    "hue": "Farbton",
+    "saturation": "Sättigung",
+    "lightness": "Helligkeit",
+    "opacity": "Deckkraft",
+    "hex": "HEX-Farbe",
+    "copy": "Kopiern",
+    "copied": "Farb kopiert",
+    "copyFailed": "Farb hat ned kopiert werdn können",
+    "presets": "Schnellauswahl",
+    "select": "{{color}} aussuachn"
+  },
   "datePicker": {
     "selectDate": "Datum aussuachn",
     "today": "Heit",
