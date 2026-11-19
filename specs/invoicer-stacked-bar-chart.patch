@@ -1,0 +1,279 @@
+diff --git a/src/lib/invoiceStatistics.ts b/src/lib/invoiceStatistics.ts
+index c9535b2..0705434 100644
+--- a/src/lib/invoiceStatistics.ts
++++ b/src/lib/invoiceStatistics.ts
+@@ -23,7 +23,7 @@ export type InvoiceStatistics = {
+ 	overdue: StatisticsTotal
+ 	drafts: StatisticsTotal
+ 	average: number
+-	periods: StatisticsBucket[]
++	periods: (StatisticsBucket & { openAmount: number })[]
+ 	statuses: { key: InvoiceStatus; amount: number; count: number }[]
+ 	customers: { name: string; amount: number; count: number }[]
+ }
+@@ -123,6 +123,10 @@ export function calculateInvoiceStatistics(
+ 				: status
+ 		const statusTotal = statuses.get(effectiveStatus)
+ 		if (statusTotal) add(statusTotal, amount)
++		if (status === 'draft') {
++			add(drafts, amount)
++			continue
++		}
+ 		const key = year === 'all' ? invoiceYear : invoice.invoiceDate.slice(0, 7)
+ 		const period = periods.get(key) ?? {
+ 			key,
+@@ -132,10 +136,6 @@ export function calculateInvoiceStatistics(
+ 			paidCount: 0,
+ 		}
+ 		periods.set(key, period)
+-		if (status === 'draft') {
+-			add(drafts, amount)
+-			continue
+-		}
+ 		add(issued, amount)
+ 		period.amount += amount
+ 		period.count++
+@@ -170,6 +170,7 @@ export function calculateInvoiceStatistics(
+ 				...period,
+ 				amount: period.amount / factor,
+ 				paidAmount: period.paidAmount / factor,
++				openAmount: (period.amount - period.paidAmount) / factor,
+ 			})),
+ 		statuses: [...statuses].map(([key, value]) => ({ key, ...money(value) })),
+ 		customers: [...customers]
+diff --git a/src/pages/StatisticsPage.tsx b/src/pages/StatisticsPage.tsx
+index f52e0f3..5816729 100644
+--- a/src/pages/StatisticsPage.tsx
++++ b/src/pages/StatisticsPage.tsx
+@@ -1,3 +1,4 @@
++import { BarChart, BarChartItem } from '@stoa-dev/kit/display'
+ import { BackButton, NativeSelect, PageHeading } from '@stoa-dev/kit/shell'
+ import {
+ 	Button,
+@@ -6,9 +7,6 @@ import {
+ 	CardHeader,
+ 	CardTitle,
+ 	Label,
+-	Tooltip,
+-	TooltipContent,
+-	TooltipTrigger,
+ } from '@stoa-dev/kit/ui'
+ import {
+ 	ArrowDownLeft,
+@@ -68,13 +66,20 @@ export default function StatisticsPage() {
+ 		}).format(value)
+ 	const number = (value: number) =>
+ 		new Intl.NumberFormat(i18n.resolvedLanguage).format(value)
+-	const periodLabel = (key: string) =>
+-		year === 'all'
+-			? key
+-			: new Intl.DateTimeFormat(i18n.resolvedLanguage, {
+-					month: 'short',
+-				}).format(new Date(`${key}-01T12:00:00`))
+-	const max = Math.max(0, ...statistics.periods.map((period) => period[metric]))
++	const shortMonth = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
++		month: 'short',
++	})
++	const fullMonth = new Intl.DateTimeFormat(i18n.resolvedLanguage, {
++		month: 'long',
++		year: 'numeric',
++	})
++	const periodTitle = t(
++		year === 'all' ? 'statistics.yearly' : 'statistics.monthly',
++	)
++	const paidLabel = t('statistics.paid')
++	const openLabel = t('statistics.open')
++	const paidColor = 'bg-primary'
++	const openColor = 'bg-muted-foreground/60'
+ 	const cards = [
+ 		{ key: 'issued', total: statistics.issued, icon: FileText },
+ 		{ key: 'paid', total: statistics.paid, icon: Banknote },
+@@ -193,11 +198,7 @@ export default function StatisticsPage() {
+ 					<Card>
+ 						<CardHeader>
+ 							<div className='flex flex-wrap items-start justify-between gap-3'>
+-								<CardTitle>
+-									{t(
+-										year === 'all' ? 'statistics.yearly' : 'statistics.monthly',
+-									)}
+-								</CardTitle>
++								<CardTitle>{periodTitle}</CardTitle>
+ 								<fieldset
+ 									className='flex gap-1'
+ 									aria-label={t('statistics.chartMetric')}
+@@ -230,83 +231,59 @@ export default function StatisticsPage() {
+ 							<div className='flex flex-wrap gap-4 text-xs'>
+ 								<span className='flex items-center gap-2'>
+ 									<span
+-										className='size-2.5 rounded-full bg-primary'
++										className={`size-2.5 rounded-full ${paidColor}`}
+ 										aria-hidden
+ 									/>
+-									{t('statistics.paid')}
++									{paidLabel}
+ 								</span>
+ 								<span className='flex items-center gap-2'>
+ 									<span
+-										className='size-2.5 rounded-full bg-muted-foreground/40'
++										className={`size-2.5 rounded-full ${openColor}`}
+ 										aria-hidden
+ 									/>
+-									{t('statistics.open')}
++									{openLabel}
+ 								</span>
+ 							</div>
+-							<div className='grid gap-3'>
++							<BarChart
++								label={periodTitle}
++								variant='horizontal'
++								formatValue={metric === 'amount' ? money : number}
++							>
+ 								{statistics.periods.map((period) => {
+-									const value = period[metric]
+-									const paid =
+-										metric === 'amount' ? period.paidAmount : period.paidCount
+-									const formatted =
+-										metric === 'amount' ? money(value) : number(value)
++									const month =
++										year === 'all'
++											? undefined
++											: new Date(`${period.key}-01T12:00:00`)
+ 									return (
+-										<Tooltip key={period.key}>
+-											<TooltipTrigger asChild>
+-												<button
+-													type='button'
+-													className='grid grid-cols-[3.5rem_minmax(0,1fr)] items-center gap-x-3 gap-y-1 rounded-md p-1 text-left outline-none hover:bg-muted/30 focus-visible:ring-2 focus-visible:ring-ring sm:grid-cols-[3.5rem_minmax(0,1fr)_auto]'
+-													aria-label={`${period.key}: ${formatted}; ${t('statistics.paid')}: ${metric === 'amount' ? money(paid) : number(paid)}`}
+-												>
+-													<span className='text-xs text-muted-foreground'>
+-														{periodLabel(period.key)}
+-													</span>
+-													<span
+-														className='flex h-5 min-w-0 overflow-hidden rounded-sm bg-muted/40'
+-														aria-hidden
+-													>
+-														<span
+-															className='flex h-full overflow-hidden rounded-sm'
+-															style={{
+-																width: `${max ? (value / max) * 100 : 0}%`,
+-															}}
+-														>
+-															<span
+-																className='h-full bg-primary'
+-																style={{
+-																	width: `${value ? (paid / value) * 100 : 0}%`,
+-																}}
+-															/>
+-															<span className='h-full flex-1 bg-muted-foreground/40' />
+-														</span>
+-													</span>
+-													<span className='col-start-2 text-xs tabular-nums sm:col-start-auto'>
+-														{formatted}
+-													</span>
+-												</button>
+-											</TooltipTrigger>
+-											<TooltipContent
+-												className='grid gap-1'
+-												aria-label={`${period.key}: ${formatted}`}
+-											>
+-												<p>
+-													{period.key} · {t('statistics.issued')}: {formatted}
+-												</p>
+-												<p>
+-													{t('statistics.paid')}:{' '}
+-													{metric === 'amount' ? money(paid) : number(paid)}
+-												</p>
+-												<p>
+-													{t('statistics.open')}:{' '}
+-													{metric === 'amount'
+-														? money(value - paid)
+-														: number(value - paid)}
+-												</p>
+-											</TooltipContent>
+-										</Tooltip>
++										<BarChartItem
++											key={period.key}
++											label={month ? shortMonth.format(month) : period.key}
++											detailLabel={month ? fullMonth.format(month) : period.key}
++											totalLabel={t('statistics.issued')}
++											segments={[
++												{
++													id: 'paid',
++													label: paidLabel,
++													value:
++														metric === 'amount'
++															? period.paidAmount
++															: period.paidCount,
++													className: paidColor,
++												},
++												{
++													id: 'open',
++													label: openLabel,
++													value:
++														metric === 'amount'
++															? period.openAmount
++															: period.count - period.paidCount,
++													className: openColor,
++												},
++											]}
++										/>
+ 									)
+ 								})}
+-							</div>
++							</BarChart>
+ 						</CardContent>
+ 					</Card>
+ 					<div className='grid gap-6 lg:grid-cols-2'>
+diff --git a/tests/invoiceStatistics.test.ts b/tests/invoiceStatistics.test.ts
+index 376e28a..fc86e16 100644
+--- a/tests/invoiceStatistics.test.ts
++++ b/tests/invoiceStatistics.test.ts
+@@ -73,6 +73,7 @@ test('issued, paid, open and overdue totals exclude drafts and other currencies
+ 		amount: 150,
+ 		count: 2,
+ 		paidAmount: 100,
++		openAmount: 50,
+ 		paidCount: 1,
+ 	})
+ 	assert.equal(stats.periods[1].amount, 35)
+@@ -125,13 +126,15 @@ test('legacy German statuses are evaluated and a paid invoice is never counted a
+ test('amount sums respect currency precision and avoid floating point accumulation artifacts', () => {
+ 	const { entries } = prepareStatisticsInvoices([
+ 		invoice(1, { amount: 0.1 }),
+-		invoice(2, { amount: 0.2 }),
++		invoice(2, { amount: 0.2, status: 'awaiting_payment' }),
+ 		invoice(3, { currency: 'JPY', amount: 1.4 }),
+ 		invoice(4, { currency: 'JPY', amount: 1.6 }),
+ 		invoice(5, { currency: 'BHD', amount: 0.111 }),
+ 		invoice(6, { currency: 'BHD', amount: 0.222 }),
+ 	])
+-	assert.equal(calculateInvoiceStatistics(entries, 'EUR').issued.amount, 0.3)
++	const euro = calculateInvoiceStatistics(entries, 'EUR')
++	assert.equal(euro.issued.amount, 0.3)
++	assert.equal(euro.periods[0].openAmount, 0.2)
+ 	assert.equal(calculateInvoiceStatistics(entries, 'JPY').issued.amount, 3)
+ 	assert.equal(calculateInvoiceStatistics(entries, 'BHD').issued.amount, 0.333)
+ })
+@@ -179,3 +182,21 @@ test('recipient ranking trims names, excludes drafts, returns five entries and c
+ 	assert.equal(stats.drafts.count, 1)
+ 	assert.equal(getLocalDate(new Date(2026, 0, 1, 0, 1)), '2026-01-01')
+ })
++
++test('draft-only years stay out of the chart and a selected year keeps twelve months', () => {
++	const { entries } = prepareStatisticsInvoices([
++		invoice(1, { invoiceDate: '2025-01-15', status: 'draft' }),
++		invoice(2),
++	])
++	assert.deepEqual(
++		calculateInvoiceStatistics(entries, 'EUR').periods.map(({ key }) => key),
++		['2026'],
++	)
++	const draftYear = calculateInvoiceStatistics(entries, 'EUR', '2025')
++	assert.equal(draftYear.periods.length, 12)
++	assert.ok(
++		draftYear.periods.every(
++			({ count, openAmount }) => count === 0 && openAmount === 0,
++		),
++	)
++})

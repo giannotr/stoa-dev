@@ -1,6 +1,14 @@
 # Changelog — @stoa-dev/kit
 
-## Unreleased
+## 1.1.0
+
+- `BarChartItem` unterstützt gestapelte Segmente in horizontalen und vertikalen
+  Diagrammen. Gesamt- und Segmentwerte können formatiert werden. Die Details
+  öffnen sich per Klick, Tap oder Tastatur.
+- `ColorPicker` und `ColorPickerToggle` ergänzen die UI um Farbrad, HEX-Eingabe
+  und eine Farbauswahl im Popover.
+
+## 1.0.1–1.0.3
 
 - Neuer Export `@stoa-dev/kit/autosave`: `createAutosave<T>()` mit typisiertem
   Provider und Hook, dazu ein unabhängig von React nutzbarer `AutosaveController`.
