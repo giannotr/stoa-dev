@@ -524,18 +524,6 @@
 .stoa-instrument [data-slot="switch-thumb"] {
 	width: var(--switch-thumb);
 	height: var(--switch-thumb);
-	translate: 0 0;
-	transition: translate 0.18s ease, background-color 0.18s ease;
-}
-
-.stoa-instrument [data-slot="switch"][data-state="checked"] [data-slot="switch-thumb"] {
-	translate: var(--switch-travel) 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.stoa-instrument [data-slot="switch-thumb"] {
-		transition: none;
-	}
 }
 
 .stoa-instrument [data-slot="switch"][data-state="checked"] {

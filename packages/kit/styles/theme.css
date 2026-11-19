@@ -258,9 +258,28 @@
 	}
 }
 
+@property --stoa-switch-progress {
+	syntax: "<number>";
+	inherits: false;
+	initial-value: 0;
+}
+
+[data-slot="switch-thumb"] {
+	--stoa-switch-progress: 0;
+	translate: calc(var(--switch-travel, calc(100% - 2px)) * var(--stoa-switch-progress)) 0;
+	/* Stretch at mid-travel and return to full roundness at either end. */
+	scale: calc(1 + 0.64 * var(--stoa-switch-progress) * (1 - var(--stoa-switch-progress))) 1;
+	transition: --stoa-switch-progress 180ms ease, background-color 180ms ease;
+}
+
+[data-slot="switch-thumb"][data-state="checked"] {
+	--stoa-switch-progress: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
 	[data-slot="button"], [data-slot="input"], [data-slot="textarea"],
-	[data-slot="native-select"], [data-slot="select-trigger"], [data-slot="toggle"] {
+	[data-slot="native-select"], [data-slot="select-trigger"], [data-slot="toggle"],
+	[data-slot="switch"], [data-slot="switch-thumb"] {
 		transition: none;
 	}
 }
