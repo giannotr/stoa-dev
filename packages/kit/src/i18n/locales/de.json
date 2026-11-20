@@ -13,7 +13,8 @@
     "restart": "Neu laden",
     "darkMode": "Dunkelmodus",
     "switchTheme": "Darstellung wechseln",
-    "loadingSettings": "Einstellungen laden …"
+    "loadingSettings": "Einstellungen laden …",
+    "scrollToTop": "Nach oben"
   },
   "colorPicker": {
     "title": "Farbinstrument",

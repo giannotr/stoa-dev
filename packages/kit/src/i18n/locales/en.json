@@ -13,7 +13,8 @@
     "restart": "Reload",
     "darkMode": "Dark mode",
     "switchTheme": "Change appearance",
-    "loadingSettings": "Loading settings …"
+    "loadingSettings": "Loading settings …",
+    "scrollToTop": "Back to top"
   },
   "colorPicker": {
     "title": "Color instrument",

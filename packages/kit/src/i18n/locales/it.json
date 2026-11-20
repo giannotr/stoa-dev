@@ -13,7 +13,8 @@
     "restart": "Ricarica",
     "darkMode": "Modalità scura",
     "switchTheme": "Cambia aspetto",
-    "loadingSettings": "Caricamento impostazioni …"
+    "loadingSettings": "Caricamento impostazioni …",
+    "scrollToTop": "Torna su"
   },
   "colorPicker": {
     "title": "Strumento colore",
