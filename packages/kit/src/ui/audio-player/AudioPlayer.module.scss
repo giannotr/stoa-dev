@@ -46,17 +46,13 @@
 
 .dial {
   position: relative;
-  width: min(100%, 21.25rem);
-  margin: .875rem auto .375rem;
+  width: min(100%, 19rem);
+  margin: .5rem auto 0;
 
   svg {
     display: block;
     width: 100%;
     aspect-ratio: 1;
-  }
-
-  &:has(.position-input:focus-visible) .indicator {
-    stroke-width: 3;
   }
 }
 
@@ -87,9 +83,24 @@
 .progress {
   fill: none;
   stroke: currentColor;
-  stroke-width: 2;
+  stroke-width: 3;
   stroke-linecap: round;
   transition: stroke-dashoffset .2s linear;
+}
+
+.guide {
+  stroke: var(--player-line);
+  stroke-width: .7;
+}
+
+.guide-end {
+  fill: currentColor;
+  opacity: .55;
+}
+
+.crosshair {
+  stroke: currentColor;
+  stroke-width: 1.5;
 }
 
 .indicator {
@@ -97,29 +108,6 @@
   stroke: currentColor;
   stroke-width: 1.5;
   transition: cx .2s linear, cy .2s linear;
-}
-
-.scrub-ring {
-  fill: none;
-  stroke: transparent;
-  stroke-width: 32;
-  pointer-events: stroke;
-  touch-action: none;
-  cursor: grab;
-
-  &:active {
-    cursor: grabbing;
-  }
-}
-
-.position-input {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 1px;
-  height: 1px;
-  clip-path: inset(50%);
-  pointer-events: none;
 }
 
 .center {
@@ -142,6 +130,87 @@
   span {
     color: var(--muted-foreground);
   }
+}
+
+// The control: a straight scale with a ruler, like the instrument sliders.
+.scale {
+  display: grid;
+  gap: .25rem;
+  margin-block: .25rem 1rem;
+}
+
+.scrubber {
+  appearance: none;
+  width: 100%;
+  height: 1.75rem;
+  margin: 0;
+  background:
+    linear-gradient(to right, var(--player-ink) var(--progress), var(--player-line) var(--progress))
+    center / 100% 2px no-repeat;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    box-sizing: border-box;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 3px solid var(--player-surface);
+    border-radius: 50%;
+    background: var(--player-ink);
+    box-shadow: 0 0 0 1px var(--player-ink);
+  }
+
+  &::-moz-range-thumb {
+    box-sizing: border-box;
+    width: 1.125rem;
+    height: 1.125rem;
+    border: 3px solid var(--player-surface);
+    border-radius: 50%;
+    background: var(--player-ink);
+    box-shadow: 0 0 0 1px var(--player-ink);
+  }
+
+  &:disabled::-webkit-slider-thumb {
+    opacity: 0;
+  }
+}
+
+.ruler {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  height: .5rem;
+  padding-inline: .5625rem;
+
+  i {
+    display: block;
+    width: 1px;
+    height: .25rem;
+    background: currentColor;
+    opacity: .3;
+
+    &[data-major] {
+      height: .5rem;
+      opacity: .55;
+    }
+
+    &[data-passed] {
+      opacity: 1;
+    }
+  }
+}
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted-foreground);
+  font-size: .6875rem;
+  letter-spacing: .09em;
+  font-variant-numeric: tabular-nums;
 }
 
 .transport {

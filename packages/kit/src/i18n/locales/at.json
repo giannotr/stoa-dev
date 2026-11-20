@@ -184,6 +184,7 @@
     "loop": "Wiederholen",
     "error": "Die Datei kann hier nicht abgespielt werden.",
     "loading": "Wird gladn …",
-    "duration": "Dauer"
+    "duration": "Dauer",
+    "remaining": "Rest"
   }
 }

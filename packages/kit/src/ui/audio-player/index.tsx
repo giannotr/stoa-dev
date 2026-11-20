@@ -2,8 +2,8 @@
 
 import { Pause, Play, Repeat, RotateCcw, RotateCw } from 'lucide-react'
 import {
+	type CSSProperties,
 	type KeyboardEvent,
-	type PointerEvent,
 	type ReactNode,
 	useEffect,
 	useId,
@@ -40,8 +40,10 @@ export interface AudioPlayerProps {
 }
 
 const CENTER = 160
-const RADIUS = 139
+const RADIUS = 118
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS
+/** Ticks on the straight position scale (major every fifth). */
+const SCALE_TICKS = 41
 
 function ringPoint(degrees: number, radius: number) {
 	const radians = ((degrees - 90) * Math.PI) / 180
@@ -54,8 +56,8 @@ function ringPoint(degrees: number, radius: number) {
 const TICKS = Array.from({ length: 60 }, (_, index) => {
 	const degrees = index * 6
 	const major = index % 5 === 0
-	const start = ringPoint(degrees, major ? 140 : 145)
-	const end = ringPoint(degrees, 151)
+	const start = ringPoint(degrees, major ? 121 : 125)
+	const end = ringPoint(degrees, 130)
 	return { degrees, major, x1: start.x, y1: start.y, x2: end.x, y2: end.y }
 })
 
@@ -68,7 +70,8 @@ function formatTime(seconds: number) {
 
 /**
  * Practice-friendly audio player in the style of the color instrument: a
- * position ring to scrub, skip buttons, playback speed and repeat.
+ * straight position scale to scrub, a decorative dial that mirrors the
+ * progress, skip buttons, playback speed and repeat.
  */
 export function AudioPlayer({
 	src,
@@ -142,16 +145,6 @@ export function AudioPlayer({
 		setCurrent(element.currentTime)
 	}
 
-	function pointToPosition(event: PointerEvent<SVGCircleElement>) {
-		const bounds = event.currentTarget.ownerSVGElement?.getBoundingClientRect()
-		if (!bounds || !known) return
-		const x = event.clientX - bounds.left - bounds.width / 2
-		const y = event.clientY - bounds.top - bounds.height / 2
-		if (x === 0 && y === 0) return
-		const angle = ((Math.atan2(x, -y) * 180) / Math.PI + 360) % 360
-		seek((angle / 360) * duration)
-	}
-
 	function onKeyDown(event: KeyboardEvent) {
 		const target = event.target as HTMLElement
 		if (target.closest('input[type="text"], textarea, select')) return
@@ -217,20 +210,38 @@ export function AudioPlayer({
 				</p>
 			) : (
 				<>
-					<div className={styles.dial}>
-						<input
-							className={styles.positionInput}
-							type='range'
-							min={0}
-							max={known ? duration : 0}
-							step={0.1}
-							value={current}
-							disabled={!ready || !known}
-							aria-label={t('audioPlayer.position')}
-							aria-valuetext={`${formatTime(current)} / ${formatTime(duration)}`}
-							onChange={(event) => seek(event.currentTarget.valueAsNumber)}
-						/>
+					{/* Decoration only: the dial mirrors the position, the scale below controls it. */}
+					<div className={styles.dial} aria-hidden='true'>
 						<svg viewBox='0 0 320 320' aria-hidden='true'>
+							{/* Guide line from both edges to the ring, kept clear of the readout. */}
+							<line
+								x1={4}
+								y1={CENTER}
+								x2={CENTER - RADIUS - 16}
+								y2={CENTER}
+								className={styles.guide}
+							/>
+							<line
+								x1={CENTER + RADIUS + 16}
+								y1={CENTER}
+								x2={316}
+								y2={CENTER}
+								className={styles.guide}
+							/>
+							<rect
+								x={0}
+								y={CENTER - 3}
+								width={6}
+								height={6}
+								className={styles.guideEnd}
+							/>
+							<rect
+								x={314}
+								y={CENTER - 3}
+								width={6}
+								height={6}
+								className={styles.guideEnd}
+							/>
 							<circle
 								cx={CENTER}
 								cy={CENTER}
@@ -259,40 +270,71 @@ export function AudioPlayer({
 							<circle
 								cx={CENTER}
 								cy={CENTER}
-								r={126}
+								r={104}
 								className={styles.innerTrack}
 							/>
+							{[0, 90, 180, 270].map((mark) => {
+								const outer = ringPoint(mark, 100)
+								const inner = ringPoint(mark, 92)
+								return (
+									<line
+										key={mark}
+										x1={outer.x}
+										y1={outer.y}
+										x2={inner.x}
+										y2={inner.y}
+										className={styles.crosshair}
+									/>
+								)
+							})}
 							<circle
 								cx={indicator.x}
 								cy={indicator.y}
-								r={8}
+								r={6}
 								className={styles.indicator}
 							/>
-							<circle
-								cx={CENTER}
-								cy={CENTER}
-								r={RADIUS}
-								className={styles.scrubRing}
-								onPointerDown={(event) => {
-									if (event.button !== 0 || !event.isPrimary || !ready) return
-									event.currentTarget.setPointerCapture(event.pointerId)
-									pointToPosition(event)
-								}}
-								onPointerMove={(event) => {
-									if (event.currentTarget.hasPointerCapture(event.pointerId))
-										pointToPosition(event)
-								}}
-							/>
 						</svg>
-						<div className={styles.center} aria-hidden='true'>
+						<div className={styles.center}>
 							<strong data-slot='audio-player-time'>
 								{formatTime(current)}
 							</strong>
 							<span>
 								{src === null
 									? t('audioPlayer.loading')
-									: `${t('audioPlayer.duration')} ${formatTime(duration)}`}
+									: `${t('audioPlayer.remaining')} −${formatTime(known ? duration - current : Number.NaN)}`}
 							</span>
+						</div>
+					</div>
+
+					<div className={styles.scale}>
+						<input
+							className={styles.scrubber}
+							type='range'
+							min={0}
+							max={known ? duration : 0}
+							step={0.1}
+							value={current}
+							disabled={!ready || !known}
+							aria-label={t('audioPlayer.position')}
+							aria-valuetext={`${formatTime(current)} / ${formatTime(duration)}`}
+							style={{ '--progress': `${share * 100}%` } as CSSProperties}
+							onChange={(event) => seek(event.currentTarget.valueAsNumber)}
+						/>
+						<div className={styles.ruler} aria-hidden='true'>
+							{Array.from({ length: SCALE_TICKS }, (_, index) => (
+								<i
+									// biome-ignore lint/suspicious/noArrayIndexKey: static scale
+									key={index}
+									data-major={index % 5 === 0 || undefined}
+									data-passed={
+										known && index / (SCALE_TICKS - 1) <= share ? '' : undefined
+									}
+								/>
+							))}
+						</div>
+						<div className={styles.scaleLabels} aria-hidden='true'>
+							<span>0:00</span>
+							<span>{formatTime(duration)}</span>
 						</div>
 					</div>
 

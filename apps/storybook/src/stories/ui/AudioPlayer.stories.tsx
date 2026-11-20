@@ -102,11 +102,17 @@ export const InDialog: Story = {
 
 /** Reads the duration, seeks with buttons and arrow keys, sets speed and repeat. */
 export const Controls: Story = {
-	play: async ({ canvas }) => {
-		await waitFor(() => expect(canvas.getByText('Dauer 0:12')).toBeVisible(), {
-			timeout: 5000,
-		})
-		const time = () => canvas.getByText(/^\d:\d\d$/)
+	play: async ({ canvas, canvasElement }) => {
+		await waitFor(
+			() =>
+				expect(
+					canvas.getByRole('slider', { name: 'Position' }),
+				).toHaveAttribute('aria-valuetext', '0:00 / 0:12'),
+			{ timeout: 5000 },
+		)
+		const player = canvasElement.querySelector('[data-slot="audio-player"]')
+		const time = () =>
+			player?.querySelector('[data-slot="audio-player-time"]') as HTMLElement
 
 		await userEvent.click(canvas.getByRole('button', { name: '5 s vor' }))
 		await expect(time()).toHaveTextContent('0:05')
@@ -115,6 +121,7 @@ export const Controls: Story = {
 		canvas.getByRole('button', { name: 'Abspielen' }).focus()
 		await userEvent.keyboard('{ArrowRight}')
 		await expect(time()).toHaveTextContent('0:10')
+		await expect(canvas.getByText('Rest −0:02')).toBeVisible()
 		await expect(
 			canvas.getByRole('slider', { name: 'Position' }),
 		).toHaveAttribute('aria-valuetext', '0:10 / 0:12')
@@ -132,9 +139,13 @@ export const Controls: Story = {
 
 export const PlayAndPause: Story = {
 	play: async ({ canvas }) => {
-		await waitFor(() => expect(canvas.getByText('Dauer 0:12')).toBeVisible(), {
-			timeout: 5000,
-		})
+		await waitFor(
+			() =>
+				expect(
+					canvas.getByRole('slider', { name: 'Position' }),
+				).toHaveAttribute('aria-valuetext', '0:00 / 0:12'),
+			{ timeout: 5000 },
+		)
 		await userEvent.click(canvas.getByRole('button', { name: 'Abspielen' }))
 		const pause = await canvas.findByRole('button', { name: 'Pause' })
 		await userEvent.click(pause)

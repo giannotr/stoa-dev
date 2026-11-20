@@ -184,6 +184,7 @@
     "loop": "Ripeti",
     "error": "Questo file non può essere riprodotto qui.",
     "loading": "Caricamento …",
-    "duration": "Durata"
+    "duration": "Durata",
+    "remaining": "Restante"
   }
 }

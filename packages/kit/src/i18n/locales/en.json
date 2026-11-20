@@ -184,6 +184,7 @@
     "loop": "Repeat",
     "error": "This file cannot be played here.",
     "loading": "Loading …",
-    "duration": "Duration"
+    "duration": "Duration",
+    "remaining": "Remaining"
   }
 }
