@@ -702,3 +702,40 @@
 	background: var(--ink);
 	color: var(--paper);
 }
+
+/* ── Combobox: same rows as the menus ───────────────────────────────────── */
+
+.stoa-instrument [data-slot="combobox-content"] {
+	padding: 0.375rem;
+	border: 0;
+	border-radius: 1rem;
+	background: var(--popover);
+	box-shadow:
+		0 0 0 1px var(--hairline),
+		0 20px 48px -18px rgb(0 0 0 / 30%);
+}
+
+.stoa-instrument [data-slot="combobox-option"] {
+	min-height: 2.25rem;
+	align-items: center;
+	padding: 0.5rem 0.75rem;
+	border-radius: 0.625rem;
+	font-size: 0.8125rem;
+}
+
+.stoa-instrument [data-slot="combobox-option"][data-highlighted] {
+	background: var(--ink);
+	color: var(--paper);
+}
+
+.stoa-instrument [data-slot="combobox-option"][data-highlighted] * {
+	color: inherit;
+}
+
+.stoa-instrument [data-slot="combobox-hint"] {
+	font-family: var(--instrument-mono);
+	font-size: 0.625rem;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+}
+

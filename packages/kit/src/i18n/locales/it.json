@@ -200,5 +200,8 @@
     "fit": "Adatta",
     "error": "Il file non può essere mostrato qui.",
     "loading": "Caricamento …"
+  },
+  "combobox": {
+    "via": "tramite {{name}}"
   }
 }

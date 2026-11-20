@@ -200,5 +200,8 @@
     "fit": "Einpassen",
     "error": "Die Datei kann hier nicht angezeigt werden.",
     "loading": "Wird geladen …"
+  },
+  "combobox": {
+    "via": "über {{name}}"
   }
 }
