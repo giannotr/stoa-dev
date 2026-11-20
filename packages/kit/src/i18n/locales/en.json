@@ -186,5 +186,19 @@
     "loading": "Loading …",
     "duration": "Duration",
     "remaining": "Remaining"
+  },
+  "fileViewer": {
+    "title": "Viewing instrument",
+    "image": "Image",
+    "pdf": "PDF",
+    "position": "{{current}} of {{count}}",
+    "previous": "Previous file",
+    "next": "Next file",
+    "zoom": "Zoom",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "fit": "Fit",
+    "error": "This file cannot be shown here.",
+    "loading": "Loading …"
   }
 }

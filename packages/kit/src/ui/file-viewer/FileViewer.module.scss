@@ -1,0 +1,382 @@
+@use '../../../scss' as *;
+
+// Instrument language shared with the color and audio instruments.
+.viewer {
+  --viewer-surface: color-mix(in srgb, var(--card) 68%, var(--muted));
+  --viewer-ink: var(--card-foreground);
+  --viewer-line: color-mix(in srgb, currentColor 25%, transparent);
+  --viewer-padding: clamp(1rem, 4vw, 1.75rem);
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  min-height: 24rem;
+  box-sizing: border-box;
+  padding: var(--viewer-padding);
+  border-radius: 1.375rem;
+  background: var(--viewer-surface);
+  color: var(--card-foreground);
+  font-family: var(--font-mono, "Mona Sans Mono", ui-monospace, monospace);
+  box-shadow: var(--surface-shadow);
+
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+.caption,
+.readout,
+.fit,
+.counter,
+.loading {
+  font-size: .6875rem;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.caption {
+  color: var(--muted-foreground);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--viewer-line);
+}
+
+.heading {
+  display: grid;
+  gap: .25rem;
+  min-width: 0;
+}
+
+// Framed index, like a page number in the margin.
+.index {
+  flex-shrink: 0;
+  padding: .25rem .5rem;
+  border: 1.5px solid currentColor;
+  font-size: .75rem;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  border-radius: 1rem;
+  background: color-mix(in srgb, var(--viewer-surface) 70%, var(--background));
+  overflow: hidden;
+}
+
+// Viewfinder: corner brackets, edge ticks and a small cross, behind the content.
+.marks {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  i {
+    position: absolute;
+    display: block;
+    border-color: currentColor;
+    opacity: .5;
+  }
+
+  [data-corner] {
+    width: .875rem;
+    height: .875rem;
+  }
+
+  [data-corner='tl'] { top: .75rem; left: .75rem; border-top: 1.5px solid; border-left: 1.5px solid; }
+  [data-corner='tr'] { top: .75rem; right: .75rem; border-top: 1.5px solid; border-right: 1.5px solid; }
+  [data-corner='bl'] { bottom: .75rem; left: .75rem; border-bottom: 1.5px solid; border-left: 1.5px solid; }
+  [data-corner='br'] { bottom: .75rem; right: .75rem; border-bottom: 1.5px solid; border-right: 1.5px solid; }
+
+  [data-edge='top'],
+  [data-edge='bottom'] {
+    left: 50%;
+    width: 1px;
+    height: .5rem;
+    background: currentColor;
+  }
+
+  [data-edge='top'] { top: .75rem; }
+  [data-edge='bottom'] { bottom: .75rem; }
+
+  [data-edge='left'],
+  [data-edge='right'] {
+    top: 50%;
+    width: .5rem;
+    height: 1px;
+    background: currentColor;
+  }
+
+  [data-edge='left'] { left: .75rem; }
+  [data-edge='right'] { right: .75rem; }
+
+  [data-center] {
+    top: 50%;
+    left: 50%;
+    width: 1.25rem;
+    height: 1.25rem;
+    translate: -50% -50%;
+    opacity: .3;
+    background:
+      linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat,
+      linear-gradient(currentColor, currentColor) center / 1px 100% no-repeat;
+  }
+}
+
+.viewport {
+  position: absolute;
+  inset: 0;
+  overflow: auto;
+}
+
+// Fitted: the canvas is exactly the viewport and the image scales into it.
+// Zoomed: the canvas grows with the image; margin:auto keeps it centred while
+// smaller and fully scrollable (no clipped left edge) while larger.
+.canvas {
+  display: flex;
+  box-sizing: border-box;
+  height: 100%;
+  padding: 2rem;
+
+  [data-zoomed] & {
+    width: max-content;
+    min-width: 100%;
+    height: auto;
+    min-height: 100%;
+  }
+}
+
+.image {
+  display: block;
+  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 10px 30px -18px rgb(0 0 0 / 35%);
+}
+
+.pdf {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.loading,
+.error {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  margin: 0;
+  text-align: center;
+}
+
+.loading {
+  color: var(--muted-foreground);
+}
+
+.error {
+  width: min(80%, 24rem);
+  padding: 1rem;
+  border: 1px dashed var(--viewer-line);
+  border-radius: .875rem;
+  background: var(--viewer-surface);
+  color: var(--muted-foreground);
+  font-size: .8125rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--viewer-line);
+}
+
+.round {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--viewer-line);
+  border-radius: 50%;
+  cursor: pointer;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &:not(:disabled):hover {
+    border-color: currentColor;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: .35;
+  }
+}
+
+.paging {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+// One dot per file; the current one is solid ink.
+.dots {
+  display: flex;
+  align-items: center;
+  gap: .4375rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    width: .375rem;
+    height: .375rem;
+    border-radius: 50%;
+    background: var(--viewer-line);
+    transition: background-color .15s ease, scale .15s ease;
+
+    &[aria-current='true'] {
+      background: var(--viewer-ink);
+      scale: 1.5;
+    }
+  }
+}
+
+.counter {
+  font-variant-numeric: tabular-nums;
+}
+
+.zoom {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .75rem;
+  min-width: min(100%, 22rem);
+}
+
+.scale {
+  display: grid;
+  flex: 1;
+  gap: .125rem;
+  max-width: 14rem;
+}
+
+.slider {
+  appearance: none;
+  width: 100%;
+  height: 1.5rem;
+  margin: 0;
+  background:
+    linear-gradient(to right, var(--viewer-ink) var(--progress), var(--viewer-line) var(--progress))
+    center / 100% 2px no-repeat;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: default;
+    opacity: .5;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    box-sizing: border-box;
+    width: 1rem;
+    height: 1rem;
+    border: 3px solid var(--viewer-surface);
+    border-radius: 50%;
+    background: var(--viewer-ink);
+    box-shadow: 0 0 0 1px var(--viewer-ink);
+  }
+
+  &::-moz-range-thumb {
+    box-sizing: border-box;
+    width: 1rem;
+    height: 1rem;
+    border: 3px solid var(--viewer-surface);
+    border-radius: 50%;
+    background: var(--viewer-ink);
+    box-shadow: 0 0 0 1px var(--viewer-ink);
+  }
+}
+
+.ruler {
+  display: flex;
+  justify-content: space-between;
+  height: .4375rem;
+  padding-inline: .5rem;
+
+  i {
+    display: block;
+    width: 1px;
+    height: .25rem;
+    background: currentColor;
+    opacity: .3;
+
+    &[data-major] {
+      height: .4375rem;
+      opacity: .6;
+    }
+
+    &[data-passed] {
+      opacity: 1;
+    }
+  }
+}
+
+.readout {
+  min-width: 3.5rem;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.fit {
+  padding: .375rem .75rem;
+  border: 1px solid var(--viewer-line);
+  border-radius: 999px;
+  cursor: pointer;
+
+  &:not(:disabled):hover {
+    border-color: currentColor;
+  }
+
+  &[aria-pressed='true'] {
+    border-color: var(--viewer-ink);
+    background: var(--viewer-ink);
+    color: var(--viewer-surface);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: .35;
+  }
+}
+
+.footer {
+  padding-top: .75rem;
+  border-top: 1px solid var(--viewer-line);
+}
+
+@include reduced-motion {
+  .dots li {
+    transition: none;
+  }
+}
