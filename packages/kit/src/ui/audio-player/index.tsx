@@ -115,7 +115,6 @@ export function AudioPlayer({
 	const ready = src !== null && !failed
 	const share = known ? Math.min(1, current / duration) : 0
 	const degrees = share * 360
-	const indicator = ringPoint(degrees, RADIUS)
 
 	function fail() {
 		setFailed(true)
@@ -287,12 +286,6 @@ export function AudioPlayer({
 									/>
 								)
 							})}
-							<circle
-								cx={indicator.x}
-								cy={indicator.y}
-								r={6}
-								className={styles.indicator}
-							/>
 						</svg>
 						<div className={styles.center}>
 							<strong data-slot='audio-player-time'>

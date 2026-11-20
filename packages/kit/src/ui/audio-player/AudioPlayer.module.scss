@@ -80,9 +80,11 @@
   stroke-opacity: 1;
 }
 
+// Quiet echo of the scale below: grey and translucent, clearly not a control.
 .progress {
   fill: none;
-  stroke: currentColor;
+  stroke: var(--muted-foreground);
+  stroke-opacity: .5;
   stroke-width: 3;
   stroke-linecap: round;
   transition: stroke-dashoffset .2s linear;
@@ -101,13 +103,6 @@
 .crosshair {
   stroke: currentColor;
   stroke-width: 1.5;
-}
-
-.indicator {
-  fill: var(--player-surface);
-  stroke: currentColor;
-  stroke-width: 1.5;
-  transition: cx .2s linear, cy .2s linear;
 }
 
 .center {
@@ -355,8 +350,7 @@
 }
 
 @include reduced-motion {
-  .progress,
-  .indicator {
+  .progress {
     transition: none;
   }
 }
