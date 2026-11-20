@@ -8,7 +8,7 @@ import {
 } from '@stoa-dev/kit/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ExternalLink } from 'lucide-react'
-import { expect, fn, userEvent, waitFor } from 'storybook/test'
+import { expect, fn, screen, userEvent, waitFor } from 'storybook/test'
 
 /** A quiet 440 Hz tone as WAV, generated in the browser so no file is needed. */
 function toneUrl(seconds = 12) {
@@ -85,19 +85,55 @@ export const WithFooter: Story = {
 	},
 }
 
-/** How practicr uses it: inside a dialog, the play button gets the focus. */
+/**
+ * In a dialog without extra card: the player's own close button closes the
+ * (uncontrolled) dialog, so the dialog's X is not needed.
+ */
 export const InDialog: Story = {
 	render: (args) => (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button variant='outline'>Aufnahme abspielen</Button>
 			</DialogTrigger>
-			<DialogContent className='w-auto border-0 bg-transparent p-0 shadow-none sm:max-w-none'>
+			<DialogContent
+				showCloseButton={false}
+				className='w-auto border-0 bg-transparent p-0 shadow-none sm:max-w-none'
+			>
 				<DialogTitle className='sr-only'>{args.title}</DialogTitle>
-				<AudioPlayer {...args} autoFocus />
+				<AudioPlayer {...args} closable autoFocus />
 			</DialogContent>
 		</Dialog>
 	),
+	play: async ({ canvas }) => {
+		await userEvent.click(
+			canvas.getByRole('button', { name: 'Aufnahme abspielen' }),
+		)
+		await screen.findByRole('dialog')
+		await userEvent.click(screen.getByRole('button', { name: 'Schließen' }))
+		await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+	},
+}
+
+/** Standalone and without onClose, the close button hides the player itself. */
+export const ClosableStandalone: Story = {
+	args: { closable: true },
+	play: async ({ canvas }) => {
+		await userEvent.click(canvas.getByRole('button', { name: 'Schließen' }))
+		await expect(canvas.queryByRole('region')).toBeNull()
+		await expect(canvas.queryByText('Etüde Nr. 4 – Aufnahme.wav')).toBeNull()
+	},
+}
+
+/** With onClose the app decides; Escape closes too outside of dialogs. */
+export const ClosableWithCallback: Story = {
+	args: { closable: true, onClose: fn() },
+	play: async ({ args, canvas }) => {
+		await userEvent.click(canvas.getByRole('button', { name: 'Schließen' }))
+		await expect(args.onClose).toHaveBeenCalledTimes(1)
+		canvas.getByRole('button', { name: 'Abspielen' }).focus()
+		await userEvent.keyboard('{Escape}')
+		await expect(args.onClose).toHaveBeenCalledTimes(2)
+	},
 }
 
 /** Reads the duration, seeks with buttons and arrow keys, sets speed and repeat. */

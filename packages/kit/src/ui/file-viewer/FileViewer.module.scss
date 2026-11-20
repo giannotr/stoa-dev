@@ -57,6 +57,28 @@
   min-width: 0;
 }
 
+// Own close button, top right, in the same round language as the controls.
+.close {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-top: -.125rem;
+  border: 1px solid var(--viewer-line);
+  border-radius: 50%;
+  cursor: pointer;
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  &:hover {
+    border-color: currentColor;
+  }
+}
+
 // Framed index, like a page number in the margin.
 .index {
   flex-shrink: 0;

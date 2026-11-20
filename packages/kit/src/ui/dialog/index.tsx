@@ -1,15 +1,69 @@
 import { XIcon } from 'lucide-react'
 import { Dialog as DialogPrimitive } from 'radix-ui'
 import type * as React from 'react'
+import { createContext, useCallback, useContext, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { STOA_NS } from '../../i18n/namespace'
 import { cn } from '../../utils/cn'
 import { Button } from '../button'
 
+const DialogCloseContext = createContext<(() => void) | null>(null)
+
+/**
+ * Closes the surrounding kit Dialog, or `null` outside of one. Works for
+ * controlled and uncontrolled dialogs and through portals, so components can
+ * offer their own close button without knowing how they are hosted.
+ */
+function useDialogClose() {
+	return useContext(DialogCloseContext)
+}
+
+/**
+ * What a component's own close button does, wherever it is hosted: call
+ * `onClose` if given, close the surrounding kit Dialog if there is one, and
+ * otherwise hide the component itself (`dismissed`).
+ */
+function useCloseAction(onClose?: () => void) {
+	const closeDialog = useDialogClose()
+	const [dismissed, setDismissed] = useState(false)
+	const close = useCallback(() => {
+		onClose?.()
+		closeDialog?.()
+		if (!onClose && !closeDialog) setDismissed(true)
+	}, [onClose, closeDialog])
+	return { close, dismissed, insideDialog: closeDialog !== null }
+}
+
 function Dialog({
+	open: openProp,
+	defaultOpen = false,
+	onOpenChange,
 	...props
 }: React.ComponentProps<typeof DialogPrimitive.Root>) {
-	return <DialogPrimitive.Root data-slot='dialog' {...props} />
+	// The open state is mirrored here so that useDialogClose can close
+	// uncontrolled dialogs too.
+	const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen)
+	const controlled = openProp !== undefined
+	const open = controlled ? openProp : uncontrolledOpen
+	const setOpen = useCallback(
+		(next: boolean) => {
+			if (!controlled) setUncontrolledOpen(next)
+			onOpenChange?.(next)
+		},
+		[controlled, onOpenChange],
+	)
+	const close = useCallback(() => setOpen(false), [setOpen])
+
+	return (
+		<DialogCloseContext.Provider value={close}>
+			<DialogPrimitive.Root
+				data-slot='dialog'
+				open={open}
+				onOpenChange={setOpen}
+				{...props}
+			/>
+		</DialogCloseContext.Provider>
+	)
 }
 
 function DialogTrigger({
@@ -165,4 +219,6 @@ export {
 	DialogPortal,
 	DialogTitle,
 	DialogTrigger,
+	useCloseAction,
+	useDialogClose,
 }

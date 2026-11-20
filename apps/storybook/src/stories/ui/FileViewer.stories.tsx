@@ -9,7 +9,7 @@ import {
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ExternalLink } from 'lucide-react'
 import { useState } from 'react'
-import { expect, fn, userEvent, waitFor, within } from 'storybook/test'
+import { expect, fn, screen, userEvent, waitFor, within } from 'storybook/test'
 
 const svg = (width: number, height: number, body: string) =>
 	`data:image/svg+xml;charset=utf-8,${encodeURIComponent(
@@ -93,15 +93,18 @@ const files = [
 function Collection({
 	start = 0,
 	onIndexChange,
+	closable = false,
 }: {
 	start?: number
 	onIndexChange?: (index: number) => void
+	closable?: boolean
 }) {
 	const [index, setIndex] = useState(start)
 	const file = files[index]
 	return (
 		<div className='max-w-4xl' style={{ height: '38rem' }}>
 			<FileViewer
+				closable={closable}
 				name={file.name}
 				src={file.src}
 				description={file.description}
@@ -237,17 +240,55 @@ export const Zooming: Story = {
 	},
 }
 
-/** How practicr uses it: in a tall dialog. */
+/**
+ * In a tall dialog without extra card: the viewer's own close button closes
+ * the (uncontrolled) dialog, so the dialog's X is not needed.
+ */
 export const InDialog: Story = {
 	render: () => (
 		<Dialog>
 			<DialogTrigger asChild>
 				<Button variant='outline'>Anhang ansehen</Button>
 			</DialogTrigger>
-			<DialogContent className='h-[90vh] w-[min(64rem,calc(100vw-2rem))] max-w-none border-0 bg-transparent p-0 shadow-none sm:max-w-none'>
+			<DialogContent
+				showCloseButton={false}
+				className='h-[90vh] w-[min(64rem,calc(100vw-2rem))] max-w-none border-0 bg-transparent p-0 shadow-none sm:max-w-none'
+			>
 				<DialogTitle className='sr-only'>Anhänge</DialogTitle>
-				<Collection />
+				<Collection closable />
 			</DialogContent>
 		</Dialog>
 	),
+	play: async ({ canvas }) => {
+		await userEvent.click(
+			canvas.getByRole('button', { name: 'Anhang ansehen' }),
+		)
+		await screen.findByRole('dialog')
+		await userEvent.click(screen.getByRole('button', { name: 'Nächste Datei' }))
+		await userEvent.click(screen.getByRole('button', { name: 'Schließen' }))
+		await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+	},
+}
+
+/** Standalone and without onClose, the close button hides the viewer itself. */
+export const ClosableStandalone: Story = {
+	args: { closable: true },
+	play: async ({ canvas }) => {
+		await userEvent.click(canvas.getByRole('button', { name: 'Schließen' }))
+		await expect(
+			canvas.queryByRole('heading', { name: 'Etüde Nr. 4.svg' }),
+		).toBeNull()
+	},
+}
+
+/** With onClose the app decides; Escape closes too outside of dialogs. */
+export const ClosableWithCallback: Story = {
+	args: { closable: true, onClose: fn() },
+	play: async ({ args, canvas }) => {
+		await userEvent.click(canvas.getByRole('button', { name: 'Schließen' }))
+		await expect(args.onClose).toHaveBeenCalledTimes(1)
+		canvas.getByRole('button', { name: 'Einpassen' }).focus()
+		await userEvent.keyboard('{Escape}')
+		await expect(args.onClose).toHaveBeenCalledTimes(2)
+	},
 }

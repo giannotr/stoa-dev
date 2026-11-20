@@ -1,6 +1,6 @@
 'use client'
 
-import { ChevronLeft, ChevronRight, Minus, Plus } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Minus, Plus, X } from 'lucide-react'
 import {
 	type CSSProperties,
 	type KeyboardEvent,
@@ -13,6 +13,7 @@ import {
 import { useTranslation } from 'react-i18next'
 import { STOA_NS } from '../../i18n/namespace'
 import { cn } from '../../utils/cn'
+import { useCloseAction } from '../dialog'
 import styles from './FileViewer.module.scss'
 
 export type FileViewerKind = 'image' | 'pdf'
@@ -35,6 +36,13 @@ export interface FileViewerProps {
 	/** Extra actions below the controls, e.g. "open in default app". */
 	footer?: ReactNode
 	onError?: () => void
+	/**
+	 * Shows an own close button (and Escape outside of dialogs). It calls
+	 * `onClose`, closes a surrounding kit Dialog, or else hides the component.
+	 */
+	closable?: boolean
+	/** Called by the close button; optional inside a kit Dialog. */
+	onClose?: () => void
 	className?: string
 }
 
@@ -71,6 +79,8 @@ export function FileViewer({
 	errorMessage,
 	footer,
 	onError,
+	closable = false,
+	onClose,
 	className,
 }: FileViewerProps) {
 	const { t } = useTranslation(STOA_NS)
@@ -82,6 +92,7 @@ export function FileViewer({
 	const [naturalWidth, setNaturalWidth] = useState(0)
 	// The scale the fitted image is shown at, measured from the layout.
 	const [fitScale, setFitScale] = useState(1)
+	const { close, dismissed, insideDialog } = useCloseAction(onClose)
 
 	// A new file starts fitted (reset during render, no extra effect).
 	const [previousSrc, setPreviousSrc] = useState(src)
@@ -131,6 +142,16 @@ export function FileViewer({
 	}
 
 	function onKeyDown(event: KeyboardEvent) {
+		if (
+			event.key === 'Escape' &&
+			closable &&
+			!insideDialog &&
+			!event.defaultPrevented
+		) {
+			event.preventDefault()
+			close()
+			return
+		}
 		const target = event.target as HTMLElement
 		if (target.closest('input, textarea, select')) return
 		if (event.key === 'ArrowLeft' && paging) {
@@ -149,6 +170,8 @@ export function FileViewer({
 	const percent = `${Math.round((zoom ?? shownScale()) * 100)} %`
 	const caption = [t(pdf ? 'fileViewer.pdf' : 'fileViewer.image')]
 	const position = t('fileViewer.position', { current: index + 1, count })
+
+	if (closable && dismissed) return null
 
 	return (
 		<section
@@ -179,6 +202,17 @@ export function FileViewer({
 							{pad(index + 1)} / {pad(count)}
 						</span>
 					</span>
+				)}
+				{closable && (
+					<button
+						type='button'
+						className={styles.close}
+						aria-label={t('actions.close')}
+						title={t('actions.close')}
+						onClick={close}
+					>
+						<X />
+					</button>
 				)}
 			</header>
 
