@@ -23,9 +23,9 @@
 	--paper: #f4f4f2;
 	--background: #dfdfdc;
 	--foreground: var(--ink);
-	--card: #ebebe8;
+	--card: var(--light);
 	--card-foreground: var(--ink);
-	--popover: var(--paper);
+	--popover: var(--light);
 	--popover-foreground: var(--ink);
 	--primary: var(--ink);
 	--primary-foreground: var(--paper);
@@ -200,6 +200,7 @@
 		[data-slot="tag-input"]
 	) {
 	border: var(--stroke) solid var(--input);
+	/* border-radius: .1rem; */
 	border-radius: 0.875rem;
 	box-shadow: none;
 }
