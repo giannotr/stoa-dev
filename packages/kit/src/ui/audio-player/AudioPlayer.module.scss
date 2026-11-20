@@ -165,24 +165,49 @@
 }
 
 .scrubber {
+  // A firm rounded stroke like the bar chart bars; the thumb sits centred on it.
+  --track: .375rem;
+  --thumb: 1.25rem;
+
   appearance: none;
   width: 100%;
   height: 1.75rem;
   margin: 0;
-  background:
-    linear-gradient(to right, var(--player-ink) var(--progress), var(--player-line) var(--progress))
-    center / 100% 2px no-repeat;
+  background: transparent;
   cursor: pointer;
 
   &:disabled {
     cursor: default;
   }
 
+  &::-webkit-slider-runnable-track {
+    height: var(--track);
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--player-ink) var(--progress),
+      var(--player-line) var(--progress)
+    );
+  }
+
+  &::-moz-range-track {
+    height: var(--track);
+    border-radius: 999px;
+    background: var(--player-line);
+  }
+
+  &::-moz-range-progress {
+    height: var(--track);
+    border-radius: 999px;
+    background: var(--player-ink);
+  }
+
   &::-webkit-slider-thumb {
     appearance: none;
     box-sizing: border-box;
-    width: 1.125rem;
-    height: 1.125rem;
+    width: var(--thumb);
+    height: var(--thumb);
+    margin-top: calc((var(--track) - var(--thumb)) / 2);
     border: 3px solid var(--player-surface);
     border-radius: 50%;
     background: var(--player-ink);
@@ -191,8 +216,8 @@
 
   &::-moz-range-thumb {
     box-sizing: border-box;
-    width: 1.125rem;
-    height: 1.125rem;
+    width: var(--thumb);
+    height: var(--thumb);
     border: 3px solid var(--player-surface);
     border-radius: 50%;
     background: var(--player-ink);
@@ -209,7 +234,7 @@
   justify-content: space-between;
   align-items: flex-start;
   height: .5rem;
-  padding-inline: .5625rem;
+  padding-inline: .625rem; // half the thumb, so ticks line up with its centre
 
   i {
     display: block;
