@@ -44,7 +44,12 @@ export default defineConfig({
 					browser: {
 						enabled: true,
 						headless: true,
-						provider: playwright(),
+						// Media may start without a gesture, so the audio player's play test can run headless.
+						provider: playwright({
+							launchOptions: {
+								args: ['--autoplay-policy=no-user-gesture-required'],
+							},
+						}),
 						instances: [{ browser: 'chromium' }],
 					},
 				},

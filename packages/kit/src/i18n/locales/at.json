@@ -172,5 +172,18 @@
   "tags": {
     "placeholder": "Schlagwort eingeben, mit Enter bestätigen",
     "remove": "Schlagwort „{{tag}}“ entfernen"
+  },
+  "audioPlayer": {
+    "title": "Audioinstrument",
+    "position": "Position",
+    "play": "Abspielen",
+    "pause": "Pause",
+    "back": "{{seconds}} s zurück",
+    "forward": "{{seconds}} s vor",
+    "speed": "Tempo",
+    "loop": "Wiederholen",
+    "error": "Die Datei kann hier nicht abgespielt werden.",
+    "loading": "Wird gladn …",
+    "duration": "Dauer"
   }
 }

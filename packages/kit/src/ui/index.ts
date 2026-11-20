@@ -1,4 +1,5 @@
 export * from './accordion'
+export * from './audio-player'
 export * from './button'
 export * from './calendar'
 export * from './card'

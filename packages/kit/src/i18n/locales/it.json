@@ -172,5 +172,18 @@
   "tags": {
     "placeholder": "Scrivi una parola chiave e premi Invio",
     "remove": "Rimuovi “{{tag}}”"
+  },
+  "audioPlayer": {
+    "title": "Strumento audio",
+    "position": "Posizione",
+    "play": "Riproduci",
+    "pause": "Pausa",
+    "back": "Indietro di {{seconds}} s",
+    "forward": "Avanti di {{seconds}} s",
+    "speed": "Velocità",
+    "loop": "Ripeti",
+    "error": "Questo file non può essere riprodotto qui.",
+    "loading": "Caricamento …",
+    "duration": "Durata"
   }
 }

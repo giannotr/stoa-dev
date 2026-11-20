@@ -172,5 +172,18 @@
   "tags": {
     "placeholder": "Type a tag and press Enter",
     "remove": "Remove tag “{{tag}}”"
+  },
+  "audioPlayer": {
+    "title": "Audio instrument",
+    "position": "Position",
+    "play": "Play",
+    "pause": "Pause",
+    "back": "Back {{seconds}} s",
+    "forward": "Forward {{seconds}} s",
+    "speed": "Speed",
+    "loop": "Repeat",
+    "error": "This file cannot be played here.",
+    "loading": "Loading …",
+    "duration": "Duration"
   }
 }
