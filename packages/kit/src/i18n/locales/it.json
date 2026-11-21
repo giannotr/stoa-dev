@@ -16,6 +16,10 @@
     "loadingSettings": "Caricamento impostazioni …",
     "scrollToTop": "Torna su"
   },
+  "slideAction": {
+    "label": "Scorri per confermare",
+    "success": "Confermato"
+  },
   "colorPicker": {
     "title": "Strumento colore",
     "choose": "Scegli colore",

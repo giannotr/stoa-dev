@@ -16,6 +16,10 @@
     "loadingSettings": "Einstellungen laden …",
     "scrollToTop": "Nach oben"
   },
+  "slideAction": {
+    "label": "Zum Bestätigen ziehen",
+    "success": "Bestätigt"
+  },
   "colorPicker": {
     "title": "Farbinstrument",
     "choose": "Farbe auswählen",

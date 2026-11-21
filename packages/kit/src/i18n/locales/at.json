@@ -16,6 +16,10 @@
     "loadingSettings": "Einstöllungen ladn …",
     "scrollToTop": "Nach obn"
   },
+  "slideAction": {
+    "label": "Zum Bestätigen ziehen",
+    "success": "Bestätigt"
+  },
   "colorPicker": {
     "title": "Farbinstrument",
     "choose": "Farb aussuachn",

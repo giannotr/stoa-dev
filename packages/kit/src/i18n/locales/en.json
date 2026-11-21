@@ -16,6 +16,10 @@
     "loadingSettings": "Loading settings …",
     "scrollToTop": "Back to top"
   },
+  "slideAction": {
+    "label": "Slide to confirm",
+    "success": "Confirmed"
+  },
   "colorPicker": {
     "title": "Color instrument",
     "choose": "Choose color",
