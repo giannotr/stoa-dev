@@ -557,7 +557,7 @@
 	color: var(--ink);
 }
 
-.stoa-instrument [data-slot="radio-group-indicator"] > * {
+.stoa-instrument [data-slot="radio-group-item"] [data-slot="radio-group-indicator"] > * {
 	background: var(--ink);
 	fill: var(--ink);
 	color: var(--ink);
