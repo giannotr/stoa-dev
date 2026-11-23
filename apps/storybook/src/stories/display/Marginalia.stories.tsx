@@ -9,6 +9,7 @@ import {
 	MarginaliaStatus,
 } from '@stoa-dev/kit/display'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Thermometer } from 'lucide-react'
 import { expect } from 'storybook/test'
 
 /**
@@ -28,6 +29,46 @@ export const Paired: Story = {}
 
 export const Single: Story = {
 	render: () => <Marginalia value='2026' />,
+}
+
+/** Optional unit after the value: smaller and muted, text or icon. */
+export const SingleWithUnit: Story = {
+	render: () => (
+		<div className='flex items-baseline gap-8'>
+			<Marginalia value='12,4' unit='km' />
+			<Marginalia value='87' unit='%' />
+			<Marginalia value='21' unit='°C' unitLabel='Grad Celsius' />
+			<Marginalia
+				value='38'
+				unit={<Thermometer />}
+				unitLabel='Grad Körpertemperatur'
+			/>
+			<Marginalia value='329' unit='min' className='text-3xl' />
+		</div>
+	),
+	play: async ({ canvasElement }) => {
+		const [km, , celsius, icon] = canvasElement.querySelectorAll(
+			'[data-slot="marginalia"]',
+		)
+		const unit = km.querySelector('[data-slot="marginalia-unit"]') as Element
+		await expect(km).toHaveTextContent('12,4km')
+		// Smaller than the value and muted.
+		await expect(
+			Number.parseFloat(getComputedStyle(unit).fontSize),
+		).toBeLessThan(Number.parseFloat(getComputedStyle(km).fontSize))
+		await expect(getComputedStyle(unit).color).not.toBe(
+			getComputedStyle(km).color,
+		)
+		// A unitLabel replaces the visible unit for screen readers.
+		await expect(
+			celsius.querySelector('[data-slot="marginalia-unit"]'),
+		).toHaveAttribute('aria-hidden', 'true')
+		await expect(celsius).toHaveTextContent('Grad Celsius')
+		const svg = icon.querySelector('svg') as SVGElement
+		await expect(svg.getBoundingClientRect().height).toBeLessThan(
+			Number.parseFloat(getComputedStyle(icon).fontSize),
+		)
+	},
 }
 
 export const Framed: Story = {
