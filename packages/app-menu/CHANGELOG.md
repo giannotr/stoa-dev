@@ -1,5 +1,17 @@
 # Changelog — @stoa-dev/app-menu
 
+## 0.4.0
+
+- Darstellungsmenü mit **Originalgröße** (⌘/Strg+0, deaktiviert bei 100 %),
+  **Vergrößern** (⌘/Strg+=), **Verkleinern** (⌘/Strg+-) und **Neu laden** (⌘/Strg+R);
+  Zoomstufen 50–300 % wie im Browser, der Zoom bleibt beim Neuladen erhalten.
+- Das Darstellungsmenü erscheint jetzt auf allen Plattformen; „Vollbild“ weiter nur
+  auf macOS (Tauri unterstützt den Eintrag sonst nicht).
+- `ZOOM_STEPS`, `stepZoom`, `readStoredZoom`, `storeZoom` als Hilfsfunktionen.
+
+**Umstieg:** `labels` liefert zusätzlich `actualSize`, `zoomIn`, `zoomOut` und
+`reload`, und die Capability der App braucht `core:webview:allow-set-webview-zoom`.
+
 ## 0.3.0
 
 - `appCreationYear` in den About-Optionen: Der Copyright-Hinweis lautet dann

@@ -34,6 +34,10 @@ export async function setupAppMenu() {
 			view: i18next.t(`${scope}.view`),
 			window: i18next.t(`${scope}.window`),
 			help: i18next.t(`${scope}.help`),
+			actualSize: i18next.t(`${scope}.actualSize`),
+			zoomIn: i18next.t(`${scope}.zoomIn`),
+			zoomOut: i18next.t(`${scope}.zoomOut`),
+			reload: i18next.t(`${scope}.reload`),
 		}),
 		// Optional; ohne diese beiden gelten buildStandardFileMenu/-EditMenu.
 		fileMenu: ({ labels, mac }) => ({
@@ -51,6 +55,12 @@ export async function setupAppMenu() {
 	})
 }
 ```
+
+Das Darstellungsmenü enthält „Vollbild“ (nur macOS), „Originalgröße“ (⌘/Strg+0,
+deaktiviert bei 100 %), „Vergrößern“ (⌘/Strg+=), „Verkleinern“ (⌘/Strg+-) und „Neu
+laden“ (⌘/Strg+R). Für den Zoom braucht die Capability der App die Berechtigung
+`core:webview:allow-set-webview-zoom`, für das Icon im Über-Fenster
+`core:app:allow-default-window-icon`.
 
 `setupStandardAppMenu` tut außerhalb von Tauri nichts (Browser-Vorschau), lädt Name,
 Version und Icon der App, setzt das Menü, meldet auf macOS Fenster- und Hilfe-Menü
@@ -72,6 +82,7 @@ geschlossen) und liefert eine Funktion zum Beenden zurück. Weitere Optionen:
 | `buildStandardHelpMenu(text, about, { mac?, ...options })` | Hilfe: auf macOS leer, sonst mit „Über“ |
 | `isMac()` | `true` auf macOS, `false` ohne `navigator` (Tests) |
 | `computeShortVersion(version)` | `"1.4.2"` → `"1.4"` |
+| `ZOOM_STEPS`, `stepZoom(level, 1 \| -1)` | Zoomstufen 50–300 % und Schritt zur nächsten |
 | `copyrightYears(appCreationYear, currentYear?)` | `2024` → `"2024–2026"`, im ersten Jahr `"2026"` |
 | `About`, `AboutOptions`, `PlatformOptions`, `AppMenuLabels`, `AppMenuContext`, `StandardAppMenuOptions` | Typen |
 

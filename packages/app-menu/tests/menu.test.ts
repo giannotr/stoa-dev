@@ -167,3 +167,14 @@ describe('buildStandardHelpMenu', () => {
 		})
 	})
 })
+
+describe('stepZoom', () => {
+	it('moves to the next stop and stays at the ends', async () => {
+		const { stepZoom } = await import('../src')
+		expect(stepZoom(1, 1)).toBe(1.1)
+		expect(stepZoom(1, -1)).toBe(0.9)
+		expect(stepZoom(1.05, 1)).toBe(1.1)
+		expect(stepZoom(3, 1)).toBe(3)
+		expect(stepZoom(0.5, -1)).toBe(0.5)
+	})
+})

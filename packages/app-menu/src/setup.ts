@@ -1,6 +1,12 @@
 import { defaultWindowIcon, getName, getVersion } from '@tauri-apps/api/app'
 import { isTauri } from '@tauri-apps/api/core'
-import { Menu, Submenu, type SubmenuOptions } from '@tauri-apps/api/menu'
+import {
+	Menu,
+	MenuItem,
+	Submenu,
+	type SubmenuOptions,
+} from '@tauri-apps/api/menu'
+import { getCurrentWebview } from '@tauri-apps/api/webview'
 import {
 	type About,
 	type AboutOptions,
@@ -8,10 +14,10 @@ import {
 	buildStandardEditMenu,
 	buildStandardFileMenu,
 	buildStandardHelpMenu,
-	buildStandardViewMenu,
 	buildStandardWindowMenu,
 	isMac,
 } from './builders'
+import { readStoredZoom, stepZoom, storeZoom } from './zoom'
 
 /** Submenu names; re-read on every build so they follow the app language. */
 export type AppMenuLabels = {
@@ -21,6 +27,14 @@ export type AppMenuLabels = {
 	view: string
 	window: string
 	help: string
+	/** View menu: "Originalgröße" (back to 100 %). */
+	actualSize: string
+	/** View menu: "Vergrößern". */
+	zoomIn: string
+	/** View menu: "Verkleinern". */
+	zoomOut: string
+	/** View menu: "Neu laden". */
+	reload: string
 }
 
 /** What the app's own menu builders get. */
@@ -64,11 +78,13 @@ async function loadAbout(onError: (error: unknown) => void): Promise<About> {
 }
 
 /**
- * Builds and sets the app menu the way Tauri's default menu does
- * (`Menu::default` in tauri 2): an app menu on macOS, then File, Edit, the
- * extra menus, View (macOS only), Window and Help. Only File and Edit are
- * app-specific. Rebuilds when `subscribe` reports a change and closes the
- * previous menu. Outside Tauri it does nothing.
+ * Builds and sets the app menu after Tauri's default menu (`Menu::default`
+ * in tauri 2): an app menu on macOS, then File, Edit, the extra menus, View,
+ * Window and Help. Only File and Edit are app-specific. View holds Full
+ * Screen (macOS), Actual Size (disabled at 100 %), Zoom In, Zoom Out and
+ * Reload; the zoom needs the permission `core:webview:allow-set-webview-zoom`
+ * and survives Reload. Rebuilds when `subscribe` reports a change and closes
+ * the previous menu. Outside Tauri it does nothing.
  *
  * Resolves to a function that stops the rebuilds.
  */
@@ -86,6 +102,62 @@ export async function setupStandardAppMenu({
 	const mac = isMac()
 	const about = await loadAbout(onError)
 
+	let zoom = readStoredZoom()
+	// Rebuilt with every menu; its enabled state follows the zoom.
+	let actualSizeItem: MenuItem | null = null
+	async function setZoom(next: number) {
+		zoom = next
+		storeZoom(next)
+		await getCurrentWebview().setZoom(next)
+		await actualSizeItem?.setEnabled(next !== 1)
+	}
+	if (zoom !== 1) await setZoom(zoom).catch(onError)
+	const zoomTo = (next: number) => {
+		if (next !== zoom) void setZoom(next).catch(onError)
+	}
+
+	async function buildViewMenu(text: AppMenuLabels) {
+		actualSizeItem = await MenuItem.new({
+			id: 'stoa-view-actual-size',
+			text: text.actualSize,
+			accelerator: 'CmdOrCtrl+0',
+			enabled: zoom !== 1,
+			action: () => zoomTo(1),
+		})
+		const zoomIn = await MenuItem.new({
+			id: 'stoa-view-zoom-in',
+			text: text.zoomIn,
+			accelerator: 'CmdOrCtrl+=',
+			action: () => zoomTo(stepZoom(zoom, 1)),
+		})
+		const zoomOut = await MenuItem.new({
+			id: 'stoa-view-zoom-out',
+			text: text.zoomOut,
+			accelerator: 'CmdOrCtrl+-',
+			action: () => zoomTo(stepZoom(zoom, -1)),
+		})
+		const reload = await MenuItem.new({
+			id: 'stoa-view-reload',
+			text: text.reload,
+			accelerator: 'CmdOrCtrl+R',
+			action: () => window.location.reload(),
+		})
+		return Submenu.new({
+			text: text.view,
+			items: [
+				// Tauri supports the predefined Full Screen item on macOS only.
+				...(mac
+					? [{ item: 'Fullscreen' } as const, { item: 'Separator' } as const]
+					: []),
+				actualSizeItem,
+				zoomIn,
+				zoomOut,
+				{ item: 'Separator' },
+				reload,
+			],
+		})
+	}
+
 	async function build() {
 		const context: AppMenuContext = { mac, about, labels: labels({ mac }) }
 		const text = context.labels
@@ -101,9 +173,7 @@ export async function setupStandardAppMenu({
 				...(extraMenus?.(context) ?? []),
 			].map((options) => Submenu.new(options)),
 		)
-		const viewMenu = mac
-			? [await Submenu.new(buildStandardViewMenu(text.view))]
-			: []
+		const viewMenu = await buildViewMenu(text)
 		const windowMenu = await Submenu.new(
 			buildStandardWindowMenu(text.window, { mac }),
 		)
@@ -112,7 +182,7 @@ export async function setupStandardAppMenu({
 		)
 
 		const menu = await Menu.new({
-			items: [...appMenu, ...ownMenus, ...viewMenu, windowMenu, helpMenu],
+			items: [...appMenu, ...ownMenus, viewMenu, windowMenu, helpMenu],
 		})
 		await menu.setAsAppMenu()
 
