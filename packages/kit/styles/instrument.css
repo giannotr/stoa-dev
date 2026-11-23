@@ -105,6 +105,8 @@
 
 .stoa-instrument :is([data-slot="label"], [data-slot="field-label"]) {
 	color: color-mix(in srgb, var(--foreground) 78%, transparent);
+	/* Lighter than the semibold field text it names. */
+	font-weight: 400;
 }
 
 .stoa-instrument :is([data-slot="field"], [data-slot="field-group"]) {
