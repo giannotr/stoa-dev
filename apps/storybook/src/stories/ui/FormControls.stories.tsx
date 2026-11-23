@@ -20,6 +20,7 @@ import {
 } from '@stoa-dev/kit/ui'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Bold, Italic, Underline } from 'lucide-react'
+import { expect } from 'storybook/test'
 
 const meta = {
 	title: 'UI/FormControls',
@@ -117,4 +118,15 @@ export const AllControls: Story = {
 			</CardContent>
 		</Card>
 	),
+	play: async ({ canvasElement }) => {
+		// Typed text, placeholders and chosen values share one weight.
+		const weight = (selector: string, pseudo?: string) =>
+			getComputedStyle(canvasElement.querySelector(selector) as Element, pseudo)
+				.fontWeight
+		const input = weight('[data-slot="input"]')
+		await expect(weight('[data-slot="input"]', '::placeholder')).toBe(input)
+		await expect(weight('[data-slot="textarea"]', '::placeholder')).toBe(input)
+		await expect(weight('[data-slot="native-select"]')).toBe(input)
+		await expect(weight('[data-slot="select-value"]')).toBe(input)
+	},
 }

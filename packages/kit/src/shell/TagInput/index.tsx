@@ -103,7 +103,7 @@ export function TagInput({
 			<input
 				id={id}
 				list={offered.length ? listId : undefined}
-				className='min-w-32 flex-1 bg-transparent px-1 py-1 text-sm outline-none placeholder:text-muted-foreground'
+				className='min-w-32 flex-1 bg-transparent px-1 py-1 text-sm font-semibold outline-none placeholder:text-muted-foreground'
 				placeholder={value.length ? '' : (placeholder ?? t('tags.placeholder'))}
 				value={text}
 				disabled={disabled}
