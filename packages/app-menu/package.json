@@ -1,0 +1,52 @@
+{
+  "name": "@stoa-dev/app-menu",
+  "version": "0.1.0",
+  "description": "Standard Tauri 2 application menus (app, view, window, help) for STOA apps",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giannotr/stoa-dev.git",
+    "directory": "packages/app-menu"
+  },
+  "homepage": "https://github.com/giannotr/stoa-dev/tree/main/packages/app-menu#readme",
+  "bugs": {
+    "url": "https://github.com/giannotr/stoa-dev/issues"
+  },
+  "keywords": [
+    "tauri",
+    "menu",
+    "app-menu",
+    "stoa"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run --config vitest.config.ts",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@tauri-apps/api": "^2.0.0"
+  },
+  "devDependencies": {
+    "@stoa-dev/tsconfig": "*",
+    "@tauri-apps/api": "2.11.0",
+    "typescript": "~5.8.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

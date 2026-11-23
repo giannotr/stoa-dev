@@ -7,17 +7,17 @@
     "apps/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace @stoa-dev/kit",
+    "build": "npm run build --workspace @stoa-dev/kit && npm run build --workspace @stoa-dev/app-menu",
     "dev": "npm run dev --workspace @stoa-dev/kit",
-    "typecheck": "npm run typecheck --workspace @stoa-dev/kit",
+    "typecheck": "npm run typecheck --workspace @stoa-dev/kit && npm run typecheck --workspace @stoa-dev/app-menu",
     "lint": "biome lint .",
     "biome": "biome check --write .",
     "check": "npm run lint && npm run typecheck && npm run build && npm test && npm run storybook:test",
     "rust:test": "cargo test --manifest-path crates/stoa-licensing/Cargo.toml",
-    "release:check": "npm run check && npm pack --dry-run --workspace @stoa-dev/kit",
+    "release:check": "npm run check && npm pack --dry-run --workspace @stoa-dev/kit && npm pack --dry-run --workspace @stoa-dev/app-menu",
     "storybook": "npm run storybook --workspace @stoa-dev/storybook",
     "storybook:test": "npm run test --workspace @stoa-dev/storybook",
-    "test": "vitest run --config packages/kit/vitest.config.ts"
+    "test": "vitest run --config packages/kit/vitest.config.ts && npm test --workspace @stoa-dev/app-menu"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.15",

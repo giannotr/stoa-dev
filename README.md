@@ -8,6 +8,7 @@ Monorepo für die gemeinsamen Bausteine der STOA-Apps
 | [`@stoa-dev/kit`](packages/kit) | npm | Komponenten, Hooks, Utils, Lizenz-UI, Theme, Locales |
 | [`@stoa-dev/biome-config`](packages/biome-config) | npm | gemeinsame Biome-Regeln |
 | [`@stoa-dev/tsconfig`](packages/tsconfig) | npm | `base`, `app`, `node`, `library` |
+| [`@stoa-dev/app-menu`](packages/app-menu) | npm | Standard-Anwendungsmenüs für Tauri 2 (App, Darstellung, Fenster, Hilfe) |
 | [`stoa-licensing`](crates/stoa-licensing) | crates.io | Rust-Lizenzmodul für Tauri |
 | [`@stoa-dev/storybook`](apps/storybook) | – (privat) | Storybook und Interaktionstests für das Kit |
 
@@ -25,7 +26,7 @@ npm run release:check  # zusätzlich: Inhalt des npm-Pakets anzeigen
 ## Veröffentlichen
 
 ```bash
-npm publish --workspace @stoa-dev/kit            # bzw. @stoa-dev/biome-config, @stoa-dev/tsconfig
+npm publish --workspace @stoa-dev/kit            # bzw. @stoa-dev/app-menu, @stoa-dev/biome-config, @stoa-dev/tsconfig
 cargo publish --manifest-path crates/stoa-licensing/Cargo.toml
 ```
 
