@@ -1,6 +1,6 @@
 {
   "name": "@stoa-dev/kit",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Shared React components, hooks, utilities, licensing UI and theme for STOA desktop apps",
   "license": "MIT",
   "repository": {
