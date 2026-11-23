@@ -72,10 +72,13 @@ geschlossen) und liefert eine Funktion zum Beenden zurück. Weitere Optionen:
 | `buildStandardHelpMenu(text, about, { mac?, ...options })` | Hilfe: auf macOS leer, sonst mit „Über“ |
 | `isMac()` | `true` auf macOS, `false` ohne `navigator` (Tests) |
 | `computeShortVersion(version)` | `"1.4.2"` → `"1.4"` |
+| `copyrightYears(appCreationYear, currentYear?)` | `2024` → `"2024–2026"`, im ersten Jahr `"2026"` |
 | `About`, `AboutOptions`, `PlatformOptions`, `AppMenuLabels`, `AppMenuContext`, `StandardAppMenuOptions` | Typen |
 
-`options` (`AboutOptions`) überschreibt `copyright` und `credits` im Über-Fenster;
-Standard ist „Copyright © ‹Jahr› STOA“ und „Entwickelt von STOA“. `{ mac }` legt die
+`options` (`AboutOptions`) steuert das Über-Fenster: `appCreationYear: 2024` ergibt
+„Copyright © 2024–2026 STOA“ (im ersten Jahr nur „© 2026“), `copyright` ersetzt die
+Zeile ganz, `credits` den Entwickler-Hinweis (Standard „Entwickelt von STOA“). Mit
+`setupStandardAppMenu` gibt man sie als `about: { appCreationYear: 2024 }` mit. `{ mac }` legt die
 Plattform fest, sonst wird sie aus dem User-Agent gelesen. Jedes Über-Element
 bekommt eine eigene Kopie der Metadaten, weil Tauri `icon` an Ort und Stelle durch
 seine Ressourcen-ID ersetzt.

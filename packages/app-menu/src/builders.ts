@@ -10,7 +10,12 @@ export type About = {
 
 /** Overrides for the About panel; defaults name STOA. */
 export type AboutOptions = {
-	/** Defaults to "Copyright © <current year> STOA". */
+	/**
+	 * Year the app was first released. The default copyright then reads
+	 * "Copyright © 2024–2026 STOA" (or "© 2026 STOA" in its first year).
+	 */
+	appCreationYear?: number
+	/** Replaces the whole copyright line; wins over appCreationYear. */
 	copyright?: string
 	/** Defaults to "Entwickelt von STOA\nhttps://stoa.berlin". */
 	credits?: string
@@ -33,6 +38,19 @@ export function computeShortVersion(longVersion: string) {
 }
 
 /**
+ * "2024–2026" from the creation year to now (en dash, no spaces), or just
+ * the single year when both are the same or the creation year lies ahead.
+ */
+export function copyrightYears(
+	appCreationYear: number | undefined,
+	currentYear = new Date().getFullYear(),
+) {
+	return appCreationYear === undefined || appCreationYear >= currentYear
+		? String(appCreationYear ?? currentYear)
+		: `${appCreationYear}–${currentYear}`
+}
+
+/**
  * About metadata as a fresh object: Tauri's JS replaces `icon` in place with
  * its resource id, so every About item needs its own copy.
  */
@@ -44,7 +62,8 @@ function aboutMetadata(
 		...about,
 		shortVersion: computeShortVersion(about.version),
 		copyright:
-			options.copyright ?? `Copyright © ${new Date().getFullYear()} STOA`,
+			options.copyright ??
+			`Copyright © ${copyrightYears(options.appCreationYear)} STOA`,
 		credits: options.credits ?? 'Entwickelt von STOA\nhttps://stoa.berlin',
 	}
 }

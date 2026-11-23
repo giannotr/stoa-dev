@@ -5,6 +5,7 @@ import {
 	buildStandardViewMenu,
 	buildStandardWindowMenu,
 	computeShortVersion,
+	copyrightYears,
 	isMac,
 } from '../src'
 
@@ -16,6 +17,21 @@ describe('computeShortVersion', () => {
 		expect(computeShortVersion('1.4.2')).toBe('1.4')
 		expect(computeShortVersion('2.0')).toBe('2.0')
 		expect(computeShortVersion('3')).toBe('3')
+	})
+})
+
+describe('copyrightYears', () => {
+	it('spans from the creation year to now with an en dash', () => {
+		expect(copyrightYears(2024, 2026)).toBe('2024–2026')
+	})
+
+	it('shows a single year in the first year or without a creation year', () => {
+		expect(copyrightYears(2026, 2026)).toBe('2026')
+		expect(copyrightYears(undefined, 2026)).toBe('2026')
+	})
+
+	it('never runs backwards when the clock is behind', () => {
+		expect(copyrightYears(2027, 2026)).toBe('2027')
 	})
 })
 
@@ -60,6 +76,32 @@ describe('buildStandardAppMenu', () => {
 			'Separator',
 			'Quit',
 		])
+	})
+
+	it('spans the copyright from appCreationYear, also in the Help menu', () => {
+		const app = buildStandardAppMenu(about, { appCreationYear: 2024 })
+			.items?.[0] as {
+			item: { About: Record<string, unknown> }
+		}
+		expect(app.item.About.copyright).toBe(
+			`Copyright © ${copyrightYears(2024)} STOA`,
+		)
+		const help = buildStandardHelpMenu('Hilfe', about, {
+			mac: false,
+			appCreationYear: 2024,
+		}).items?.[0] as { item: { About: Record<string, unknown> } }
+		expect(help.item.About.copyright).toBe(app.item.About.copyright)
+	})
+
+	it('lets an own copyright line win over appCreationYear', () => {
+		const menu = buildStandardAppMenu(about, {
+			appCreationYear: 2024,
+			copyright: '© X',
+		})
+		const first = menu.items?.[0] as {
+			item: { About: Record<string, unknown> }
+		}
+		expect(first.item.About.copyright).toBe('© X')
 	})
 
 	it('accepts own copyright and credits', () => {

@@ -1,5 +1,12 @@
 # Changelog — @stoa-dev/app-menu
 
+## 0.3.0
+
+- `appCreationYear` in den About-Optionen: Der Copyright-Hinweis lautet dann
+  „Copyright © 2024–2026 STOA“ (Halbgeviertstrich) bzw. im ersten Jahr nur
+  „Copyright © 2026 STOA“. Ein eigener `copyright`-Text hat weiter Vorrang.
+- `copyrightYears(appCreationYear, currentYear?)` als Hilfsfunktion.
+
 ## 0.2.0
 
 - `setupStandardAppMenu(options)`: baut die ganze Menüleiste wie Tauris Standardmenü,

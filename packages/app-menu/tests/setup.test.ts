@@ -119,6 +119,20 @@ describe('setupStandardAppMenu', () => {
 		expect(menu.items[3].items).toHaveLength(1)
 	})
 
+	it('passes the about options, e.g. appCreationYear, to the app menu', async () => {
+		vi.stubGlobal('navigator', { userAgent: 'Macintosh' })
+		await setupStandardAppMenu({
+			labels: () => german,
+			about: { appCreationYear: 2000 },
+		})
+		const appMenu = built.menus[0].items[0] as unknown as {
+			items: { item: { About: { copyright: string } } }[]
+		}
+		expect(appMenu.items[0].item.About.copyright).toBe(
+			`Copyright © 2000–${new Date().getFullYear()} STOA`,
+		)
+	})
+
 	it('uses the app-specific File and Edit menus', async () => {
 		vi.stubGlobal('navigator', { userAgent: 'Windows NT 10.0' })
 		await setupStandardAppMenu({
