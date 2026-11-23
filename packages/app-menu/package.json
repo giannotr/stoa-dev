@@ -1,6 +1,6 @@
 {
   "name": "@stoa-dev/app-menu",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Standard Tauri 2 application menus (app, view, window, help) for STOA apps",
   "license": "MIT",
   "repository": {
@@ -23,6 +23,7 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "exports": {
