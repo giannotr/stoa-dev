@@ -4,6 +4,7 @@ import { type CSSProperties, type PointerEvent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { STOA_NS } from '../../i18n/namespace'
 import { cn } from '../../utils/cn'
+import styles from './ColorPicker.module.scss'
 import {
 	DEFAULT_COLOR,
 	discTextColor,
@@ -13,7 +14,6 @@ import {
 	normalizeColor,
 	PRESETS,
 } from './color'
-import styles from './ColorPicker.module.scss'
 
 export interface ColorPickerProps {
 	/** Displayed hex color. Omit to let the picker own the selection. */

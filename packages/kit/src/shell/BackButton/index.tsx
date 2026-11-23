@@ -12,7 +12,11 @@ export interface BackButtonProps {
 	label?: string
 }
 
-export function BackButton({ strict = false, to = '/', label }: BackButtonProps) {
+export function BackButton({
+	strict = false,
+	to = '/',
+	label,
+}: BackButtonProps) {
 	const navigate = useNavigate()
 	const { routeToDefault } = useRouting(to)
 	const { t } = useTranslation(STOA_NS)
@@ -22,7 +26,7 @@ export function BackButton({ strict = false, to = '/', label }: BackButtonProps)
 			variant='ghost'
 			size='icon'
 			aria-label={label ?? t('app.back')}
-			onClick={() => strict ? navigate(-1) : routeToDefault()}
+			onClick={() => (strict ? navigate(-1) : routeToDefault())}
 		>
 			<ArrowLeft />
 		</Button>
